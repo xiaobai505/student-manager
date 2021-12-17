@@ -55,3 +55,8 @@ logging:
 adminster:
   username: admin
   password: 123456
+
+pagehelper:
+  reasonable: true
+  support-methods-arguments: true
+
