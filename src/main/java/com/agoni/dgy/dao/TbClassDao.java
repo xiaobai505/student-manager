@@ -7,7 +7,7 @@ import org.apache.ibatis.annotations.Mapper;
 import java.util.List;
 
 @Mapper
-public interface TbClassDao{
+public interface TbClassDao extends BaseMapper<TbClass>{
     int deleteByPrimaryKey(Integer id);
 
     int insert(TbClass record);

@@ -2,13 +2,20 @@ package com.agoni.dgy.model;
 
 import java.io.Serializable;
 import java.util.Date;
-import lombok.Data;
+
+import com.baomidou.mybatisplus.annotation.TableName;
+import lombok.*;
 
 /**
  * tb_class
  * @author 
  */
 @Data
+@Builder
+@NoArgsConstructor
+@AllArgsConstructor
+@EqualsAndHashCode(callSuper = false)
+@TableName("tb_class")
 public class TbClass implements Serializable {
     /**
      * id主键

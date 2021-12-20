@@ -28,4 +28,9 @@ public class Test {
         PageInfo<TbClass> tbClassPageInfo = tbCourseService.selectAll();
         return tbClassPageInfo;
     }
+    @RequestMapping("/all2")
+    public PageInfo<TbClass> all2(){
+        PageInfo<TbClass> tbClassPageInfo = tbCourseService.selectAll2();
+        return tbClassPageInfo;
+    }
 }

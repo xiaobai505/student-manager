@@ -22,4 +22,11 @@ public interface TbCourseService {
      * @return
      */
     PageInfo<TbClass> selectAll();
+
+    /**
+     * 查询所有
+     * @return
+     */
+    PageInfo<TbClass> selectAll2();
+
 }

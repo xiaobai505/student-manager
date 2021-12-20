@@ -3,6 +3,7 @@ package com.agoni.dgy.service.impl;
 import com.agoni.dgy.dao.TbClassDao;
 import com.agoni.dgy.model.TbClass;
 import com.agoni.dgy.service.TbCourseService;
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import org.springframework.stereotype.Service;
@@ -29,6 +30,21 @@ public class TbCourseServiceImpl implements TbCourseService {
     public PageInfo<TbClass> selectAll(){
         PageHelper.startPage(1, 5);
         List<TbClass> tbClasses = tbClassDao.selectAll();
+        // 3.获取详细分页信息
+        PageInfo<TbClass> pageInfo = new PageInfo<>(tbClasses);
+        return pageInfo;
+    }
+
+    /**
+     * 查询所有
+     *
+     * @return
+     */
+    @Override
+    public PageInfo<TbClass> selectAll2() {
+        QueryWrapper<TbClass> queryWrapper = new QueryWrapper<>();
+        PageHelper.startPage(1, 5);
+        List<TbClass> tbClasses = tbClassDao.selectList(queryWrapper);
         // 3.获取详细分页信息
         PageInfo<TbClass> pageInfo = new PageInfo<>(tbClasses);
         return pageInfo;
