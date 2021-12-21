@@ -11,11 +11,6 @@ import lombok.*;
  * @author 
  */
 @Data
-@Builder
-@NoArgsConstructor
-@AllArgsConstructor
-@EqualsAndHashCode(callSuper = false)
-@TableName("tb_class")
 public class TbClass implements Serializable {
     /**
      * id主键

@@ -69,13 +69,6 @@
 			<version>1.2.17</version>
 		</dependency>
 
-		<!--mybatis-->
-		<dependency>
-			<groupId>org.mybatis.spring.boot</groupId>
-			<artifactId>mybatis-spring-boot-starter</artifactId>
-			<version>2.2.0</version>
-		</dependency>
-
 		<!-- mysql -->
 		<dependency>
 			<groupId>mysql</groupId>
@@ -110,38 +103,39 @@
 			</exclusions>
 		</dependency>
 
+		<!--权限认证-->
 		<dependency>
 			<groupId>org.springframework.security</groupId>
 			<artifactId>spring-security-test</artifactId>
 			<scope>test</scope>
 		</dependency>
 
+		<!--lombok-->
 		<dependency>
 			<groupId>org.projectlombok</groupId>
 			<artifactId>lombok</artifactId>
 		</dependency>
 
-		<!-- https://mvnrepository.com/artifact/com.github.pagehelper/pagehelper-spring-boot-starter -->
+		<!--pagehelper-->
 		<dependency>
 			<groupId>com.github.pagehelper</groupId>
 			<artifactId>pagehelper-spring-boot-starter</artifactId>
 			<version>1.4.1</version>
 		</dependency>
-		<!-- https://mvnrepository.com/artifact/com.baomidou/mybatis-plus-core -->
+
+		<!--mybatis-plus-boot-starter-->
 		<dependency>
 			<groupId>com.baomidou</groupId>
-			<artifactId>mybatis-plus-core</artifactId>
+			<artifactId>mybatis-plus-boot-starter</artifactId>
 			<version>3.4.3.4</version>
 		</dependency>
 
-		<dependency>
-			<groupId>com.baomidou</groupId>
-			<artifactId>mybatis-plus-generator</artifactId>
-			<version>3.5.1</version>
-		</dependency>
-
-
-
+		<!-- 逆向生成 以后在做 -->
+		<!--<dependency>-->
+		<!--	<groupId>com.baomidou</groupId>-->
+		<!--	<artifactId>mybatis-plus-generator</artifactId>-->
+		<!--	<version>3.5.1</version>-->
+		<!--</dependency>-->
 
 	</dependencies>
 
@@ -174,40 +168,32 @@
 			</plugin>
 		</plugins>
 		<!--解决不编译XML等文件-->
-		<resources>
-			<!--不编译mapper的XML文件呢-->
-			<resource>
-				<directory>src/main/java</directory>
-				<includes>
-					<include>**/*.xml</include>
-				</includes>
-				<filtering>false</filtering>
-			</resource>
+		<!--<resources>-->
 			<!--不编译数据库配置文件-->
-			<resource>
-				<directory>src/main/resources</directory>
-				<includes>
-					<include>**/*.yml</include>
-					<include>**/*.properties</include>
-					<include>**/*.xml</include>
-					<include>**/*.html</include>
-					<include>**/*.js</include>
-					<include>**/*.jpg</include>
-					<include>**/*.png</include>
-					<include>**/*.css</include>
-					<include>**/*.gif</include>
-				</includes>
-				<filtering>false</filtering>
-			</resource>
-			<!--不编译webapp静态文件-->
 			<!--<resource>-->
-			<!--	<directory>src/main/webapp</directory>-->
-			<!--	<targetPath>META-INF/resources</targetPath>-->
+			<!--	<directory>src/main/resources</directory>-->
 			<!--	<includes>-->
-			<!--		<include>**/*.*</include>-->
+			<!--		<include>**/*.yml</include>-->
+			<!--		<include>**/*.properties</include>-->
+			<!--		<include>**/*.xml</include>-->
+			<!--		<include>**/*.html</include>-->
+			<!--		<include>**/*.js</include>-->
+			<!--		<include>**/*.jpg</include>-->
+			<!--		<include>**/*.png</include>-->
+			<!--		<include>**/*.css</include>-->
+			<!--		<include>**/*.gif</include>-->
 			<!--	</includes>-->
+			<!--	<filtering>false</filtering>-->
 			<!--</resource>-->
-		</resources>
+			<!--不编译webapp静态文件-->
+		<!--	<resource>-->
+		<!--		<directory>src/main/webapp</directory>-->
+		<!--		<targetPath>META-INF/resources</targetPath>-->
+		<!--		<includes>-->
+		<!--			<include>**/*.*</include>-->
+		<!--		</includes>-->
+		<!--	</resource>-->
+		<!--</resources>-->
 	</build>
 
 

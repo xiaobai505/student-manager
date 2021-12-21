@@ -3,10 +3,10 @@ package com.agoni.dgy.dao;
 import com.agoni.dgy.model.TbClass;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import org.apache.ibatis.annotations.Mapper;
+import org.springframework.stereotype.Component;
 
 import java.util.List;
 
-@Mapper
 public interface TbClassDao extends BaseMapper<TbClass>{
     int deleteByPrimaryKey(Integer id);
 

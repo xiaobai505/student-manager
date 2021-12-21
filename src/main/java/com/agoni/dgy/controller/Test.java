@@ -18,7 +18,7 @@ public class Test {
     private TbCourseService tbCourseService;
 
     @RequestMapping("/test/{id}")
-    public TbClass test(@RequestParam @PathVariable("id") int id){
+    public TbClass test(@PathVariable("id") int id){
         TbClass tbClass = tbCourseService.selectByPrimaryKey(id);
         return tbClass;
     }

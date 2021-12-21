@@ -4,8 +4,11 @@ import com.agoni.dgy.dao.TbClassDao;
 import com.agoni.dgy.model.TbClass;
 import com.agoni.dgy.service.TbCourseService;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import com.baomidou.mybatisplus.core.metadata.IPage;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
@@ -14,7 +17,7 @@ import java.util.List;
 @Service
 public class TbCourseServiceImpl implements TbCourseService {
 
-    @Resource
+    @Autowired
     private TbClassDao tbClassDao;
     /**
      * 根据id查询课程信息
@@ -43,10 +46,12 @@ public class TbCourseServiceImpl implements TbCourseService {
     @Override
     public PageInfo<TbClass> selectAll2() {
         QueryWrapper<TbClass> queryWrapper = new QueryWrapper<>();
-        PageHelper.startPage(1, 5);
-        List<TbClass> tbClasses = tbClassDao.selectList(queryWrapper);
+//        PageHelper.startPage(1, 5);
+//        List<TbClass> tbClasses = tbClassDao.selectList(queryWrapper);
+        IPage page=new Page(1,5);
+        IPage<TbClass> tbClassIPage = tbClassDao.selectPage(page, null);
         // 3.获取详细分页信息
-        PageInfo<TbClass> pageInfo = new PageInfo<>(tbClasses);
+        PageInfo<TbClass> pageInfo = new PageInfo<>(null);
         return pageInfo;
     }
 

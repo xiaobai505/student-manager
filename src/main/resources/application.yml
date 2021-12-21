@@ -1,5 +1,6 @@
 server:
   port: 8081
+
 spring:
   datasource:
     username: root
@@ -31,18 +32,12 @@ spring:
     connectionProperties: druid.stat.mergeSql=true;druid.stat.slowSqlMillis=5000
     # 合并多个DruidDataSource的监控数据
     #useGlobalDataSourceStat: true
-
     platform: mysql
   security:
     user:
       name: docker
       password: 123456
 
-# mybatis mapper映射文件
-#mybatis:
-#  mapper-locations: classpath*:mapper/**/*.xml
-#  configuration:
-#    map-underscore-to-camel-case: true
 mybatis-plus:
   mapper-locations: classpath*:mapper/**/*.xml
   global-config:
@@ -57,16 +52,7 @@ mybatis-plus:
   configuration:
     map-underscore-to-camel-case: true
     cache-enabled: false
-
-
-
-logging:
-  level:
-    com:
-      manager:
-        mapper: debug
-
-
+    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
 
 adminster:
   username: admin

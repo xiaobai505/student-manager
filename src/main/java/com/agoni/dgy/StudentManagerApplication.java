@@ -7,7 +7,7 @@ import org.springframework.cache.annotation.EnableCaching;
 
 //@EnableCaching//开启缓存
 @SpringBootApplication
-//@MapperScan(basePackages = {"com.agoni.*"})
+@MapperScan(basePackages = {"com.agoni.dgy.dao.**"})
 public class StudentManagerApplication {
 	public static void main(String[] args) {
 		SpringApplication.run(StudentManagerApplication.class, args);
