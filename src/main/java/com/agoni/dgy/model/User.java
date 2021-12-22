@@ -1,10 +1,7 @@
 package com.agoni.dgy.model;
 
-import com.baomidou.mybatisplus.annotation.IdType;
-import com.baomidou.mybatisplus.annotation.TableField;
-import com.baomidou.mybatisplus.annotation.TableId;
-import com.baomidou.mybatisplus.annotation.TableLogic;
-import com.baomidou.mybatisplus.annotation.TableName;
+import com.baomidou.mybatisplus.annotation.*;
+
 import java.io.Serializable;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
@@ -102,27 +99,27 @@ public class User implements Serializable {
     private LocalDateTime lastLoginTime;
 
     @ApiModelProperty("创建时间")
-    @TableField("create_time")
+    @TableField(value = "create_time", fill = FieldFill.INSERT)
     private LocalDateTime createTime;
 
     @ApiModelProperty("创建人标识")
-    @TableField("create_by")
+    @TableField(value = "create_by", fill = FieldFill.INSERT)
     private String createBy;
 
     @ApiModelProperty("创建人姓名")
-    @TableField("create_by_name")
+    @TableField(value = "create_by_name", fill = FieldFill.INSERT)
     private String createByName;
 
     @ApiModelProperty("最后修改时间")
-    @TableField("update_time")
+    @TableField(value = "update_by_name", fill = FieldFill.UPDATE)
     private LocalDateTime updateTime;
 
     @ApiModelProperty("最后修改人标识")
-    @TableField("update_by")
+    @TableField(value = "update_by", fill = FieldFill.UPDATE)
     private String updateBy;
 
     @ApiModelProperty("最后修改人姓名")
-    @TableField("update_by_name")
+    @TableField(value = "update_by_name", fill = FieldFill.UPDATE)
     private String updateByName;
 
     @ApiModelProperty("删除标记（0：正常，1：删除）")
