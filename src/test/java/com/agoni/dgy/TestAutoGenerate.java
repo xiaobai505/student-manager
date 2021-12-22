@@ -54,14 +54,15 @@ public class TestAutoGenerate {
                     .author("dgy")               //作者
                     .outputDir(System.getProperty("user.dir") + "\\src\\main\\java")    //输出路径(写到java目录)
                     .enableSwagger()           //开启swagger
-                    .commentDate("yyyy-MM-dd").fileOverride();            //开启覆盖之前生成的文件
+                    .commentDate("yyyy-MM-dd")
+                    .fileOverride();            //开启覆盖之前生成的文件
             }).packageConfig(builder -> {builder
                         .parent("com.agoni") //
                         .moduleName("dgy")   // 模块
                         .entity("model")
+                        .controller("controller")
                         .service("service")
                         .serviceImpl("service.impl")
-                        .controller("controller")
                         .mapper("mapper")
                         .xml("mapper")
                         .pathInfo(Collections.singletonMap(OutputFile.mapperXml, System.getProperty("user.dir") + "\\src\\main\\resources\\mapper"));
@@ -88,10 +89,8 @@ public class TestAutoGenerate {
             }).templateEngine(new FreemarkerTemplateEngine()) // 使用Freemarker引擎模板，默认的是Velocity引擎模板
                 .execute();
         new InjectionConfig.Builder().beforeOutputFile((tableInfo, objectMap) -> {
-                    System.out.println("tableInfo: " + tableInfo.getEntityName() + " objectMap: " + objectMap.size());
-                })
-                .customFile(Collections.singletonMap("bean.java", "/templates/bean.java.ftl"))
-                .build();
+            System.out.println("tableInfo: " + tableInfo.getEntityName() + " objectMap: " + objectMap.size());
+        }).customFile(Collections.singletonMap("bean.java", "/templates/bean.java.ftl")).build();
 
     }
 
