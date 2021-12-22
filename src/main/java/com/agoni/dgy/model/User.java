@@ -101,10 +101,6 @@ public class User implements Serializable {
     @TableField("last_login_time")
     private LocalDateTime lastLoginTime;
 
-    @ApiModelProperty("使用状态（Y正常 N非正常）")
-    @TableField("status")
-    private String status;
-
     @ApiModelProperty("创建时间")
     @TableField("create_time")
     private LocalDateTime createTime;

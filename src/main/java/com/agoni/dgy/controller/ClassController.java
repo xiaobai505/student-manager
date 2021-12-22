@@ -1,9 +1,18 @@
 package com.agoni.dgy.controller;
 
 
+import com.agoni.dgy.model.Class;
+import com.agoni.dgy.model.User;
+import com.agoni.dgy.service.ClassService;
+import com.agoni.dgy.service.UserService;
+import com.baomidou.mybatisplus.core.metadata.IPage;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import org.springframework.web.bind.annotation.RestController;
+
+import java.util.List;
 
 /**
  * <p>
@@ -16,5 +25,16 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @RequestMapping("/dgy/class")
 public class ClassController {
+    @Autowired
+    private ClassService classService;
 
+    @RequestMapping("/list")
+    public List<Class> list() {
+        return classService.list();
+    }
+
+    @RequestMapping("/page")
+    public IPage<Class> page() {
+        return classService.page(new Page(1,5),null);
+    }
 }
