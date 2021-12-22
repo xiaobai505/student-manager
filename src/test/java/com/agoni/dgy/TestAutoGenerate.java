@@ -68,15 +68,11 @@ public class TestAutoGenerate {
             }).templateEngine(new FreemarkerTemplateEngine()) // 使用Freemarker引擎模板，默认的是Velocity引擎模板
                 .execute();
 
-//        new InjectionConfig.Builder().beforeOutputFile((tableInfo, objectMap) -> {
-//                    System.out.println("tableInfo: " + tableInfo.getEntityName() + " objectMap: " + objectMap.size());
-//                })
-//                .customFile(Collections.singletonMap("mapper.xml", "/templates/mapper.xml.ftl"))
-//                .customFile(Collections.singletonMap("bean.java", "/templates/bean.java.ftl"))
-//                .customFile(Collections.singletonMap("service.java", "/templates/service.java.ftl"))
-//                .customFile(Collections.singletonMap("serviceImpl.java", "/templates/serviceImpl.java.ftl"))
-//                .customFile(Collections.singletonMap("mapper.java", "/templates/mapper.java.ftl"))
-//                .build();
+        new InjectionConfig.Builder().beforeOutputFile((tableInfo, objectMap) -> {
+                    System.out.println("tableInfo: " + tableInfo.getEntityName() + " objectMap: " + objectMap.size());
+                })
+                .customFile(Collections.singletonMap("bean.java", "/templates/bean.java.ftl"))
+                .build();
 
     }
 }

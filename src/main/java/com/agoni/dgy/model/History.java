@@ -9,8 +9,7 @@ import java.io.Serializable;
 import java.time.LocalDateTime;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.*;
 
 /**
  * <p>
@@ -20,8 +19,10 @@ import lombok.Setter;
  * @author dgy
  * @since 2021-12-22
  */
-@Getter
-@Setter
+@Data
+@Builder
+@NoArgsConstructor
+@AllArgsConstructor
 @TableName("tb_history")
 @ApiModel(value = "History对象", description = "")
 public class History implements Serializable {
