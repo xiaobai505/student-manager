@@ -111,7 +111,7 @@ public class User implements Serializable {
     private String createByName;
 
     @ApiModelProperty("最后修改时间")
-    @TableField(value = "update_by_name", fill = FieldFill.UPDATE)
+    @TableField(value = "update_time", fill = FieldFill.UPDATE)
     private LocalDateTime updateTime;
 
     @ApiModelProperty("最后修改人标识")
