@@ -1,4 +1,4 @@
-package com.agoni.dgy.model;
+package com.agoni.dgy.model.po;
 
 import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableId;
@@ -22,9 +22,9 @@ import lombok.*;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-@TableName("tb_class_user")
-@ApiModel(value = "ClassUser对象", description = "用户角色关系表")
-public class ClassUser implements Serializable {
+@TableName("tb_role_user")
+@ApiModel(value = "RoleUser对象", description = "用户角色关系表")
+public class RoleUser implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
@@ -36,9 +36,9 @@ public class ClassUser implements Serializable {
     @TableField("user_id")
     private Long userId;
 
-    @ApiModelProperty("班级id")
-    @TableField("class_id")
-    private Long classId;
+    @ApiModelProperty("角色ID")
+    @TableField("role_id")
+    private Long roleId;
 
     @ApiModelProperty("创建时间")
     @TableField("create_time")

@@ -1,6 +1,6 @@
 package com.agoni.dgy.service.impl;
 
-import com.agoni.dgy.model.Result;
+import com.agoni.dgy.model.po.Result;
 import com.agoni.dgy.mapper.ResultMapper;
 import com.agoni.dgy.service.ResultService;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;

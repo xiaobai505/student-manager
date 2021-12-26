@@ -2,4 +2,17 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.agoni.dgy.mapper.UserMapper">
 
+    <select id="selectUserAndRolepage" resultType="com.agoni.dgy.model.vo.UserAndRole">
+        select t3.role_code,t3.role_name,t1.* from tb_user t1
+          left join (select * from tb_role_user where del_flag=0) t2 on t1.id = t2.user_id
+          left join (select * from tb_role where del_flag=0) t3 on t2.role_id=t3.id
+        where
+            t1.del_flag=0
+        <if test="userAndRole.name != null and userAndRole.name != ''">
+            AND t1.name like #{userAndRole.name}
+        </if>
+        <if test="userAndRole.roleCode != null and userAndRole.roleCode != ''">
+            AND t3.role_code = #{userAndRole.roleCode}
+        </if>
+    </select>
 </mapper>

@@ -1,4 +1,4 @@
-package com.agoni.dgy.model;
+package com.agoni.dgy.model.po;
 
 import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableField;
@@ -13,7 +13,7 @@ import lombok.*;
 
 /**
  * <p>
- * 
+ * 成绩表
  * </p>
  *
  * @author dgy
@@ -23,23 +23,31 @@ import lombok.*;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-@TableName("tb_history")
-@ApiModel(value = "History对象", description = "")
-public class History implements Serializable {
+@TableName("tb_result")
+@ApiModel(value = "Result对象", description = "成绩表")
+public class Result implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
-    @TableId(value = "log_id", type = IdType.AUTO)
-    private Integer logId;
+    @ApiModelProperty("主键id")
+    @TableId(value = "id", type = IdType.AUTO)
+    private Integer id;
 
-    @TableField("log_date")
-    private LocalDateTime logDate;
+    @ApiModelProperty("用户id")
+    @TableField("user_id")
+    private Long userId;
 
-    @TableField("log_type")
-    private String logType;
+    @ApiModelProperty("班级名称")
+    @TableField("class_name")
+    private String className;
 
-    @TableField("course_id")
-    private Integer courseId;
+    @ApiModelProperty("班级code")
+    @TableField("class_code")
+    private String classCode;
+
+    @ApiModelProperty("成绩")
+    @TableField("result")
+    private String result;
 
     @ApiModelProperty("创建时间")
     @TableField("create_time")

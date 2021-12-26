@@ -1,5 +1,6 @@
-package com.agoni.dgy.model;
+package com.agoni.dgy.model.po;
 
+import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableLogic;
@@ -12,7 +13,7 @@ import lombok.*;
 
 /**
  * <p>
- * 用户课程关系表
+ * 课程表
  * </p>
  *
  * @author dgy
@@ -22,27 +23,31 @@ import lombok.*;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-@TableName("tb_course_user")
-@ApiModel(value = "CourseUser对象", description = "用户课程关系表")
-public class CourseUser implements Serializable {
+@TableName("tb_course")
+@ApiModel(value = "Course对象", description = "课程表")
+public class Course implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
-    @ApiModelProperty("用户角色关系")
-    @TableId("id")
-    private Long id;
+    @ApiModelProperty("id主键")
+    @TableId(value = "id", type = IdType.AUTO)
+    private Integer id;
 
-    @ApiModelProperty("用户ID")
-    @TableField("user_id")
-    private Long userId;
+    @ApiModelProperty("课程名称")
+    @TableField("course_name")
+    private String courseName;
 
-    @ApiModelProperty("课程ID")
-    @TableField("course_id")
-    private Long courseId;
+    @ApiModelProperty("课程老师")
+    @TableField("course_teacher")
+    private String courseTeacher;
 
-    @ApiModelProperty("最高分数")
-    @TableField("best_score")
-    private String bestScore;
+    @ApiModelProperty("开始时间")
+    @TableField("start_time")
+    private LocalDateTime startTime;
+
+    @ApiModelProperty("结束时间")
+    @TableField("end_time")
+    private LocalDateTime endTime;
 
     @ApiModelProperty("创建时间")
     @TableField("create_time")

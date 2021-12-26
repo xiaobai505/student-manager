@@ -1,6 +1,6 @@
 package com.agoni.dgy.mapper;
 
-import com.agoni.dgy.model.Course;
+import com.agoni.dgy.model.po.Course;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import org.apache.ibatis.annotations.Mapper;
 

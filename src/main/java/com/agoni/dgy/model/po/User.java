@@ -1,4 +1,4 @@
-package com.agoni.dgy.model;
+package com.agoni.dgy.model.po;
 
 import com.baomidou.mybatisplus.annotation.*;
 

@@ -1,7 +1,8 @@
 package com.agoni.dgy.service;
 
-import com.agoni.dgy.model.Class;
+import com.agoni.dgy.model.po.Class;
 import com.baomidou.mybatisplus.extension.service.IService;
+import org.springframework.stereotype.Service;
 
 /**
  * <p>
@@ -11,6 +12,7 @@ import com.baomidou.mybatisplus.extension.service.IService;
  * @author dgy
  * @since 2021-12-22
  */
+@Service
 public interface ClassService extends IService<Class> {
-
+    void selectpage();
 }

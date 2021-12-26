@@ -1,6 +1,6 @@
 package com.agoni.dgy.service;
 
-import com.agoni.dgy.model.Result;
+import com.agoni.dgy.model.po.Result;
 import com.baomidou.mybatisplus.extension.service.IService;
 
 /**

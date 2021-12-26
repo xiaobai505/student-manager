@@ -1,17 +1,16 @@
 package com.agoni.dgy.controller;
 
 
-import com.agoni.dgy.model.User;
+import com.agoni.dgy.model.from.FromPage;
+import com.agoni.dgy.model.from.UserAndRoleFrom;
+import com.agoni.dgy.model.po.User;
+import com.agoni.dgy.model.vo.UserAndRole;
 import com.agoni.dgy.service.UserService;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -27,23 +26,32 @@ import java.util.List;
 @RequestMapping("/dgy/user")
 @CrossOrigin
 public class UserController {
+
     @Autowired
     private UserService userService;
 
-    @RequestMapping("/list")
-    public List<User> list() {
-        List<User> list = userService.list();
-        return list;
+    /**
+     * 查询多表关联用户信息
+     * @param from
+     * @return
+     */
+    @PostMapping("/selectPage")
+    public IPage<UserAndRole> selectPage(@RequestBody FromPage from) {
+        return userService.selectpage(from.getPage(), from.getUserAndRole());
     }
 
-    @RequestMapping("/page")
-    public IPage<User> page(Page page) {
-        QueryWrapper queryWrapper=new QueryWrapper();
-        return userService.page(page,queryWrapper);
-    }
 
+    /**
+     * 根据id更新用户信息
+     * @param user
+     * @return
+     */
     @RequestMapping("/updateById")
     public boolean updateById(@RequestBody User user) {
         return userService.updateById(user);
+    }
+
+    public void saveUserAndRole(@RequestBody UserAndRoleFrom userAndRole){
+        userService.saveUserAndRole(userAndRole);
     }
 }

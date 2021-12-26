@@ -1,6 +1,6 @@
 package com.agoni.dgy.service;
 
-import com.agoni.dgy.model.RoleUser;
+import com.agoni.dgy.model.po.RoleUser;
 import com.baomidou.mybatisplus.extension.service.IService;
 
 /**
