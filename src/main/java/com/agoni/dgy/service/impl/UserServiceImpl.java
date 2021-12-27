@@ -1,9 +1,10 @@
 package com.agoni.dgy.service.impl;
 
-import com.agoni.dgy.mapper.ClassMapper;
+import com.agoni.dgy.mapper.MajorMapper;
 import com.agoni.dgy.mapper.RoleMapper;
 import com.agoni.dgy.mapper.UserMapper;
-import com.agoni.dgy.model.from.UserAndRoleFrom;
+import com.agoni.dgy.model.from.AddUserFrom;
+import com.agoni.dgy.model.po.Major;
 import com.agoni.dgy.model.po.Role;
 import com.agoni.dgy.model.po.User;
 import com.agoni.dgy.model.vo.UserAndRole;
@@ -33,7 +34,7 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
     @Autowired
     private RoleMapper roleMapper;
     @Autowired
-    private ClassMapper classMapper;
+    private MajorMapper majorMapper;
 
     @Override
     public IPage<UserAndRole> selectpage(Page<UserAndRole> page, UserAndRole userAndRole) {
@@ -41,7 +42,7 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
     }
 
     @Override
-    public void saveUserAndRole(UserAndRoleFrom userAndRole) {
+    public void saveUserAndRole(AddUserFrom userAndRole) {
         // 1：插入用户
         User user = userAndRole.getUser();
         userMapper.insert(user);
@@ -51,9 +52,9 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
         roleMapper.insert(role);
         log.info(user.getId()+"---"+role.getId());
         // 3：插入班级
-        userAndRole.getClazz();
-//        classMapper.insert();
-        return;
+        Major major = userAndRole.getMajor();
+        if (major==null){return;}
+        majorMapper.insert(major);
     }
 
     private LambdaQueryWrapper<User> getUserLambdaQueryWrapper(User user) {

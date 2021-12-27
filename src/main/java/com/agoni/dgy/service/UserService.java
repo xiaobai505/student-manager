@@ -1,6 +1,6 @@
 package com.agoni.dgy.service;
 
-import com.agoni.dgy.model.from.UserAndRoleFrom;
+import com.agoni.dgy.model.from.AddUserFrom;
 import com.agoni.dgy.model.po.User;
 import com.agoni.dgy.model.vo.UserAndRole;
 import com.baomidou.mybatisplus.core.metadata.IPage;
@@ -25,5 +25,9 @@ public interface UserService extends IService<User> {
      */
     IPage<UserAndRole> selectpage(Page<UserAndRole> page, UserAndRole userAndRole);
 
-    void saveUserAndRole(UserAndRoleFrom userAndRole);
+    /**
+     * 新增用户 user role major 信息
+     * @param userAndRole
+     */
+    void saveUserAndRole(AddUserFrom userAndRole);
 }

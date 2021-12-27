@@ -2,7 +2,7 @@ package com.agoni.dgy.controller;
 
 
 import com.agoni.dgy.model.from.FromPage;
-import com.agoni.dgy.model.from.UserAndRoleFrom;
+import com.agoni.dgy.model.from.AddUserFrom;
 import com.agoni.dgy.model.po.User;
 import com.agoni.dgy.model.vo.UserAndRole;
 import com.agoni.dgy.service.UserService;
@@ -47,7 +47,12 @@ public class UserController {
         return userService.updateById(user);
     }
 
-    public void saveUserAndRole(@RequestBody UserAndRoleFrom userAndRole){
-        userService.saveUserAndRole(userAndRole);
+    /**
+     * 新增用户 user role major 信息
+     * @param addUserFrom
+     */
+    @PostMapping("/addUser")
+    public void addUser(@RequestBody AddUserFrom addUserFrom){
+        userService.saveUserAndRole(addUserFrom);
     }
 }

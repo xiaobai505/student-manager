@@ -1,9 +1,13 @@
 package com.agoni.dgy.controller;
 
 
-import org.springframework.web.bind.annotation.RequestMapping;
+import com.agoni.dgy.model.po.Major;
+import com.agoni.dgy.service.MajorService;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.*;
 
-import org.springframework.web.bind.annotation.RestController;
+import java.util.List;
 
 /**
  * <p>
@@ -15,6 +19,20 @@ import org.springframework.web.bind.annotation.RestController;
  */
 @RestController
 @RequestMapping("/dgy/major")
+@CrossOrigin
 public class MajorController {
+
+    @Autowired
+    private MajorService majorService;
+
+    @GetMapping("/list")
+    public List<Major> list() {
+        return majorService.list();
+    }
+
+    @GetMapping("/page")
+    public Page page(@RequestBody Page page) {
+        return majorService.page(page);
+    }
 
 }
