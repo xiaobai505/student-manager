@@ -1,7 +1,7 @@
 package com.agoni.dgy.service.impl;
 
-import com.agoni.dgy.model.po.CourseUser;
 import com.agoni.dgy.mapper.CourseUserMapper;
+import com.agoni.dgy.model.po.CourseUser;
 import com.agoni.dgy.service.CourseUserService;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import org.springframework.stereotype.Service;

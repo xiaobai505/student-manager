@@ -1,12 +1,12 @@
 package com.agoni.dgy.service.impl;
 
+import com.agoni.dgy.mapper.ClassMapper;
 import com.agoni.dgy.mapper.RoleMapper;
+import com.agoni.dgy.mapper.UserMapper;
 import com.agoni.dgy.model.from.UserAndRoleFrom;
 import com.agoni.dgy.model.po.Role;
 import com.agoni.dgy.model.po.User;
-import com.agoni.dgy.mapper.UserMapper;
 import com.agoni.dgy.model.vo.UserAndRole;
-import com.agoni.dgy.service.RoleService;
 import com.agoni.dgy.service.UserService;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
@@ -32,6 +32,8 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
     private UserMapper userMapper;
     @Autowired
     private RoleMapper roleMapper;
+    @Autowired
+    private ClassMapper classMapper;
 
     @Override
     public IPage<UserAndRole> selectpage(Page<UserAndRole> page, UserAndRole userAndRole) {
@@ -40,13 +42,17 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
 
     @Override
     public void saveUserAndRole(UserAndRoleFrom userAndRole) {
+        // 1：插入用户
         User user = userAndRole.getUser();
         userMapper.insert(user);
+        // 2：插入权限
         Role role = userAndRole.getRole();
         if (role == null){return;}
         roleMapper.insert(role);
         log.info(user.getId()+"---"+role.getId());
-
+        // 3：插入班级
+        userAndRole.getClazz();
+//        classMapper.insert();
         return;
     }
 

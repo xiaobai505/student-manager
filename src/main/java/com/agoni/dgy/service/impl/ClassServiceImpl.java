@@ -1,7 +1,7 @@
 package com.agoni.dgy.service.impl;
 
-import com.agoni.dgy.model.po.Class;
 import com.agoni.dgy.mapper.ClassMapper;
+import com.agoni.dgy.model.po.Class;
 import com.agoni.dgy.service.ClassService;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;

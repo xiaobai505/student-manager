@@ -25,14 +25,9 @@ public class TestAutoGenerate {
 
 
     private static void extracted() {
-        tables.add("tb_class");
-        tables.add("tb_class_user");
-        tables.add("tb_course");
-        tables.add("tb_course_user");
-        tables.add("tb_history");
-        tables.add("tb_result");
-        tables.add("tb_role");
-        tables.add("tb_role_user");
+        tables.add("tb_major");
+        tables.add("tb_major_user");
+
 
         colList.add(new Column("create_time", FieldFill.INSERT));
         colList.add(new Column("create_by", FieldFill.INSERT));
