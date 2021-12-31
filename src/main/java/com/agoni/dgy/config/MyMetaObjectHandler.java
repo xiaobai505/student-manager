@@ -19,6 +19,10 @@ import java.time.LocalDateTime;
 @Component
 public class MyMetaObjectHandler implements MetaObjectHandler {
 
+    /**
+     * 创建自动填充字段
+     * @param metaObject
+     */
     @Override
     public void insertFill(MetaObject metaObject) {
         this.setFieldValByName("createBy", "xb", metaObject);
@@ -26,6 +30,10 @@ public class MyMetaObjectHandler implements MetaObjectHandler {
         this.setFieldValByName("createTime", LocalDateTime.now(), metaObject);
     }
 
+    /**
+     * 更新自动填充字段
+     * @param metaObject
+     */
     @Override
     public void updateFill(MetaObject metaObject) {
         this.setFieldValByName("updateBy", "xb", metaObject);
