@@ -1,4 +1,4 @@
-package com.agoni.dgy;
+package com.agoni;
 
 import org.mybatis.spring.annotation.MapperScan;
 import org.springframework.boot.SpringApplication;

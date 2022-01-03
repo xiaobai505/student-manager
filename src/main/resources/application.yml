@@ -33,10 +33,10 @@ spring:
     # 合并多个DruidDataSource的监控数据
     #useGlobalDataSourceStat: true
     platform: mysql
-  security:
+  security:             #默认用户名密码  --集成了cas暂时没用
     user:
-      name: docker
-      password: 123456
+      name: asd
+      password: 123
 
 mybatis-plus:
   mapper-locations: classpath*:mapper/**/*.xml
@@ -54,6 +54,8 @@ mybatis-plus:
     log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
 
 jwt:
-  expiration: 604800
+  expiration: 2
+  secret: dgy
+
 
 

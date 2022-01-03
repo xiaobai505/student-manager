@@ -1,13 +1,16 @@
 package com.agoni.security.config;
 
 import org.springframework.context.ApplicationContext;
+import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.AuthenticationTrustResolver;
 import org.springframework.security.config.annotation.ObjectPostProcessor;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
+import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.builders.WebSecurity;
+import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.web.accept.ContentNegotiationStrategy;
@@ -15,16 +18,34 @@ import org.springframework.web.accept.ContentNegotiationStrategy;
 /**
  * @author Admin
  */
+@Configuration
+@EnableWebSecurity //启用web权限
+@EnableGlobalMethodSecurity(prePostEnabled = true) //启用方法验证
 public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
-
 
     @Override
     protected void configure(AuthenticationManagerBuilder auth) throws Exception {
-        super.configure(auth);
+        auth.inMemoryAuthentication().withUser("asd").password("123").roles("all");
     }
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
+        String[] antMatchers={"/dgy/**","/*","/login/**","/**"};
+        http.authorizeRequests()//配置安全策略
+                .antMatchers(antMatchers).permitAll()//定义/请求不需要验证  "/","/hello"
+                .anyRequest().authenticated()//其余的所有请求都需要验证
+                .and()
+//                .logout()
+//                .permitAll()//定义logout不需要验证
+//                .and()
+                .formLogin();//使用form表单登录
+
+//        http.exceptionHandling().authenticationEntryPoint(casAuthenticationEntryPoint())
+//                .and()
+//                .addFilter(casAuthenticationFilter())
+//                .addFilterBefore(casLogoutFilter(), LogoutFilter.class)
+//                .addFilterBefore(singleSignOutFilter(), CasAuthenticationFilter.class);
+
         //关闭csrf
         http.csrf().disable();
 //                .addFilter(new JwtLoginFilter(super.authenticationManager(),rsaKeyProperties))

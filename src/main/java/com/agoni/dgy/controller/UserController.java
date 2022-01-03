@@ -42,7 +42,7 @@ public class UserController {
      * @param user
      * @return
      */
-    @RequestMapping("/updateById")
+    @PostMapping("/updateById")
     public boolean updateById(@RequestBody User user) {
         return userService.updateById(user);
     }
