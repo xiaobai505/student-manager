@@ -1,7 +1,7 @@
 package com.agoni.dgy.service.impl;
 
-import com.agoni.dgy.model.po.MajorUser;
 import com.agoni.dgy.mapper.MajorUserMapper;
+import com.agoni.dgy.model.po.MajorUser;
 import com.agoni.dgy.service.MajorUserService;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import org.springframework.stereotype.Service;

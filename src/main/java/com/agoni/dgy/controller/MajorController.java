@@ -1,13 +1,16 @@
 package com.agoni.dgy.controller;
 
 
-import com.agoni.dgy.model.po.Major;
+import com.agoni.dgy.model.from.FromPage;
+import com.agoni.dgy.model.vo.UserAndRole;
 import com.agoni.dgy.service.MajorService;
+import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.*;
-
-import java.util.List;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
 /**
  * <p>
@@ -15,24 +18,22 @@ import java.util.List;
  * </p>
  *
  * @author dgy
- * @since 2021-12-27
+ * @since 2022-01-04
  */
 @RestController
 @RequestMapping("/dgy/major")
-@CrossOrigin
 public class MajorController {
 
     @Autowired
     private MajorService majorService;
 
-    @GetMapping("/list")
-    public List<Major> list() {
-        return majorService.list();
-    }
-
-    @GetMapping("/page")
-    public Page page(@RequestBody Page page) {
+    @PostMapping("/page")
+    public IPage<UserAndRole> page(@RequestBody Page page) {
         return majorService.page(page);
     }
 
+    @PostMapping("/selectPage")
+    public IPage<UserAndRole> selectPage(@RequestBody FromPage from) {
+        return null;
+    }
 }

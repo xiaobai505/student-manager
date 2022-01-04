@@ -1,16 +1,15 @@
 package com.agoni.dgy.model.po;
 
-import com.baomidou.mybatisplus.annotation.FieldFill;
-import com.baomidou.mybatisplus.annotation.IdType;
-import com.baomidou.mybatisplus.annotation.TableField;
-import com.baomidou.mybatisplus.annotation.TableId;
-import com.baomidou.mybatisplus.annotation.TableLogic;
-import com.baomidou.mybatisplus.annotation.TableName;
-import java.io.Serializable;
-import java.time.LocalDateTime;
+import com.baomidou.mybatisplus.annotation.*;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
-import lombok.*;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+
+import java.io.Serializable;
+import java.time.LocalDateTime;
 
 /**
  * <p>
@@ -18,7 +17,7 @@ import lombok.*;
  * </p>
  *
  * @author dgy
- * @since 2021-12-27
+ * @since 2022-01-04
  */
 @Data
 @Builder
@@ -33,6 +32,14 @@ public class Major implements Serializable {
     @ApiModelProperty("id主键")
     @TableId(value = "id", type = IdType.AUTO)
     private Integer id;
+
+    @ApiModelProperty("学校分院")
+    @TableField("School")
+    private String school;
+
+    @ApiModelProperty("专业")
+    @TableField("major")
+    private String major;
 
     @ApiModelProperty("班级名称")
     @TableField("class_name")

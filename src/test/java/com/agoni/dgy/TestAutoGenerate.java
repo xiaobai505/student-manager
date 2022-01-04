@@ -4,7 +4,6 @@ package com.agoni.dgy;
 import com.baomidou.mybatisplus.annotation.FieldFill;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import com.baomidou.mybatisplus.generator.FastAutoGenerator;
-
 import com.baomidou.mybatisplus.generator.IFill;
 import com.baomidou.mybatisplus.generator.config.InjectionConfig;
 import com.baomidou.mybatisplus.generator.config.OutputFile;
@@ -26,7 +25,7 @@ public class TestAutoGenerate {
 
     private static void extracted() {
         tables.add("tb_major");
-        tables.add("tb_major_user");
+//        tables.add("tb_major_user");
 
 
         colList.add(new Column("create_time", FieldFill.INSERT));
@@ -52,7 +51,7 @@ public class TestAutoGenerate {
                         .parent("com.agoni") //
                         .moduleName("dgy")   // 模块
                         .entity("model")
-                        .controller("controller")
+//                        .controller("controller")
                         .service("service")
                         .serviceImpl("service.impl")
                         .mapper("mapper")

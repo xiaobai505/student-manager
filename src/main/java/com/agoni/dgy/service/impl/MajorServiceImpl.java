@@ -1,7 +1,7 @@
 package com.agoni.dgy.service.impl;
 
-import com.agoni.dgy.model.po.Major;
 import com.agoni.dgy.mapper.MajorMapper;
+import com.agoni.dgy.model.po.Major;
 import com.agoni.dgy.service.MajorService;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import org.springframework.stereotype.Service;
@@ -12,7 +12,7 @@ import org.springframework.stereotype.Service;
  * </p>
  *
  * @author dgy
- * @since 2021-12-27
+ * @since 2022-01-04
  */
 @Service
 public class MajorServiceImpl extends ServiceImpl<MajorMapper, Major> implements MajorService {
