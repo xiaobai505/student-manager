@@ -9,14 +9,14 @@ import org.springframework.web.bind.annotation.*;
 import javax.servlet.http.HttpServletRequest;
 
 @RestController
-@RequestMapping("/login")
+@RequestMapping("/auth")
 public class RedirectController {
 
     @Autowired
     private JwtTokenUtil jwtTokenUtil;
 
-    @PostMapping("/getToken")
-    public String getToken(@RequestBody User user) {
+    @PostMapping("/login")
+    public String login(@RequestBody User user) {
         if (StringUtils.equals("admin", user.getUsername())) {
             String token = jwtTokenUtil.generateToken(user.getUsername());
             return token;
