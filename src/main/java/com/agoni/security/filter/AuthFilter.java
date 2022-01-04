@@ -2,21 +2,22 @@ package com.agoni.security.filter;
 
 
 import com.agoni.security.utils.JwtTokenUtil;
+import com.alibaba.druid.util.StringUtils;
+import io.jsonwebtoken.Jwt;
 import lombok.extern.slf4j.Slf4j;
-import org.apache.ibatis.logging.Log;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import javax.servlet.*;
+import javax.servlet.http.HttpServletRequest;
 import java.io.IOException;
-import java.util.logging.Logger;
 
 /**
  * @author gyd
  */
-//@Component
+@Component
 @Slf4j
-public class TimeFilter implements Filter {
+public class AuthFilter implements Filter {
 
     @Autowired
     private JwtTokenUtil jwtTokenUtil;
@@ -30,11 +31,21 @@ public class TimeFilter implements Filter {
     @Override
     public void doFilter(ServletRequest servletRequest, ServletResponse servletResponse, FilterChain filterChain)
             throws IOException, ServletException {
-        log.info("time filter start");
-        long start = System.currentTimeMillis();
+        HttpServletRequest request = (HttpServletRequest) servletRequest;
+        // 如果是登录  直接过
+        String requestURI = request.getRequestURI();
+        if (StringUtils.equals("/login/getToken",requestURI)){
+            filterChain.doFilter(servletRequest, servletResponse);
+            return;
+        }
+        // 其他的请求校验token
+        String token = request.getHeader("token");
+        try {
+            Jwt jwt = jwtTokenUtil.checkToken(token);
+        }catch (Exception e){
+            e.printStackTrace();
+        }
         filterChain.doFilter(servletRequest, servletResponse);
-        log.info("time filter 耗时:"+ (System.currentTimeMillis() - start));
-        log.info("time filter finish");
     }
 
     @Override

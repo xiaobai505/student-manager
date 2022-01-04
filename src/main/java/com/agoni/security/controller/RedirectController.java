@@ -1,12 +1,8 @@
 package com.agoni.security.controller;
 
-import com.agoni.dgy.model.from.FromPage;
 import com.agoni.dgy.model.po.User;
-import com.agoni.dgy.model.vo.UserAndRole;
 import com.agoni.security.utils.JwtTokenUtil;
 import com.alibaba.druid.util.StringUtils;
-import com.baomidou.mybatisplus.core.metadata.IPage;
-import jdk.nashorn.internal.ir.annotations.Reference;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -32,7 +28,7 @@ public class RedirectController {
     public boolean checkToken(HttpServletRequest request){
         try {
             String token = request.getHeader("token");
-            jwtTokenUtil.getAllClaimsFromToken(token);
+//            jwtTokenUtil.getAllClaimsFromToken(token);
         }catch (Exception e){
             return false;
         }
