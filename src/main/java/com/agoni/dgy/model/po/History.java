@@ -32,8 +32,8 @@ public class History implements Serializable {
     @TableId(value = "log_id", type = IdType.AUTO)
     private Integer logId;
 
-    @TableField("log_date")
-    private LocalDateTime logDate;
+    @TableField("log_data")
+    private String logData;
 
     @TableField("log_type")
     private String logType;
