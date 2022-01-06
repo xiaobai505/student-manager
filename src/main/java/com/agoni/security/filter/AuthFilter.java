@@ -18,7 +18,7 @@ import java.io.PrintWriter;
 /**
  * @author gyd
  */
-@Component
+//@Component
 @Slf4j
 public class AuthFilter implements Filter {
 
@@ -35,8 +35,17 @@ public class AuthFilter implements Filter {
     public void doFilter(ServletRequest servletRequest, ServletResponse servletResponse, FilterChain filterChain)
             throws IOException, ServletException {
         HttpServletRequest request = (HttpServletRequest) servletRequest;
+        HttpServletResponse response= (HttpServletResponse) servletResponse;
         // 如果是登录  直接过
         String requestURI = request.getRequestURI();
+//        if (request.getHeader("Origin") != null) {
+//            response.setHeader("Access-Control-Allow-Origin", request.getHeader("Origin"));
+//        }
+//        response.setHeader("Access-Control-Allow-Credentials", "true");
+//        response.setHeader("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE, OPTIONS");
+//        response.setHeader("Access-Control-Max-Age", "3600");
+//        response.setHeader("Access-Control-Allow-Headers", "Content-Type, Accept, X-Requested-With, remember-me");
+
         if (!StringUtils.equals("/auth/login",requestURI)){
             // 其他的请求校验token
             String token = request.getHeader("token");
@@ -44,12 +53,7 @@ public class AuthFilter implements Filter {
                 Jwt jwt = jwtTokenUtil.checkToken(token);
             }catch (Exception e){
                 e.printStackTrace();
-                HttpServletResponse response= (HttpServletResponse) servletResponse;
-                response.setCharacterEncoding("UTF-8");
-                response.setContentType("application/json; charset=utf-8");
-                response.setStatus(201);
-                response.getWriter().write("权限不足");
-                return;
+//                return;
             }
 
         }
