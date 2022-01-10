@@ -42,18 +42,18 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
         http.cors().and().csrf().disable() // 关闭csrf
                 .authorizeRequests()// 配置安全策略
                 .antMatchers(SecurityConstants.SYSTEM_WHITELIST).permitAll() // 请求不需要验证
-                .antMatchers(SecurityConstants.SYSTEM_WHITELIST2).hasAnyRole("student") // 学生权限可以查看
-                .antMatchers(SecurityConstants.SYSTEM_WHITELIST3).hasRole("teacher")
-                .anyRequest().authenticated()// 其余的所有请求都需要验证
-                .and()
-                .addFilter(new JWTUsernamePasswordAuthenticationFilter(authenticationManager()))
+//                .antMatchers(SecurityConstants.SYSTEM_WHITELIST2).hasAnyRole("student") // 学生权限可以查看
+//                .antMatchers(SecurityConstants.SYSTEM_WHITELIST3).hasRole("teacher")
+                .anyRequest().authenticated();// 其余的所有请求都需要验证
+
+        http.addFilter(new JWTUsernamePasswordAuthenticationFilter(authenticationManager()))
                 .addFilter(new JWTBasicAuthenticationFilter(authenticationManager()))
                 .exceptionHandling()
                 .authenticationEntryPoint(restAuthenticationEntryPoint)
                 .and()
-                .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
-                .and()
-                .logout().permitAll();//定义logout不需要验证
+                .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
+
+        http.logout().permitAll();//定义logout不需要验证
     }
 
 

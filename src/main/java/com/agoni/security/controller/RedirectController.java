@@ -18,11 +18,8 @@ public class RedirectController {
 
     @PostMapping("/login")
     public String login(@RequestBody User user) {
-        if (StringUtils.equals("admin", user.getUsername())) {
-            String token = JwtTokenUtil.generateToken(user.getUsername());
-            return token;
-        }
-        return null;
+        String token = JwtTokenUtil.generateToken(user.getUsername());
+        return token;
     }
 
     @GetMapping("/checkToken")

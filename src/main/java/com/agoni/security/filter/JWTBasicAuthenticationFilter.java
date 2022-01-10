@@ -8,6 +8,8 @@ import io.jsonwebtoken.JwtException;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.web.authentication.www.BasicAuthenticationFilter;
 
@@ -16,8 +18,7 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
+import java.util.*;
 
 /**
  * @author gyd
@@ -45,7 +46,17 @@ public class JWTBasicAuthenticationFilter extends BasicAuthenticationFilter {
         if (header != null) {
             String userName = JwtTokenUtil.getUserName(header.replace(SecurityConstants.TOKEN_PREFIX, ""));
             if (userName != null) {
-                return new UsernamePasswordAuthenticationToken(userName, null, new ArrayList<>());
+                ArrayList<String> list = new ArrayList<>();
+                list.add("student");
+                if ("root".equals(userName)){
+                    list.add("teacher");
+                }
+                Iterator<String> iterator = list.iterator();
+                List<SimpleGrantedAuthority> roles=new ArrayList<SimpleGrantedAuthority>();
+                while (iterator.hasNext()){
+                    roles.add(new SimpleGrantedAuthority(iterator.next()));
+                }
+                return new UsernamePasswordAuthenticationToken(userName, null, roles);
             }
         }
         return null;
