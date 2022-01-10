@@ -1,8 +1,7 @@
 package com.agoni.security.utils;
 
-import io.jsonwebtoken.Clock;
-import io.jsonwebtoken.Jwt;
-import io.jsonwebtoken.Jwts;
+import com.agoni.security.constants.SecurityConstants;
+import io.jsonwebtoken.*;
 import io.jsonwebtoken.impl.DefaultClock;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
@@ -11,6 +10,7 @@ import org.springframework.stereotype.Component;
 import java.io.Serializable;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -22,62 +22,48 @@ public class JwtTokenUtil implements Serializable {
 
     private static final Clock clock = DefaultClock.INSTANCE;
 
-
-    /**
-     * 秘钥
-     */
-    @Value("${jwt.secret}")
-    private String secret;
-
-    /**
-     * 超时时间
-     */
-    @Value("${jwt.expiration}")
-    private Long expiration;
-
-    public static void main(String[] args) {
-        Map<String, Object> claims = new HashMap<>(16);
-        claims.put("username", "admin");
-        final Date createdDate = clock.now();
-
-        final Date expirationDate =  new Date((createdDate.getTime()+(1000*60*5)));
-        String token = Jwts.builder().setClaims(claims).setSubject("admin").setIssuedAt(createdDate).setExpiration(expirationDate)
-                //                .signWith(SignatureAlgorithm.HS512, secret)
-                .compact();
-        log.info("token:" + token);
-//        String token= "eyJhbGciOiJub25lIn0.eyJzdWIiOiJhZG1pbiIsImV4cCI6MTY0MTIzMTg5OCwiaWF0IjoxNjQxMjMxNzc4LCJ1c2VybmFtZSI6ImFkbWluIn0.";
-        Jwt parse = Jwts.parser().parse(token);
-        log.info("parse"+parse);
-
-
+    public static String getUserName(String token) {
+        return getTokenBody(token).getSubject();
     }
 
-    public Jwt checkToken(String token) {
-        log.info("check token:" + token);
-        Jwt jwt = Jwts.parser().parse(token);
-        return jwt;
+    /**
+     * Token是否过期
+     */
+    public static boolean isExpiration(String token) {
+        return getTokenBody(token).getExpiration().before(new Date());
     }
 
+    public static Claims getTokenBody(String token) {
+        return Jwts.parser()
+                .setSigningKey(SecurityConstants.SecurityKey)
+                .parseClaimsJws(token.replace(SecurityConstants.TOKEN_PREFIX, ""))
+                .getBody();
+    }
 
-    public String generateToken(String username) {
-        Map<String, Object> claims = new HashMap<>(16);
-        claims.put("username", username);
+    public static String generateToken(String username) {
+        Map<String, Object> role = new HashMap<>(16);
+        role.put("username", username);
         final Date createdDate = clock.now();
         final Date expirationDate = calculateExpirationDate(createdDate);
-        return Jwts.builder()
-                .setClaims(claims)
+        String tokenPrefix = Jwts.builder()
+                .setClaims(role)
                 .setSubject(username)
                 .setIssuedAt(createdDate)
                 .setExpiration(expirationDate)
-//                .signWith(SignatureAlgorithm.HS512, secret)
+                .signWith(SignatureAlgorithm.HS512, SecurityConstants.SecurityKey)
                 .compact();
+        return SecurityConstants.TOKEN_PREFIX + tokenPrefix;
     }
 
-
-    private Date calculateExpirationDate(Date createdDate) {
-        // 604800   分钟
-        return new Date(createdDate.getTime() + expiration * 1000 * 60 );
+    private static Date calculateExpirationDate(Date createdDate) {
+        // 过期时间 分钟
+        return new Date(createdDate.getTime() + 1000 * 60 * SecurityConstants.Minute);
     }
 
-
+    public static void main(String[] args) {
+        String token = generateToken("admin");
+        log.info("token: " + token);
+        String userName = getUserName(token.replace(SecurityConstants.TOKEN_PREFIX, ""));
+        log.info("userName: " + userName);
+    }
 }

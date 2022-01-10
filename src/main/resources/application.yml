@@ -53,9 +53,9 @@ mybatis-plus:
     cache-enabled: false
     log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
 
-jwt:
-  expiration: 2
-  secret: dgy
+JWT:
+  timeOut: 2
+  SecurityKey: dgy
 
 
 

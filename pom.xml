@@ -114,6 +114,7 @@
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-security</artifactId>
+			<version>2.6.1</version>
 		</dependency>
 
 		<!--jwt加密-->
@@ -160,10 +161,19 @@
 			<artifactId>spring-boot-starter-swagger</artifactId>
 			<version>1.5.1.RELEASE</version>
 		</dependency>
+		<dependency>
+			<groupId>org.hibernate</groupId>
+			<artifactId>hibernate-core</artifactId>
+			<version>5.2.18.Final</version>
+		</dependency>
+		<dependency>
+			<groupId>io.reactivex</groupId>
+			<artifactId>rxnetty</artifactId>
+			<version>0.4.9</version>
+		</dependency>
 
 
-
-    </dependencies>
+	</dependencies>
 
 
 
