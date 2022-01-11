@@ -15,13 +15,6 @@ import javax.servlet.http.HttpServletRequest;
 @CrossOrigin
 public class RedirectController {
 
-
-    @PostMapping("/login")
-    public String login(@RequestBody User user) {
-        String token = JwtTokenUtil.generateToken(user.getUsername());
-        return token;
-    }
-
     @GetMapping("/checkToken")
     public boolean checkToken(HttpServletRequest request){
         try {
