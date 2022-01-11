@@ -11,7 +11,6 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
-import java.nio.file.attribute.UserPrincipal;
 
 @Component
 public class LoginSuccessHandler implements AuthenticationSuccessHandler {
@@ -25,10 +24,14 @@ public class LoginSuccessHandler implements AuthenticationSuccessHandler {
      */
     @Override
     public void onAuthenticationSuccess(HttpServletRequest request, HttpServletResponse response, Authentication authentication) throws IOException, ServletException {
-        UserPrincipal userPrincipal = (UserPrincipal) authentication.getPrincipal();
-        response.setStatus(HttpStatus.OK.value());
-        response.setContentType("application/json;charset=utf-8");
+        Object principal = authentication.getPrincipal();
         String token = JwtTokenUtil.generateToken("admin");
+
+        response.setHeader("Access-Control-Allow-Origin", "*");
+        response.setHeader("Cache-Control","no-cache");
+        response.setContentType("application/json;charset=utf-8");
+        response.setStatus(HttpStatus.OK.value());
         response.getWriter().println(JSON.toJSONString(token));
+        response.getWriter().flush();
     }
 }

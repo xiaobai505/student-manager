@@ -1,5 +1,6 @@
 package com.agoni.security.config;
 
+import com.agoni.security.Interceptor.LoginFailureHandler;
 import com.agoni.security.Interceptor.LoginSuccessHandler;
 import com.agoni.security.constants.SecurityConstants;
 import com.agoni.security.exception.RestAuthenticationEntryPoint;
@@ -12,6 +13,7 @@ import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.config.http.SessionCreationPolicy;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
 /**
  * @author Admin
@@ -22,13 +24,18 @@ import org.springframework.security.config.http.SessionCreationPolicy;
 public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
     LoginSuccessHandler loginSuccessHandler;
+    LoginFailureHandler loginFailureHandler;
+    RestAuthenticationEntryPoint restAuthenticationEntryPoint;
+
+    @Autowired
+    public void setLoginFailureHandler(LoginFailureHandler loginFailureHandler) {
+        this.loginFailureHandler = loginFailureHandler;
+    }
 
     @Autowired
     public void setLoginSuccessHandler(LoginSuccessHandler loginSuccessHandler) {
         this.loginSuccessHandler = loginSuccessHandler;
     }
-
-    RestAuthenticationEntryPoint restAuthenticationEntryPoint;
 
     @Autowired
     public void setRestAuthenticationEntryPoint(RestAuthenticationEntryPoint restAuthenticationEntryPoint) {
@@ -37,8 +44,11 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Override
     protected void configure(AuthenticationManagerBuilder auth) throws Exception {
-        auth.inMemoryAuthentication().withUser("root").password("123").roles("student");
-        auth.inMemoryAuthentication().withUser("admin").password("123").roles("teacher");
+        auth.inMemoryAuthentication()
+                .passwordEncoder(new BCryptPasswordEncoder())
+                .withUser("admin")
+                .password(new BCryptPasswordEncoder().encode("123"))
+                .roles("teacher","student");
     }
 
 
@@ -51,11 +61,10 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
         http.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
 
-        // todo 后面在看，不知道 这么写。
-        // http.formLogin().loginProcessingUrl("/auth/login").successHandler(loginSuccessHandler);
+        http.formLogin().loginProcessingUrl("/auth/login").successHandler(loginSuccessHandler).failureHandler(loginFailureHandler);
 
-        http.addFilter(new JWTBasicAuthenticationFilter(authenticationManager()))
-            .exceptionHandling().authenticationEntryPoint(restAuthenticationEntryPoint);
+        http.addFilter(new JWTBasicAuthenticationFilter(authenticationManager()));
+            //.exceptionHandling().authenticationEntryPoint(restAuthenticationEntryPoint);
 
         //定义logout不需要验证
         http.logout().permitAll();
