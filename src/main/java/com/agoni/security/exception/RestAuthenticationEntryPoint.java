@@ -14,7 +14,6 @@ import java.io.IOException;
 @Component
 public class RestAuthenticationEntryPoint implements AuthenticationEntryPoint {
 
-
     @Override
     public void commence(HttpServletRequest request, HttpServletResponse response, AuthenticationException authException) throws IOException, ServletException {
         response.setHeader("Access-Control-Allow-Origin", "*");
@@ -23,9 +22,10 @@ public class RestAuthenticationEntryPoint implements AuthenticationEntryPoint {
         response.setContentType("application/json");
         response.setStatus(HttpStatus.UNAUTHORIZED.value());
 
-        ErrorResponse errorResponse = new ErrorResponse();
-        errorResponse.setCode(ExceptionType.UNAUTHORIZED.getCode());
-        errorResponse.setMessage(ExceptionType.UNAUTHORIZED.getMessage());
+        ErrorResponse errorResponse = ErrorResponse.builder()
+                .code(ExceptionType.UNAUTHORIZED.getCode())
+                .message(ExceptionType.UNAUTHORIZED.getMessage())
+                .build();
         response.getWriter().println(JSONObject.toJSONString(errorResponse));
         response.getWriter().flush();
     }

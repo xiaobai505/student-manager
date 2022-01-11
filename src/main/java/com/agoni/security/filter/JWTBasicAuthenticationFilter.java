@@ -2,13 +2,8 @@ package com.agoni.security.filter;
 
 import com.agoni.security.constants.SecurityConstants;
 import com.agoni.security.utils.JwtTokenUtil;
-import io.jsonwebtoken.Claims;
-import io.jsonwebtoken.Jwt;
-import io.jsonwebtoken.JwtException;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
-import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
-import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.web.authentication.www.BasicAuthenticationFilter;
@@ -18,7 +13,9 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.List;
 
 /**
  * @author gyd
@@ -37,7 +34,10 @@ public class JWTBasicAuthenticationFilter extends BasicAuthenticationFilter {
             return;
         }
         UsernamePasswordAuthenticationToken authentication = getAuthentication(header);
-        SecurityContextHolder.getContext().setAuthentication(authentication);
+        // 如果上下文中没有 放进去
+        if (SecurityContextHolder.getContext().getAuthentication() == null) {
+            SecurityContextHolder.getContext().setAuthentication(authentication);
+        }
         chain.doFilter(request, response);
     }
 
