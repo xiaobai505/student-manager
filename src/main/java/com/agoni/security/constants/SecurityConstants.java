@@ -1,7 +1,5 @@
 package com.agoni.security.constants;
 
-import org.springframework.beans.factory.annotation.Value;
-
 public final class SecurityConstants {
     /**
      * 角色的key

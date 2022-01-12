@@ -23,27 +23,18 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 @EnableGlobalMethodSecurity(prePostEnabled = true) //启用方法验证
 public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
+    @Autowired
     LoginSuccessHandler loginSuccessHandler;
+    @Autowired
     LoginFailureHandler loginFailureHandler;
+    @Autowired
     RestAuthenticationEntryPoint restAuthenticationEntryPoint;
-
-    @Autowired
-    public void setLoginFailureHandler(LoginFailureHandler loginFailureHandler) {
-        this.loginFailureHandler = loginFailureHandler;
-    }
-
-    @Autowired
-    public void setLoginSuccessHandler(LoginSuccessHandler loginSuccessHandler) {
-        this.loginSuccessHandler = loginSuccessHandler;
-    }
-
-    @Autowired
-    public void setRestAuthenticationEntryPoint(RestAuthenticationEntryPoint restAuthenticationEntryPoint) {
-        this.restAuthenticationEntryPoint = restAuthenticationEntryPoint;
-    }
+    //@Autowired
+    //JWTBasicAuthenticationFilter jwtBasicAuthenticationFilter;
 
     @Override
     protected void configure(AuthenticationManagerBuilder auth) throws Exception {
+        //标准的security认证,根据数据库里面的用户名密码
         auth.inMemoryAuthentication()
                 .passwordEncoder(new BCryptPasswordEncoder())
                 .withUser("admin")
@@ -63,6 +54,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
         http.formLogin().loginProcessingUrl("/auth/login").successHandler(loginSuccessHandler).failureHandler(loginFailureHandler);
 
+        //http.addFilter(jwtBasicAuthenticationFilter);
         http.addFilter(new JWTBasicAuthenticationFilter(authenticationManager()));
             //.exceptionHandling().authenticationEntryPoint(restAuthenticationEntryPoint);
 

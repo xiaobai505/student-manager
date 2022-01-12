@@ -1,19 +1,13 @@
 package com.agoni.security.filter;
 
 
-import com.agoni.security.utils.JwtTokenUtil;
-import com.alibaba.druid.util.StringUtils;
-import com.alibaba.fastjson.JSONObject;
-import io.jsonwebtoken.Jwt;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import javax.servlet.*;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
-import java.io.PrintWriter;
 
 /**
  * @author gyd

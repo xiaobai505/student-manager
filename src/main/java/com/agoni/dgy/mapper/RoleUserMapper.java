@@ -1,8 +1,12 @@
 package com.agoni.dgy.mapper;
 
 import com.agoni.dgy.model.po.RoleUser;
+import com.agoni.dgy.model.vo.RoleUserVo;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import org.apache.ibatis.annotations.Mapper;
+import org.apache.ibatis.annotations.Param;
+
+import java.util.List;
 
 /**
  * <p>
@@ -15,4 +19,5 @@ import org.apache.ibatis.annotations.Mapper;
 @Mapper
 public interface RoleUserMapper extends BaseMapper<RoleUser> {
 
+    List<RoleUserVo> selectUserAndRole(@Param("id") Long id);
 }

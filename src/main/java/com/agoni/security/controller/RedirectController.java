@@ -1,12 +1,9 @@
 package com.agoni.security.controller;
 
-import com.agoni.dgy.model.po.User;
-import com.agoni.security.constants.SecurityConstants;
-import com.agoni.security.utils.JwtTokenUtil;
-import com.alibaba.druid.util.StringUtils;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
 import javax.servlet.http.HttpServletRequest;
 
