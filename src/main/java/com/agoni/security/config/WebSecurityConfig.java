@@ -5,6 +5,7 @@ import com.agoni.security.Interceptor.LoginSuccessHandler;
 import com.agoni.security.constants.SecurityConstants;
 import com.agoni.security.exception.RestAuthenticationEntryPoint;
 import com.agoni.security.filter.JWTBasicAuthenticationFilter;
+import com.agoni.security.service.AuthUserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
@@ -14,6 +15,7 @@ import org.springframework.security.config.annotation.web.configuration.EnableWe
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.NoOpPasswordEncoder;
 
 /**
  * @author Admin
@@ -29,17 +31,15 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     LoginFailureHandler loginFailureHandler;
     @Autowired
     RestAuthenticationEntryPoint restAuthenticationEntryPoint;
-    //@Autowired
-    //JWTBasicAuthenticationFilter jwtBasicAuthenticationFilter;
+    @Autowired
+    AuthUserService authUserService;
+
+
 
     @Override
     protected void configure(AuthenticationManagerBuilder auth) throws Exception {
-        //标准的security认证,根据数据库里面的用户名密码
-        auth.inMemoryAuthentication()
-                .passwordEncoder(new BCryptPasswordEncoder())
-                .withUser("admin")
-                .password(new BCryptPasswordEncoder().encode("123123"))
-                .roles("teacher","student");
+        // 标准的security认证,根据数据库里面的用户名密码
+        auth.userDetailsService(authUserService).passwordEncoder(NoOpPasswordEncoder.getInstance());
     }
 
 
@@ -52,11 +52,12 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
         http.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
 
+        // 登录解析
         http.formLogin().loginProcessingUrl("/auth/login").successHandler(loginSuccessHandler).failureHandler(loginFailureHandler);
 
-        //http.addFilter(jwtBasicAuthenticationFilter);
-        http.addFilter(new JWTBasicAuthenticationFilter(authenticationManager()));
-            //.exceptionHandling().authenticationEntryPoint(restAuthenticationEntryPoint);
+        // token 以及异常解析
+        http.addFilter(new JWTBasicAuthenticationFilter(authenticationManager()))
+                .exceptionHandling().authenticationEntryPoint(restAuthenticationEntryPoint);
 
         //定义logout不需要验证
         http.logout().permitAll();

@@ -34,8 +34,8 @@ public class LoginFailureHandler implements AuthenticationFailureHandler {
         response.setStatus(HttpStatus.BAD_REQUEST.value());
 
         ErrorResponse errorResponse = ErrorResponse.builder()
-                .code(ExceptionType.UNAUTHORIZED.getCode())
-                .message(ExceptionType.UNAUTHORIZED.getMessage())
+                .code(ExceptionType.USER_PASSWORD_NOT_MATCH.getCode())
+                .message(ExceptionType.USER_PASSWORD_NOT_MATCH.getMessage())
                 .build();
         response.getWriter().write(JSONObject.toJSONString(errorResponse));
     }

@@ -4,6 +4,7 @@ import com.agoni.security.constants.SecurityConstants;
 import com.agoni.security.service.AuthUserService;
 import com.agoni.security.utils.JwtTokenUtil;
 import com.alibaba.druid.util.StringUtils;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.context.ApplicationContext;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -24,7 +25,7 @@ import java.io.IOException;
 /**
  * @author gyd
  */
-@Component
+@Slf4j
 public class JWTBasicAuthenticationFilter extends BasicAuthenticationFilter {
 
     public JWTBasicAuthenticationFilter(AuthenticationManager authenticationManager) {
@@ -46,6 +47,7 @@ public class JWTBasicAuthenticationFilter extends BasicAuthenticationFilter {
 
         // 4：SecurityContextHolder 没有用户，查询数据库，把权限放到 SecurityContextHolder
         if (SecurityContextHolder.getContext().getAuthentication() == null) {
+            log.info(" SecurityContextHolder 没有数据，查询数据库！");
             UsernamePasswordAuthenticationToken authentication = getUsernamePasswordAuthenticationToken(request, userName);
             authentication.setDetails(new WebAuthenticationDetailsSource().buildDetails(request));
             SecurityContextHolder.getContext().setAuthentication(authentication);

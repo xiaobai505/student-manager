@@ -23,8 +23,8 @@ public class RestAuthenticationEntryPoint implements AuthenticationEntryPoint {
         response.setStatus(HttpStatus.BAD_REQUEST.value());
 
         ErrorResponse errorResponse = ErrorResponse.builder()
-                .code(ExceptionType.UNAUTHORIZED.getCode())
-                .message(ExceptionType.UNAUTHORIZED.getMessage())
+                .code(ExceptionType.TOKEN_CHECK_FAIL.getCode())
+                .message(ExceptionType.TOKEN_CHECK_FAIL.getMessage())
                 .build();
         response.getWriter().println(JSONObject.toJSONString(errorResponse));
         response.getWriter().flush();
