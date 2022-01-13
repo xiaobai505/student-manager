@@ -7,6 +7,7 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import lombok.experimental.SuperBuilder;
 
 import java.io.Serializable;
 import java.time.LocalDateTime;
@@ -20,12 +21,12 @@ import java.time.LocalDateTime;
  * @since 2021-12-22
  */
 @Data
-@Builder
+@SuperBuilder
 @NoArgsConstructor
 @AllArgsConstructor
 @TableName("tb_course")
 @ApiModel(value = "Course对象", description = "课程表")
-public class Course implements Serializable {
+public class Course extends AbstractEntity implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
@@ -40,43 +41,5 @@ public class Course implements Serializable {
     @ApiModelProperty("课程老师")
     @TableField("course_teacher")
     private String courseTeacher;
-
-    @ApiModelProperty("开始时间")
-    @TableField("start_time")
-    private LocalDateTime startTime;
-
-    @ApiModelProperty("结束时间")
-    @TableField("end_time")
-    private LocalDateTime endTime;
-
-    @ApiModelProperty("创建时间")
-    @TableField("create_time")
-    private LocalDateTime createTime;
-
-    @ApiModelProperty("创建人标识")
-    @TableField("create_by")
-    private String createBy;
-
-    @ApiModelProperty("创建人姓名")
-    @TableField("create_by_name")
-    private String createByName;
-
-    @ApiModelProperty("最后修改时间")
-    @TableField("update_time")
-    private LocalDateTime updateTime;
-
-    @ApiModelProperty("最后修改人标识")
-    @TableField("update_by")
-    private String updateBy;
-
-    @ApiModelProperty("最后修改人姓名")
-    @TableField("update_by_name")
-    private String updateByName;
-
-    @ApiModelProperty("删除标记（0：正常，1：删除）")
-    @TableField("del_flag")
-    @TableLogic
-    private Integer delFlag;
-
 
 }

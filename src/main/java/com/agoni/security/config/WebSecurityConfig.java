@@ -4,7 +4,7 @@ import com.agoni.security.Interceptor.LoginFailureHandler;
 import com.agoni.security.Interceptor.LoginSuccessHandler;
 import com.agoni.security.constants.SecurityConstants;
 import com.agoni.security.exception.RestAuthenticationEntryPoint;
-import com.agoni.security.filter.JWTBasicAuthenticationFilter2;
+import com.agoni.security.filter.JWTBasicAuthenticationFilter;
 import com.agoni.security.service.AuthUserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;
@@ -36,7 +36,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     @Autowired
     AuthUserService authUserService;
     @Resource
-    JWTBasicAuthenticationFilter2 jwtBasicAuthenticationFilter2;
+    JWTBasicAuthenticationFilter jwtBasicAuthenticationFilter;
 
 
 
@@ -59,7 +59,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
         // token 以及异常解析
         http.exceptionHandling().authenticationEntryPoint(restAuthenticationEntryPoint);
 
-        http.addFilterBefore(jwtBasicAuthenticationFilter2, UsernamePasswordAuthenticationFilter.class);
+        http.addFilterBefore(jwtBasicAuthenticationFilter, UsernamePasswordAuthenticationFilter.class);
 
         // 登录解析
         http.formLogin().loginProcessingUrl("/auth/login").successHandler(loginSuccessHandler).failureHandler(loginFailureHandler);

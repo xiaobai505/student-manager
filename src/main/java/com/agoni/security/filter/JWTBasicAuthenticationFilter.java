@@ -6,14 +6,13 @@ import com.agoni.security.utils.JwtTokenUtil;
 import com.alibaba.druid.util.StringUtils;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.context.ApplicationContext;
-import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.web.authentication.WebAuthenticationDetailsSource;
-import org.springframework.security.web.authentication.www.BasicAuthenticationFilter;
 import org.springframework.stereotype.Component;
 import org.springframework.web.context.support.WebApplicationContextUtils;
+import org.springframework.web.filter.OncePerRequestFilter;
 
 import javax.servlet.FilterChain;
 import javax.servlet.ServletContext;
@@ -26,11 +25,9 @@ import java.io.IOException;
  * @author gyd
  */
 @Slf4j
-public class JWTBasicAuthenticationFilter extends BasicAuthenticationFilter {
+@Component
+public class JWTBasicAuthenticationFilter extends OncePerRequestFilter {
 
-    public JWTBasicAuthenticationFilter(AuthenticationManager authenticationManager) {
-        super(authenticationManager);
-    }
 
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain chain) throws IOException, ServletException {
@@ -43,9 +40,11 @@ public class JWTBasicAuthenticationFilter extends BasicAuthenticationFilter {
         // 2: 如果获取不到用户名报错
         String userName = getString(header);
 
+
         // 3：如果过期，报错，返回登录页面
 
         // 4：SecurityContextHolder 没有用户，查询数据库，把权限放到 SecurityContextHolder
+        // TODO 下面的一直是 null 不知道 怎么搞
         if (SecurityContextHolder.getContext().getAuthentication() == null) {
             log.info(" SecurityContextHolder 没有数据，查询数据库！");
             UsernamePasswordAuthenticationToken authentication = getUsernamePasswordAuthenticationToken(request, userName);
