@@ -4,9 +4,12 @@ package com.agoni.dgy.controller;
 import com.agoni.dgy.model.from.AddUserFrom;
 import com.agoni.dgy.model.from.FromPage;
 import com.agoni.dgy.model.po.User;
+import com.agoni.dgy.model.vo.AuthUserVo;
 import com.agoni.dgy.model.vo.UserAndRole;
 import com.agoni.dgy.service.UserService;
+import com.agoni.security.utils.UserUtil;
 import com.baomidou.mybatisplus.core.metadata.IPage;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -21,6 +24,7 @@ import org.springframework.web.bind.annotation.*;
 @RestController
 @RequestMapping("/dgy/user")
 @CrossOrigin
+@Slf4j
 public class UserController {
 
     @Autowired
@@ -33,6 +37,8 @@ public class UserController {
      */
     @PostMapping("/selectPage")
     public IPage<UserAndRole> selectPage(@RequestBody FromPage from) {
+        AuthUserVo authUser = UserUtil.getUserPrincipal();
+        log.info("AuthUserVo------------"+authUser.getUsername());
         return userService.selectpage(from.getPage(), from.getUserAndRole());
     }
 

@@ -1,7 +1,7 @@
 package com.agoni.security.utils;
 
 import com.agoni.dgy.model.po.User;
-import com.sun.security.auth.UserPrincipal;
+import com.agoni.dgy.model.vo.AuthUserVo;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContext;
@@ -15,16 +15,16 @@ public class UserUtil {
      *
      * @return UserPrincipal
      */
-    public static UserPrincipal getUserPrincipal() {
+    public static AuthUserVo getUserPrincipal() {
         SecurityContext securityContext = SecurityContextHolder.getContext();
         Authentication authentication = securityContext.getAuthentication();
-        UserPrincipal principal = null;
+        AuthUserVo authUserVo = null;
         try {
-            principal = (UserPrincipal) authentication.getPrincipal();
+            authUserVo = (AuthUserVo) authentication.getPrincipal();
         } catch (Exception ignored) {
 
         }
-        return principal;
+        return authUserVo;
     }
 
     /**
@@ -32,7 +32,7 @@ public class UserUtil {
      * @return
      */
     public static User getUser() {
-        UserPrincipal userPrincipal = getUserPrincipal();
+        AuthUserVo userPrincipal = getUserPrincipal();
         return null;
     }
 }

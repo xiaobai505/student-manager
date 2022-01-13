@@ -4,7 +4,7 @@ import com.agoni.security.Interceptor.LoginFailureHandler;
 import com.agoni.security.Interceptor.LoginSuccessHandler;
 import com.agoni.security.constants.SecurityConstants;
 import com.agoni.security.exception.RestAuthenticationEntryPoint;
-import com.agoni.security.filter.JWTBasicAuthenticationFilter;
+import com.agoni.security.filter.JWTBasicAuthenticationFilter2;
 import com.agoni.security.service.AuthUserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;
@@ -14,8 +14,10 @@ import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.config.http.SessionCreationPolicy;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.NoOpPasswordEncoder;
+import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
+
+import javax.annotation.Resource;
 
 /**
  * @author Admin
@@ -33,6 +35,8 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     RestAuthenticationEntryPoint restAuthenticationEntryPoint;
     @Autowired
     AuthUserService authUserService;
+    @Resource
+    JWTBasicAuthenticationFilter2 jwtBasicAuthenticationFilter2;
 
 
 
@@ -52,12 +56,13 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
         http.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
 
+        // token 以及异常解析
+        http.exceptionHandling().authenticationEntryPoint(restAuthenticationEntryPoint);
+
+        http.addFilterBefore(jwtBasicAuthenticationFilter2, UsernamePasswordAuthenticationFilter.class);
+
         // 登录解析
         http.formLogin().loginProcessingUrl("/auth/login").successHandler(loginSuccessHandler).failureHandler(loginFailureHandler);
-
-        // token 以及异常解析
-        http.addFilter(new JWTBasicAuthenticationFilter(authenticationManager()))
-                .exceptionHandling().authenticationEntryPoint(restAuthenticationEntryPoint);
 
         //定义logout不需要验证
         http.logout().permitAll();
