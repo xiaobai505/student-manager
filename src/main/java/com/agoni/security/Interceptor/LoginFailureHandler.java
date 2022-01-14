@@ -33,10 +33,8 @@ public class LoginFailureHandler implements AuthenticationFailureHandler {
         response.setContentType("application/json;charset=utf-8");
         response.setStatus(HttpStatus.BAD_REQUEST.value());
 
-        ErrorResponse errorResponse = ErrorResponse.builder()
-                .code(ExceptionType.USER_PASSWORD_NOT_MATCH.getCode())
-                .message(ExceptionType.USER_PASSWORD_NOT_MATCH.getMessage())
-                .build();
+        ErrorResponse errorResponse = ErrorResponse.builder().code(ExceptionType.LOGIN_FAILURE.getCode())
+                .message(ExceptionType.LOGIN_FAILURE.getMessage()).build();
         response.getWriter().write(JSONObject.toJSONString(errorResponse));
     }
 }
