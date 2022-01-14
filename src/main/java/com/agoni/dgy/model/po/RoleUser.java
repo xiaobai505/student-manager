@@ -44,6 +44,14 @@ public class RoleUser implements Serializable {
     @TableField("role_id")
     private Long roleId;
 
+    @ApiModelProperty("角色名称")
+    @TableField("role_name")
+    private String roleName;
+
+    @ApiModelProperty("状态")
+    @TableField("Status")
+    private String status;
+
     @ApiModelProperty("创建时间")
     @TableField("create_time")
     private LocalDateTime createTime;

@@ -50,11 +50,8 @@ public class UserAndRole implements Serializable {
     @ApiModelProperty("密码，加密存储")
     private String password;
 
-    @ApiModelProperty("角色编码")
-    private String roleCode;
-
     @ApiModelProperty("角色名称")
-    private String roleName;
+    private String roles;
 
     @ApiModelProperty("注册手机号")
     private String phone;
