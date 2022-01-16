@@ -15,7 +15,7 @@ import java.util.Collection;
  * @author Admin
  */
 @Data
-@SuperBuilder(toBuilder = true)
+@SuperBuilder
 @NoArgsConstructor
 @AllArgsConstructor
 public class AuthUserVo extends User implements UserDetails {

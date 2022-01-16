@@ -21,12 +21,12 @@ import java.time.LocalDateTime;
  * @since 2021-12-22
  */
 @Data
-@SuperBuilder(toBuilder = true)
+@SuperBuilder
 @NoArgsConstructor
 @AllArgsConstructor
 @TableName("tb_user")
 @ApiModel(value = "User对象", description = "用户表")
-public class User implements Serializable {
+public class User extends AbstractEntity implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
@@ -100,35 +100,4 @@ public class User implements Serializable {
     @ApiModelProperty("最后登录时间")
     @TableField("last_login_time")
     private LocalDateTime lastLoginTime;
-
-    @ApiModelProperty("创建时间")
-    @TableField(value = "create_time", fill = FieldFill.INSERT)
-    private LocalDateTime createTime;
-
-    @ApiModelProperty("创建人标识")
-    @TableField(value = "create_by", fill = FieldFill.INSERT)
-    private String createBy;
-
-    @ApiModelProperty("创建人姓名")
-    @TableField(value = "create_by_name", fill = FieldFill.INSERT)
-    private String createByName;
-
-    @ApiModelProperty("最后修改时间")
-    @TableField(value = "update_time", fill = FieldFill.UPDATE)
-    private LocalDateTime updateTime;
-
-    @ApiModelProperty("最后修改人标识")
-    @TableField(value = "update_by", fill = FieldFill.UPDATE)
-    private String updateBy;
-
-    @ApiModelProperty("最后修改人姓名")
-    @TableField(value = "update_by_name", fill = FieldFill.UPDATE)
-    private String updateByName;
-
-    @ApiModelProperty("删除标记（0：正常，1：删除）")
-    @TableField("del_flag")
-    @TableLogic
-    private Integer delFlag;
-
-
 }
