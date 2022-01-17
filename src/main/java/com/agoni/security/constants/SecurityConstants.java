@@ -8,9 +8,9 @@ public final class SecurityConstants {
     public static final String SecurityKey = "dongyyds";
 
     /**
-     * rememberMe 为 false 的时候过期时间是1个小时
+     * 分钟
      */
-    public static final long Minute = 5;
+    public static final long Minute = 50;
 
     /**
      * rememberMe 为 true 的时候过期时间是7天
