@@ -28,7 +28,7 @@ import java.time.LocalDateTime;
 @AllArgsConstructor
 @TableName("tb_course_user")
 @ApiModel(value = "CourseUser对象", description = "用户课程关系表")
-public class CourseUser implements Serializable {
+public class CourseUser extends AbstractEntity  implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
@@ -47,35 +47,5 @@ public class CourseUser implements Serializable {
     @ApiModelProperty("最高分数")
     @TableField("best_score")
     private String bestScore;
-
-    @ApiModelProperty("创建时间")
-    @TableField("create_time")
-    private LocalDateTime createTime;
-
-    @ApiModelProperty("创建人标识")
-    @TableField("create_by")
-    private String createBy;
-
-    @ApiModelProperty("创建人姓名")
-    @TableField("create_by_name")
-    private String createByName;
-
-    @ApiModelProperty("最后修改时间")
-    @TableField("update_time")
-    private LocalDateTime updateTime;
-
-    @ApiModelProperty("最后修改人标识")
-    @TableField("update_by")
-    private String updateBy;
-
-    @ApiModelProperty("最后修改人姓名")
-    @TableField("update_by_name")
-    private String updateByName;
-
-    @ApiModelProperty("删除标记（0：正常，1：删除）")
-    @TableField("del_flag")
-    @TableLogic
-    private Integer delFlag;
-
 
 }

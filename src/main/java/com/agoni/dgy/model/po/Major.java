@@ -25,7 +25,7 @@ import java.time.LocalDateTime;
 @AllArgsConstructor
 @TableName("tb_major")
 @ApiModel(value = "Major对象", description = "班级表")
-public class Major implements Serializable {
+public class Major extends AbstractEntity  implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
@@ -48,35 +48,5 @@ public class Major implements Serializable {
     @ApiModelProperty("班级code")
     @TableField("class_code")
     private String classCode;
-
-    @ApiModelProperty("创建时间")
-    @TableField(value = "create_time", fill = FieldFill.INSERT)
-    private LocalDateTime createTime;
-
-    @ApiModelProperty("创建人标识")
-    @TableField(value = "create_by", fill = FieldFill.INSERT)
-    private String createBy;
-
-    @ApiModelProperty("创建人姓名")
-    @TableField(value = "create_by_name", fill = FieldFill.INSERT)
-    private String createByName;
-
-    @ApiModelProperty("最后修改时间")
-    @TableField(value = "update_time", fill = FieldFill.UPDATE)
-    private LocalDateTime updateTime;
-
-    @ApiModelProperty("最后修改人标识")
-    @TableField(value = "update_by", fill = FieldFill.UPDATE)
-    private String updateBy;
-
-    @ApiModelProperty("最后修改人姓名")
-    @TableField(value = "update_by_name", fill = FieldFill.UPDATE)
-    private String updateByName;
-
-    @ApiModelProperty("删除标记（0：正常，1：删除）")
-    @TableField("del_flag")
-    @TableLogic
-    private Integer delFlag;
-
 
 }

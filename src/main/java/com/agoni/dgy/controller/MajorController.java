@@ -2,15 +2,15 @@ package com.agoni.dgy.controller;
 
 
 import com.agoni.dgy.model.from.FromPage;
+import com.agoni.dgy.model.po.Major;
 import com.agoni.dgy.model.vo.UserAndRole;
 import com.agoni.dgy.service.MajorService;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 /**
  * <p>
@@ -35,5 +35,15 @@ public class MajorController {
     @PostMapping("/selectPage")
     public IPage<UserAndRole> selectPage(@RequestBody FromPage from) {
         return null;
+    }
+
+    @PostMapping("/saveOrUpdate")
+    public boolean saveOrUpdate(@RequestBody Major major) {
+        return majorService.saveOrUpdate(major);
+    }
+
+    @DeleteMapping("/deleteById/{id}")
+    public boolean deleteById(@PathVariable Long id){
+        return majorService.removeById(id);
     }
 }

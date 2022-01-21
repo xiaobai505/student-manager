@@ -42,4 +42,12 @@ public class Course extends AbstractEntity implements Serializable {
     @TableField("course_teacher")
     private String courseTeacher;
 
+    @ApiModelProperty("开始时间")
+    @TableField("start_time")
+    private LocalDateTime startTime;
+
+    @ApiModelProperty("结束时间")
+    @TableField("end_time")
+    private LocalDateTime endTime;
+
 }

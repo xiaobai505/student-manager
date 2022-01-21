@@ -25,7 +25,7 @@ import java.time.LocalDateTime;
 @AllArgsConstructor
 @TableName("tb_result")
 @ApiModel(value = "Result对象", description = "成绩表")
-public class Result implements Serializable {
+public class Result extends AbstractEntity  implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
@@ -48,35 +48,5 @@ public class Result implements Serializable {
     @ApiModelProperty("成绩")
     @TableField("result")
     private String result;
-
-    @ApiModelProperty("创建时间")
-    @TableField("create_time")
-    private LocalDateTime createTime;
-
-    @ApiModelProperty("创建人标识")
-    @TableField("create_by")
-    private String createBy;
-
-    @ApiModelProperty("创建人姓名")
-    @TableField("create_by_name")
-    private String createByName;
-
-    @ApiModelProperty("最后修改时间")
-    @TableField("update_time")
-    private LocalDateTime updateTime;
-
-    @ApiModelProperty("最后修改人标识")
-    @TableField("update_by")
-    private String updateBy;
-
-    @ApiModelProperty("最后修改人姓名")
-    @TableField("update_by_name")
-    private String updateByName;
-
-    @ApiModelProperty("删除标记（0：正常，1：删除）")
-    @TableField("del_flag")
-    @TableLogic
-    private Integer delFlag;
-
 
 }

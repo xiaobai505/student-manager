@@ -21,14 +21,6 @@ public abstract class AbstractEntity {
     //@Id
     //private String id;
 
-    @ApiModelProperty("开始时间")
-    @TableField("start_time")
-    private LocalDateTime startTime;
-
-    @ApiModelProperty("结束时间")
-    @TableField("end_time")
-    private LocalDateTime endTime;
-
     @ApiModelProperty("创建时间")
     @TableField("create_time")
     private LocalDateTime createTime;
