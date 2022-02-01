@@ -1,9 +1,14 @@
 package com.agoni.dgy.model.po;
 
+import com.alibaba.fastjson.JSONObject;
 import com.baomidou.mybatisplus.annotation.*;
+import com.baomidou.mybatisplus.extension.handlers.FastjsonTypeHandler;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
-import lombok.*;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import java.io.Serializable;
 import java.time.LocalDateTime;
@@ -20,8 +25,8 @@ import java.time.LocalDateTime;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-@TableName("tb_history")
-@ApiModel(value = "History对象", description = "History对象")
+@TableName(value = "tb_history",autoResultMap = true)
+@ApiModel(value = "History对象", description = "")
 public class History extends AbstractEntity  implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -29,8 +34,8 @@ public class History extends AbstractEntity  implements Serializable {
     @TableId(value = "log_id", type = IdType.AUTO)
     private Integer logId;
 
-    @TableField("log_data")
-    private String logData;
+    @TableField(value = "log_data",typeHandler = FastjsonTypeHandler.class)
+    private JSONObject logData;
 
     @TableField("log_type")
     private String logType;

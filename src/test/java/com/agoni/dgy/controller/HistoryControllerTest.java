@@ -15,12 +15,11 @@ class HistoryControllerTest {
     @Test
     void page() {
         History history = historyService.getById(86);
-        JSONObject json = JSONObject.parseObject(history.getLogData());
+        JSONObject json = history.getLogData();
         String user = json.getString("user");
         String pwd = json.getString("pwd");
         json.put("user","root");
-        History build = History.builder().logId(history.getLogId()).logData(json.toJSONString()).build();
-
+        History build = History.builder().logId(history.getLogId()).logData(json).build();
 
         boolean b = historyService.updateById(build);
         System.out.printf("bbb"+b);
