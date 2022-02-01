@@ -3,6 +3,8 @@ package com.agoni.dgy.service;
 import com.agoni.dgy.model.po.Major;
 import com.baomidou.mybatisplus.extension.service.IService;
 
+import java.util.List;
+
 /**
  * <p>
  * 班级表 服务类
@@ -13,4 +15,5 @@ import com.baomidou.mybatisplus.extension.service.IService;
  */
 public interface MajorService extends IService<Major> {
 
+    List<Major> getSchoolList();
 }

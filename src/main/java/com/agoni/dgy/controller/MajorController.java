@@ -5,6 +5,7 @@ import com.agoni.dgy.model.from.FromPage;
 import com.agoni.dgy.model.po.Major;
 import com.agoni.dgy.model.vo.UserAndRole;
 import com.agoni.dgy.service.MajorService;
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -32,11 +33,6 @@ public class MajorController {
         return majorService.page(page);
     }
 
-    @PostMapping("/selectPage")
-    public IPage<UserAndRole> selectPage(@RequestBody FromPage from) {
-        return null;
-    }
-
     @PostMapping("/saveOrUpdate")
     public boolean saveOrUpdate(@RequestBody Major major) {
         return majorService.saveOrUpdate(major);
@@ -45,5 +41,10 @@ public class MajorController {
     @DeleteMapping("/deleteById/{id}")
     public boolean deleteById(@PathVariable Long id){
         return majorService.removeById(id);
+    }
+
+    @GetMapping("/list")
+    public List<Major> list(){
+        return majorService.list();
     }
 }

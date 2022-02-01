@@ -41,12 +41,8 @@ public class Major extends AbstractEntity  implements Serializable {
     @TableField("major")
     private String major;
 
-    @ApiModelProperty("班级名称")
-    @TableField("class_name")
-    private String className;
-
     @ApiModelProperty("班级code")
-    @TableField("class_code")
-    private String classCode;
+    @TableField("major_code")
+    private String majorCode;
 
 }

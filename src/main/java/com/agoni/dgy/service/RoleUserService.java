@@ -22,4 +22,6 @@ public interface RoleUserService extends IService<RoleUser> {
      * @return list
      */
     List<RoleUserVo> selectRolebyUserId(Long id);
+
+    List<String> getSchoolList();
 }

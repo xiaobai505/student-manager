@@ -31,8 +31,8 @@ public class UserUtil {
      * 获得当前用户
      * @return
      */
-    public static User getUser() {
+    public static AuthUserVo getUser() {
         AuthUserVo userPrincipal = getUserPrincipal();
-        return null;
+        return userPrincipal;
     }
 }

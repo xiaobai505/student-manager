@@ -3,10 +3,7 @@ package com.agoni.dgy.model.po;
 import com.baomidou.mybatisplus.annotation.*;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import java.io.Serializable;
 import java.time.LocalDateTime;
@@ -24,7 +21,7 @@ import java.time.LocalDateTime;
 @NoArgsConstructor
 @AllArgsConstructor
 @TableName("tb_history")
-@ApiModel(value = "History对象", description = "")
+@ApiModel(value = "History对象", description = "History对象")
 public class History extends AbstractEntity  implements Serializable {
 
     private static final long serialVersionUID = 1L;

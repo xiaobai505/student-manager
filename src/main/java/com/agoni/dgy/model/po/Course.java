@@ -50,4 +50,20 @@ public class Course extends AbstractEntity implements Serializable {
     @TableField("end_time")
     private LocalDateTime endTime;
 
+    @ApiModelProperty("上课时间")
+    @TableField("time_table")
+    private LocalDateTime timeTable;
+
+    @ApiModelProperty("库存")
+    @TableField("stock")
+    private Integer stock;
+
+    @ApiModelProperty("是否必修")
+    @TableField("is_must")
+    private Boolean isMust;
+
+    @ApiModelProperty("版本号")
+    @TableField("vetsion")
+    private Integer vetsion;
+
 }

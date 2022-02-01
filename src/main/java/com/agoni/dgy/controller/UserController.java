@@ -52,6 +52,14 @@ public class UserController {
     public boolean updateById(@RequestBody User user) {
         return userService.updateById(user);
     }
+    /**
+     * 新增用户 user
+     * @param user
+     */
+    @PostMapping("/saveOrUpdate")
+    public void saveOrUpdate(@RequestBody User user){
+        userService.saveOrUpdate(user);
+    }
 
     /**
      * 新增用户 user role major 信息
