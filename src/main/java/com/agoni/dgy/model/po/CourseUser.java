@@ -4,6 +4,9 @@ import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableLogic;
 import com.baomidou.mybatisplus.annotation.TableName;
+import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+import com.fasterxml.jackson.databind.ser.std.ToStringSerializer;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.AllArgsConstructor;
@@ -34,14 +37,17 @@ public class CourseUser extends AbstractEntity  implements Serializable {
 
     @ApiModelProperty("用户角色关系")
     @TableId("id")
+    @JsonSerialize(using= ToStringSerializer.class)
     private Long id;
 
     @ApiModelProperty("用户ID")
     @TableField("user_id")
+    @JsonSerialize(using= ToStringSerializer.class)
     private Long userId;
 
     @ApiModelProperty("课程ID")
     @TableField("course_id")
+    @JsonSerialize(using= ToStringSerializer.class)
     private Long courseId;
 
     @ApiModelProperty("最高分数")

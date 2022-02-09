@@ -1,6 +1,7 @@
 package com.agoni.dgy.model.vo;
 
 import com.baomidou.mybatisplus.annotation.IdType;
+import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableLogic;
 import io.swagger.annotations.ApiModel;
@@ -74,6 +75,9 @@ public class UserAndRole implements Serializable {
     @ApiModelProperty("账户余额")
     private BigDecimal accountBalance;
 
+    @ApiModelProperty("联系地址")
+    private String address;
+
     @ApiModelProperty("会员等级")
     private Integer userLevel;
 
@@ -88,26 +92,4 @@ public class UserAndRole implements Serializable {
 
     @ApiModelProperty("最后登录时间")
     private LocalDateTime lastLoginTime;
-
-    @ApiModelProperty("创建时间")
-    private LocalDateTime createTime;
-
-    @ApiModelProperty("创建人标识")
-    private String createBy;
-
-    @ApiModelProperty("创建人姓名")
-    private String createByName;
-
-    @ApiModelProperty("最后修改时间")
-    private LocalDateTime updateTime;
-
-    @ApiModelProperty("最后修改人标识")
-    private String updateBy;
-
-    @ApiModelProperty("最后修改人姓名")
-    private String updateByName;
-
-    @ApiModelProperty("删除标记（0：正常，1：删除）")
-    @TableLogic
-    private Integer delFlag;
 }

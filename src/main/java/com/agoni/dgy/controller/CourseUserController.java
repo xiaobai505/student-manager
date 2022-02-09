@@ -2,14 +2,10 @@ package com.agoni.dgy.controller;
 
 
 import com.agoni.dgy.model.po.CourseUser;
-import com.agoni.dgy.model.vo.AuthUserVo;
 import com.agoni.dgy.service.CourseUserService;
 import com.agoni.security.utils.UserUtil;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.context.SecurityContext;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -31,9 +27,15 @@ public class CourseUserController {
     private CourseUserService courseUserService;
 
     @GetMapping("/list")
-    public List list(){
+    public List<CourseUser> list(){
         return courseUserService.list();
     }
+
+    @GetMapping("/mylist")
+    public List<CourseUser> mylist(){
+        return courseUserService.mylist();
+    }
+
 
     @PostMapping("/saveOrUpdate")
     public Boolean saveOrUpdate(@RequestBody CourseUser courseUser) {
@@ -41,6 +43,12 @@ public class CourseUserController {
         Long userId = UserUtil.getUserPrincipal().getId();
         courseUser.setUserId(userId);
         boolean res = courseUserService.saveOrUpdate(courseUser);
+        return res;
+    }
+
+    @DeleteMapping("/{id}")
+    public boolean delete(@PathVariable Long id){
+        boolean res = courseUserService.removeById(id);
         return res;
     }
 

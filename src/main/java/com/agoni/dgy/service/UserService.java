@@ -1,6 +1,6 @@
 package com.agoni.dgy.service;
 
-import com.agoni.dgy.model.from.AddUserFrom;
+import com.agoni.dgy.model.bo.AddUserFrom;
 import com.agoni.dgy.model.po.User;
 import com.agoni.dgy.model.vo.UserAndRole;
 import com.baomidou.mybatisplus.core.metadata.IPage;

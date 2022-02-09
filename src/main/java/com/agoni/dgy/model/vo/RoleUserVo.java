@@ -37,28 +37,6 @@ public class RoleUserVo implements Serializable {
     @ApiModelProperty("角色ID")
     private Long roleId;
 
-    @ApiModelProperty("创建时间")
-    private LocalDateTime createTime;
-
-    @ApiModelProperty("创建人标识")
-    private String createBy;
-
-    @ApiModelProperty("创建人姓名")
-    private String createByName;
-
-    @ApiModelProperty("最后修改时间")
-    private LocalDateTime updateTime;
-
-    @ApiModelProperty("最后修改人标识")
-    private String updateBy;
-
-    @ApiModelProperty("最后修改人姓名")
-    private String updateByName;
-
-    @ApiModelProperty("删除标记（0：正常，1：删除）")
-    @TableLogic
-    private Integer delFlag;
-
     @ApiModelProperty("角色名称")
     private String roleName;
 
@@ -67,6 +45,4 @@ public class RoleUserVo implements Serializable {
 
     @ApiModelProperty("角色类型")
     private String roleType;
-
-
 }

@@ -1,4 +1,4 @@
-package com.agoni.dgy.model.from;
+package com.agoni.dgy.model.bo;
 
 import com.agoni.dgy.model.po.Major;
 import com.agoni.dgy.model.po.Role;

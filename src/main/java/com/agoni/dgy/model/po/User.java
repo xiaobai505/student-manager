@@ -81,6 +81,10 @@ public class User extends AbstractEntity implements Serializable {
     @TableField("account_balance")
     private BigDecimal accountBalance;
 
+    @ApiModelProperty("联系地址")
+    @TableField("address")
+    private String address;
+
     @ApiModelProperty("会员等级")
     @TableField("user_level")
     private Integer userLevel;

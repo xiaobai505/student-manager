@@ -1,7 +1,7 @@
 package com.agoni.dgy.controller;
 
 
-import com.agoni.dgy.model.from.AddUserFrom;
+import com.agoni.dgy.model.bo.AddUserFrom;
 import com.agoni.dgy.model.from.FromPage;
 import com.agoni.dgy.model.po.User;
 import com.agoni.dgy.model.vo.AuthUserVo;
@@ -30,6 +30,11 @@ public class UserController {
     @Autowired
     private UserService userService;
 
+    @GetMapping("/get")
+    public AuthUserVo get(){
+        AuthUserVo userPrincipal = UserUtil.getUserPrincipal();
+        return userPrincipal;
+    }
     /**
      * 查询多表关联用户信息
      * @param from

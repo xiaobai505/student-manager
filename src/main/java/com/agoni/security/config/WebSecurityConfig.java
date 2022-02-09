@@ -55,15 +55,11 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .anyRequest().authenticated();// 其余的所有请求都需要验证
 
         http.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
-
         // token 以及异常解析
         http.exceptionHandling().authenticationEntryPoint(restAuthenticationEntryPoint);
-
         http.addFilterBefore(jwtBasicAuthenticationFilter, UsernamePasswordAuthenticationFilter.class);
-
         // 登录解析
         http.formLogin().loginProcessingUrl("/auth/login").successHandler(loginSuccessHandler).failureHandler(loginFailureHandler);
-
         //定义logout不需要验证
         http.logout().permitAll();
     }

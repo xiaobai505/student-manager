@@ -3,7 +3,7 @@ package com.agoni.dgy.service.impl;
 import com.agoni.dgy.mapper.MajorMapper;
 import com.agoni.dgy.mapper.RoleMapper;
 import com.agoni.dgy.mapper.UserMapper;
-import com.agoni.dgy.model.from.AddUserFrom;
+import com.agoni.dgy.model.bo.AddUserFrom;
 import com.agoni.dgy.model.po.Major;
 import com.agoni.dgy.model.po.Role;
 import com.agoni.dgy.model.po.User;
