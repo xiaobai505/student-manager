@@ -1,5 +1,15 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.agoni.dgy.mapper.CourseUserMapper">
+    <select id="mylist" resultType="com.agoni.dgy.model.vo.CourseUserVo">
+        select
+            t1.course_name, t1.course_teacher, t.*
+        from tb_course_user t
+                 left join (select * from tb_course where tb_course.del_flag = 0) t1 on t1.id = t.course_id
+        where t.del_flag = 0
+        <if test="id != null and id != ''">
+            and t.user_id = #{id}
+        </if>
 
+    </select>
 </mapper>

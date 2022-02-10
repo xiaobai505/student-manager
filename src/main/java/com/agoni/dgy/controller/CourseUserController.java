@@ -2,6 +2,7 @@ package com.agoni.dgy.controller;
 
 
 import com.agoni.dgy.model.po.CourseUser;
+import com.agoni.dgy.model.vo.CourseUserVo;
 import com.agoni.dgy.service.CourseUserService;
 import com.agoni.security.utils.UserUtil;
 import lombok.extern.slf4j.Slf4j;
@@ -32,7 +33,7 @@ public class CourseUserController {
     }
 
     @GetMapping("/mylist")
-    public List<CourseUser> mylist(){
+    public List<CourseUserVo> mylist(){
         return courseUserService.mylist();
     }
 

@@ -1,6 +1,7 @@
 package com.agoni.dgy.service;
 
 import com.agoni.dgy.model.po.CourseUser;
+import com.agoni.dgy.model.vo.CourseUserVo;
 import com.baomidou.mybatisplus.extension.service.IService;
 
 import java.util.List;
@@ -15,6 +16,6 @@ import java.util.List;
  */
 public interface CourseUserService extends IService<CourseUser> {
 
-    List<CourseUser>  mylist();
+    List<CourseUserVo>  mylist();
 
 }
