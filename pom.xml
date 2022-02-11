@@ -171,8 +171,6 @@
 			<artifactId>rxnetty</artifactId>
 			<version>0.4.9</version>
 		</dependency>
-
-
 	</dependencies>
 
 
@@ -182,9 +180,13 @@
 			<plugin>
 				<groupId>org.springframework.boot</groupId>
 				<artifactId>spring-boot-maven-plugin</artifactId>
-				<configuration>
-					<executable>true</executable>
-				</configuration>
+				<executions>
+					<execution>
+						<goals>
+							<goal>repackage</goal>
+						</goals>
+					</execution>
+				</executions>
 			</plugin>
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
@@ -194,45 +196,44 @@
 					<target>8</target>
 				</configuration>
 			</plugin>
-
-			<plugin>
-				<groupId>org.mybatis.generator</groupId>
-				<artifactId>mybatis-generator-maven-plugin</artifactId>
-				<version>1.4.0</version>
-				<configuration>
-					<configurationFile>${basedir}/src/main/resources/generatorConfig.xml</configurationFile>
-					<verbose>true</verbose>
-					<overwrite>true</overwrite>
-				</configuration>
-			</plugin>
+			<!--<plugin>-->
+			<!--	<groupId>org.mybatis.generator</groupId>-->
+			<!--	<artifactId>mybatis-generator-maven-plugin</artifactId>-->
+			<!--	<version>1.4.0</version>-->
+			<!--	<configuration>-->
+			<!--		<configurationFile>${basedir}/src/main/resources/generatorConfig.xml</configurationFile>-->
+			<!--		<verbose>true</verbose>-->
+			<!--		<overwrite>true</overwrite>-->
+			<!--	</configuration>-->
+			<!--</plugin>-->
 		</plugins>
 		<!--解决不编译XML等文件-->
-		<!--<resources>-->
-			<!--不编译数据库配置文件-->
-			<!--<resource>-->
-			<!--	<directory>src/main/resources</directory>-->
-			<!--	<includes>-->
-			<!--		<include>**/*.yml</include>-->
-			<!--		<include>**/*.properties</include>-->
-			<!--		<include>**/*.xml</include>-->
-			<!--		<include>**/*.html</include>-->
-			<!--		<include>**/*.js</include>-->
-			<!--		<include>**/*.jpg</include>-->
-			<!--		<include>**/*.png</include>-->
-			<!--		<include>**/*.css</include>-->
-			<!--		<include>**/*.gif</include>-->
-			<!--	</includes>-->
-			<!--	<filtering>false</filtering>-->
-			<!--</resource>-->
-			<!--不编译webapp静态文件-->
-		<!--	<resource>-->
-		<!--		<directory>src/main/webapp</directory>-->
-		<!--		<targetPath>META-INF/resources</targetPath>-->
-		<!--		<includes>-->
-		<!--			<include>**/*.*</include>-->
-		<!--		</includes>-->
-		<!--	</resource>-->
-		<!--</resources>-->
+		<!--<resources>
+			&lt;!&ndash;不编译数据库配置文件&ndash;&gt;
+			<resource>
+				<directory>src/main/resources</directory>
+				<includes>
+					<include>**/*.yml</include>
+					<include>**/*.properties</include>
+					<include>**/*.xml</include>
+					<include>**/*.html</include>
+					<include>**/*.js</include>
+					<include>**/*.jpg</include>
+					<include>**/*.png</include>
+					<include>**/*.css</include>
+					<include>**/*.gif</include>
+				</includes>
+				<filtering>false</filtering>
+			</resource>
+			&lt;!&ndash;不编译webapp静态文件&ndash;&gt;
+			<resource>
+				<directory>src/main/webapp</directory>
+				<targetPath>META-INF/resources</targetPath>
+				<includes>
+					<include>**/*.*</include>
+				</includes>
+			</resource>
+		</resources>-->
 	</build>
 
 
