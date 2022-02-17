@@ -1,10 +1,12 @@
 package com.agoni.dgy.model.po;
 
-import com.baomidou.mybatisplus.annotation.*;
+import com.baomidou.mybatisplus.annotation.IdType;
+import com.baomidou.mybatisplus.annotation.TableField;
+import com.baomidou.mybatisplus.annotation.TableId;
+import com.baomidou.mybatisplus.annotation.TableName;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.AllArgsConstructor;
-import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.experimental.SuperBuilder;
@@ -52,7 +54,7 @@ public class Course extends AbstractEntity implements Serializable {
 
     @ApiModelProperty("上课时间")
     @TableField("time_table")
-    private LocalDateTime timeTable;
+    private String timeTable;
 
     @ApiModelProperty("库存")
     @TableField("stock")

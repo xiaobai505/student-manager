@@ -6,17 +6,13 @@ import com.agoni.dgy.model.vo.AuthUserVo;
 import com.agoni.dgy.model.vo.CourseUserVo;
 import com.agoni.dgy.service.CourseUserService;
 import com.agoni.security.utils.UserUtil;
-import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.stereotype.Service;
 
-import java.util.Collection;
 import java.util.List;
-import java.util.Map;
 
 /**
  * <p>

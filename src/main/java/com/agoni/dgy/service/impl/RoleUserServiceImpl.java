@@ -2,7 +2,6 @@ package com.agoni.dgy.service.impl;
 
 import com.agoni.dgy.mapper.RoleUserMapper;
 import com.agoni.dgy.model.po.Major;
-import com.agoni.dgy.model.po.Role;
 import com.agoni.dgy.model.po.RoleUser;
 import com.agoni.dgy.model.vo.RoleUserVo;
 import com.agoni.dgy.service.MajorService;
@@ -13,9 +12,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.Map;
 import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 /**
  * <p>

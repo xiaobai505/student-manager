@@ -1,6 +1,5 @@
 package com.agoni.security.utils;
 
-import com.agoni.dgy.model.po.User;
 import com.agoni.dgy.model.vo.AuthUserVo;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.core.Authentication;

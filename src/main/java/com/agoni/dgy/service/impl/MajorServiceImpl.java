@@ -4,7 +4,6 @@ import com.agoni.dgy.mapper.MajorMapper;
 import com.agoni.dgy.model.po.Major;
 import com.agoni.dgy.service.MajorService;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
