@@ -9,24 +9,17 @@ WORKDIR /app
 COPY src /app/src
 
 # 将pom.xml文件，拷贝到工作目录下
-#COPY settings.xml pom.xml /app/
-COPY pom.xml /app/
+COPY pom.xml /app
 
 # 执行代码编译命令
-# 自定义settings.xml, 选用国内镜像源以提高下载速度
-# RUN mvn -s /app/settings.xml -f /app/pom.xml clean package -Dspring.profiles.active=test
 RUN mvn -f /app/pom.xml clean package -Dspring.profiles.active=test
 
 # 选择运行时基础镜像
 FROM alpine:3.13
 
 # 安装依赖包，如需其他依赖包，请到alpine依赖包管理(https://pkgs.alpinelinux.org/packages?name=php8*imagick*&branch=v3.13)查找。
-# 选用国内镜像源以提高下载速度
-#RUN sed -i 's/dl-cdn.alpinelinux.org/mirrors.tencent.com/g' /etc/apk/repositories \
-#    && apk add --update --no-cache openjdk8-jre-base \
-#    && rm -f /var/cache/apk/*
 RUN apk add --update --no-cache openjdk8-jre-base \
-    && rm -f /var/cache/apk/* \
+    && rm -f /var/cache/apk/*
 
 # 指定运行时的工作目录
 WORKDIR /app
@@ -35,7 +28,7 @@ WORKDIR /app
 COPY --from=build /app/target/student_manager-0.0.1.jar .
 
 # 暴露端口
-EXPOSE 8081
+EXPOSE 80
 
 # 执行启动命令
 CMD ["java", "-jar", "/app/student_manager-0.0.1.jar", "--spring.profiles.active=test"]
