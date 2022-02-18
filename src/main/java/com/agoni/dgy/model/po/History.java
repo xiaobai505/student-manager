@@ -32,8 +32,8 @@ public class History extends AbstractEntity  implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
-    @TableId(value = "log_id", type = IdType.AUTO)
-    private Integer logId;
+    @TableId(value = "id", type = IdType.AUTO)
+    private Integer id;
 
     @TableField(value = "log_data",typeHandler = FastjsonTypeHandler.class)
     private JSONObject logData;
