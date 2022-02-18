@@ -31,7 +31,7 @@ WORKDIR /app
 COPY --from=build /app/target/student_manager-0.0.1.jar .
 
 # 暴露端口
-EXPOSE 80
+EXPOSE 8081
 
 # 执行启动命令
 CMD ["java", "-jar", "/app/student_manager-0.0.1.jar", "--spring.profiles.active=dev"]
