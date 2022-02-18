@@ -3,9 +3,9 @@ server:
 
 spring:
   datasource:
-    username: root
-    password: root.123
-    url: jdbc:mysql://sh-cynosdbmysql-grp-9glzrsc6.sql.tencentcdb.com:24091/student_status_management?characterEncoding=utf-8&useSSL=false
+    username: ${MYSQL_USERNAME}
+    password: ${MYSQL_PASSWORD}
+    url: jdbc:mysql://${MYSQL_ADDRESS}/${MYSQL_DATABASE}?characterEncoding=utf-8&useSSL=false
     driver-class-name: com.mysql.cj.jdbc.Driver
     type: com.alibaba.druid.pool.DruidDataSource
     # ???????????
