@@ -21,4 +21,9 @@ public class RedirectController {
         }
         return true;
     }
+
+    @GetMapping("/test")
+    public boolean checkToken(){
+        return true;
+    }
 }
