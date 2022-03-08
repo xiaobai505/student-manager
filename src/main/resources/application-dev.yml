@@ -23,7 +23,3 @@ spring:
     filters: stat,wall,slf4j
     connectionProperties: druid.stat.mergeSql=true;druid.stat.slowSqlMillis=5000
     platform: mysql
-
-  mvc:
-    pathmatch:
-      matching-strategy: ANT_PATH_MATCHER
