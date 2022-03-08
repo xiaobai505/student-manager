@@ -22,7 +22,6 @@ import java.util.List;
  */
 @RestController
 @RequestMapping("/dgy/role")
-@CrossOrigin
 public class RoleController {
 
     @Autowired
