@@ -17,12 +17,6 @@ public final class SecurityConstants {
     // JWT token defaults
     public static final String TOKEN_HEADER = "Authorization";
     public static final String TOKEN_PREFIX = "Bearer ";
-    public static final String TOKEN_TYPE = "JWT";
-    // System WHITELIST
-    public static final String[] SYSTEM_WHITELIST = {"/auth/**",};
-    // System WHITELIST
-    public static final String[] SYSTEM_WHITELIST2 = {"/dgy/user/**",};
-
-    public static final String[] SYSTEM_WHITELIST3 = {"/dgy/**",};
-
+    // 不校验的 URL
+    public static final String[] SYSTEM_WHITELIST = {"/auth/**","/wechat/**","/swagger**/**","/webjars/**","/v3/**","/doc.html"};
 }

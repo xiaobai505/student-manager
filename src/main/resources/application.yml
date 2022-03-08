@@ -17,9 +17,15 @@ mybatis-plus:
     cache-enabled: false
     log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
 
+# jwt创建 超时时间 和 密钥
 JWT:
   timeOut: 2
   SecurityKey: dgy
 
+# 微信登录
+weixin:
+  mp:
+    app-id: wxc2504a5dc7fddcfd
+    app-secret: db4bbad1ca7fcd5ec7e5c424d443d339
 
 

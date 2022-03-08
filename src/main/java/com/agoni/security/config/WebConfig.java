@@ -19,18 +19,4 @@ public class WebConfig implements WebMvcConfigurer {
 //        registry.addInterceptor(authInterceptor);
     }
 
-    /**
-     * 后端解决跨域问题
-     * @param registry
-     */
-    @Override
-    public void addCorsMappings(CorsRegistry registry) {
-        registry.addMapping("/**")
-                .allowedOrigins("*")
-                .allowedMethods("GET","POST","PUT","DELETE","HEAD","OPTIONS")
-                .allowedHeaders("*")
-                .exposedHeaders("Access-Control-Allow-Origin")
-                .allowCredentials(true);
-    }
-
 }

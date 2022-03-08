@@ -9,6 +9,8 @@ import com.agoni.dgy.model.vo.UserAndRole;
 import com.agoni.dgy.service.UserService;
 import com.agoni.security.utils.UserUtil;
 import com.baomidou.mybatisplus.core.metadata.IPage;
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -23,55 +25,31 @@ import org.springframework.web.bind.annotation.*;
  */
 @RestController
 @RequestMapping("/dgy/user")
-@CrossOrigin
 @Slf4j
+@Api(tags="用户")
 public class UserController {
 
     @Autowired
     private UserService userService;
 
-    @GetMapping("/get")
+    @GetMapping
+    @ApiOperation("获取用户")
     public AuthUserVo get(){
         AuthUserVo userPrincipal = UserUtil.getUserPrincipal();
         return userPrincipal;
     }
-    /**
-     * 查询多表关联用户信息
-     * @param from
-     * @return
-     */
-    @PostMapping("/selectPage")
-    public IPage<UserAndRole> selectPage(@RequestBody FromPage from) {
-        AuthUserVo authUser = UserUtil.getUserPrincipal();
-        log.info("AuthUserVo------------"+authUser.getUsername());
-        return userService.selectpage(from.getPage(), from.getUserAndRole());
-    }
 
-
-    /**
-     * 根据id更新用户信息
-     * @param user
-     * @return
-     */
-    @PostMapping("/updateById")
-    public boolean updateById(@RequestBody User user) {
-        return userService.updateById(user);
-    }
-    /**
-     * 新增用户 user
-     * @param user
-     */
-    @PostMapping("/saveOrUpdate")
+    @PostMapping
+    @ApiOperation("新增用户")
     public void saveOrUpdate(@RequestBody User user){
         userService.saveOrUpdate(user);
     }
 
-    /**
-     * 新增用户 user role major 信息
-     * @param addUserFrom
-     */
-    @PostMapping("/addUser")
-    public void addUser(@RequestBody AddUserFrom addUserFrom){
-        userService.saveUserAndRole(addUserFrom);
+    @PostMapping("/selectPage")
+    @ApiOperation("分页/条件获取用户")
+    public IPage<UserAndRole> selectPage(@RequestBody FromPage from) {
+        AuthUserVo authUser = UserUtil.getUserPrincipal();
+        log.info("AuthUserVo------------"+authUser.getUsername());
+        return userService.selectpage(from.getPage(), from.getUserAndRole());
     }
 }

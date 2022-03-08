@@ -25,7 +25,7 @@ import javax.annotation.Resource;
 @Configuration
 @EnableWebSecurity //启用web权限
 @EnableGlobalMethodSecurity(prePostEnabled = true) //启用方法验证
-public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
+public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Autowired
     LoginSuccessHandler loginSuccessHandler;
