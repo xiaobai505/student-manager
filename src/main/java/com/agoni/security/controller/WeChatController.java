@@ -20,21 +20,17 @@ public class WeChatController {
 
     private WxMpService wxMpService;
 
+
     @Autowired
     public void setWxMpService(WxMpService wxMpService) {
         this.wxMpService = wxMpService;
     }
 
     @GetMapping("/auth_url")
-    public String getAuthUrl(@PathParam("redirectUrl") String redirectUrl) {
-        redirectUrl = redirectUrl + "/wechat/invoke";
-        try {
-            redirectUrl = URLEncoder.encode(redirectUrl, "UTF-8");
-        } catch (UnsupportedEncodingException e) {
-            e.printStackTrace();
-        }
-        return wxMpService.getOAuth2Service()
-                .buildAuthorizationUrl(redirectUrl, WxConsts.OAuth2Scope.SNSAPI_USERINFO, null);
+    public String getAuthUrl() throws UnsupportedEncodingException {
+        String redirectUrl ="http://225h70r656.wicp.vip/wechat/invoke";
+        String encode = URLEncoder.encode(redirectUrl, "UTF-8");
+        return wxMpService.getOAuth2Service().buildAuthorizationUrl(encode, WxConsts.OAuth2Scope.SNSAPI_USERINFO, null);
     }
 
     @ResponseBody
