@@ -1,7 +1,6 @@
 package com.agoni.dgy.controller;
 
 
-import com.agoni.dgy.model.bo.AddUserFrom;
 import com.agoni.dgy.model.from.FromPage;
 import com.agoni.dgy.model.po.User;
 import com.agoni.dgy.model.vo.AuthUserVo;

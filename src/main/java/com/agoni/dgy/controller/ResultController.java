@@ -2,7 +2,6 @@ package com.agoni.dgy.controller;
 
 
 import com.agoni.dgy.model.po.Result;
-import com.agoni.dgy.model.vo.UserAndRole;
 import com.agoni.dgy.service.ResultService;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;

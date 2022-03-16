@@ -9,15 +9,15 @@ import me.chanjar.weixin.common.bean.oauth2.WxOAuth2AccessToken;
 import me.chanjar.weixin.common.error.WxErrorException;
 import me.chanjar.weixin.mp.api.WxMpService;
 import me.chanjar.weixin.mp.bean.result.WxMpQrCodeTicket;
-import me.chanjar.weixin.mp.bean.result.WxMpUser;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.RestController;
 
 import javax.servlet.http.HttpServletRequest;
-import javax.websocket.server.PathParam;
 import java.io.File;
 import java.io.UnsupportedEncodingException;
-import java.net.URLEncoder;
 
 @RestController
 @RequestMapping("/wechat")
@@ -42,7 +42,7 @@ public class WeChatController {
 
     @ResponseBody
     @GetMapping("invoke")
-    @ApiOperation("微信用户授权后回调接口")
+    @ApiOperation("回调接口，获得用户信息")
     public Object weChatInvoke(HttpServletRequest httpServletRequest) {
         String code = httpServletRequest.getParameter("code");
         log.info("code:"+code);
@@ -56,13 +56,20 @@ public class WeChatController {
         return null;
     }
 
-    @ResponseBody
+
     @GetMapping
-    @ApiOperation("生成一个二维码")
-    public Object test() throws WxErrorException {
+    @ApiOperation("二维码Url")
+    public Object pictureUrl() throws WxErrorException {
         WxMpQrCodeTicket ticket = wxMpService.getQrcodeService().qrCodeCreateTmpTicket(123, 123455);
-        File file = wxMpService.getQrcodeService().qrCodePicture(ticket);
-        return file;
+        return wxMpService.getQrcodeService().qrCodePictureUrl(ticket.getTicket());
+    }
+
+    @ResponseBody
+    @GetMapping("/file")
+    @ApiOperation("二维码图片")
+    public Object pictureFile() throws WxErrorException {
+        WxMpQrCodeTicket ticket = wxMpService.getQrcodeService().qrCodeCreateTmpTicket(123, 123455);
+        return wxMpService.getQrcodeService().qrCodePicture(ticket);
     }
 
 }
