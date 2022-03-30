@@ -12,7 +12,12 @@ import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
+import java.util.stream.Collectors;
 
 /**
  * <p>
@@ -40,15 +45,29 @@ public class UserController {
 
     @PostMapping
     @ApiOperation("新增用户")
-    public void saveOrUpdate(@RequestBody User user){
-        userService.saveOrUpdate(user);
+    public ResponseEntity<Boolean> saveBatch(@RequestBody List<User> user){
+        boolean b = userService.saveBatch(user);
+        return new ResponseEntity<Boolean>(b, HttpStatus.OK);
+    }
+
+    @PutMapping
+    @ApiOperation("更新用户")
+    public ResponseEntity<Boolean> updateBatchById(@RequestBody List<User> user){
+        boolean b = userService.updateBatchById(user);
+        return new ResponseEntity<Boolean>(b, HttpStatus.OK);
+    }
+
+    @DeleteMapping
+    @ApiOperation("更新用户")
+    public ResponseEntity<Boolean> removeByIds(@RequestBody List<User> userList){
+        List<Long> ids = userList.stream().map(User::getId).collect(Collectors.toList());
+        boolean b = userService.removeByIds(ids);
+        return new ResponseEntity<Boolean>(b, HttpStatus.OK);
     }
 
     @PostMapping("/selectPage")
     @ApiOperation("分页/条件获取用户")
     public IPage<UserAndRole> selectPage(@RequestBody FromPage from) {
-        AuthUserVo authUser = UserUtil.getUserPrincipal();
-        log.info("AuthUserVo------------"+authUser.getUsername());
         return userService.selectpage(from.getPage(), from.getUserAndRole());
     }
 }
