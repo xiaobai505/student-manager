@@ -37,6 +37,7 @@ public class UserController {
     @Autowired
     private UserService userService;
 
+    @GetMapping
     @ApiOperation("获取用户")
     public AuthUserVo get(){
         AuthUserVo userPrincipal = UserUtil.getUserPrincipal();
@@ -47,9 +48,9 @@ public class UserController {
     @ApiOperation("用户列表")
     public IPage<UserAndRole> pageUser(@RequestParam(value = "pageSize") Long pageSize,
                                        @RequestParam(value = "currentPage") Long current,
-                                       @RequestParam(value = "name",defaultValue = "") String name){
-        System.out.printf("");
-        return userService.selectpage(new Page<>(), new UserAndRole());
+                                       @RequestParam(value = "name",defaultValue = "") String name,
+                                       @RequestParam(value = "roles",defaultValue = "") String roles){
+        return userService.selectpage(new Page(current,pageSize), new UserAndRole());
     }
 
     @PostMapping
