@@ -18,7 +18,7 @@
             AND t1.name like concat("%",#{userAndRole.name},"%")
         </if>
         <if test="userAndRole.roles != null and userAndRole.roles != ''">
-            AND t2.roles like concat("%",#{userAndRole.roles},"%")
+            AND t2.roleIds like concat("%",#{userAndRole.roles},"%")
         </if>
     </select>
 </mapper>

@@ -1,7 +1,6 @@
 package com.agoni.dgy.controller;
 
 
-import com.agoni.dgy.model.from.FromPage;
 import com.agoni.dgy.model.po.User;
 import com.agoni.dgy.model.vo.AuthUserVo;
 import com.agoni.dgy.model.vo.UserAndRole;
@@ -46,11 +45,15 @@ public class UserController {
 
     @GetMapping("/page")
     @ApiOperation("用户列表")
-    public IPage<UserAndRole> pageUser(@RequestParam(value = "pageSize") Long pageSize,
+    public IPage<UserAndRole> pageUser(@RequestParam(value = "pageSize") Long Size,
                                        @RequestParam(value = "currentPage") Long current,
                                        @RequestParam(value = "name",defaultValue = "") String name,
                                        @RequestParam(value = "roles",defaultValue = "") String roles){
-        return userService.selectpage(new Page(current,pageSize), new UserAndRole());
+        UserAndRole userAndRole = UserAndRole.builder().name(name).roles(roles).build();
+        Page<UserAndRole> page =new Page<>();
+        page.setSize(Size);
+        page.setCurrent(current);
+        return userService.selectpage(page, userAndRole);
     }
 
     @PostMapping
@@ -73,11 +76,5 @@ public class UserController {
         List<Long> ids = userList.stream().map(User::getId).collect(Collectors.toList());
         boolean b = userService.removeByIds(ids);
         return new ResponseEntity<Boolean>(b, HttpStatus.OK);
-    }
-
-    @PostMapping("/selectPage")
-    @ApiOperation("分页/条件获取用户")
-    public IPage<UserAndRole> selectPage(@RequestBody FromPage from) {
-        return userService.selectpage(from.getPage(), from.getUserAndRole());
     }
 }
