@@ -45,7 +45,7 @@ public class UserController {
 
     @GetMapping("/page")
     @ApiOperation("用户列表")
-    public IPage<UserAndRole> pageUser(@RequestParam(value = "pageSize") Long Size,
+    public ResponseEntity<IPage> pageUser(@RequestParam(value = "pageSize") Long Size,
                                        @RequestParam(value = "currentPage") Long current,
                                        @RequestParam(value = "name",defaultValue = "") String name,
                                        @RequestParam(value = "roles",defaultValue = "") String roles){
@@ -53,7 +53,8 @@ public class UserController {
         Page<UserAndRole> page =new Page<>();
         page.setSize(Size);
         page.setCurrent(current);
-        return userService.selectpage(page, userAndRole);
+        IPage<UserAndRole> res = userService.selectpage(page, userAndRole);
+        return new ResponseEntity<IPage>(res, HttpStatus.OK);
     }
 
     @PostMapping

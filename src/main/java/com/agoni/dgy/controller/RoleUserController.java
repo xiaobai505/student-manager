@@ -6,6 +6,8 @@ import com.agoni.dgy.model.po.RoleUser;
 import com.agoni.dgy.service.RoleUserService;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -26,13 +28,17 @@ import java.util.List;
 public class RoleUserController {
     @Autowired
     private RoleUserService roleUserService;
-
-
-    @GetMapping("/list/{id}")
-    public List<RoleUser> get(@PathVariable Long id) {
+    
+    @GetMapping("/{id}")
+    public List<RoleUser> getByid(@PathVariable Long id) {
         QueryWrapper<Role> Wrapper = new QueryWrapper<>();
         List<RoleUser> list = roleUserService.list();
         return list;
     }
-
+    
+    @GetMapping("/list")
+    public ResponseEntity<List<RoleUser>> list() {
+        List<RoleUser> list = roleUserService.list();
+        return new ResponseEntity<List<RoleUser>>(list, HttpStatus.OK);
+    }
 }
