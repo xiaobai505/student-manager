@@ -47,7 +47,7 @@ public class RoleUser extends AbstractEntity  implements Serializable {
     private String roleName;
 
     @ApiModelProperty("状态")
-    @TableField("Status")
-    private String status;
+    @TableField("state")
+    private String state;
 
 }

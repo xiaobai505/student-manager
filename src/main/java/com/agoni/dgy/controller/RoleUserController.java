@@ -24,15 +24,16 @@ import java.util.List;
  * @since 2021-12-22
  */
 @RestController
-@RequestMapping("/dgy/role-user")
+@RequestMapping("/dgy/roleUser")
 public class RoleUserController {
     @Autowired
     private RoleUserService roleUserService;
     
     @GetMapping("/{id}")
     public List<RoleUser> getByid(@PathVariable Long id) {
-        QueryWrapper<Role> Wrapper = new QueryWrapper<>();
-        List<RoleUser> list = roleUserService.list();
+        QueryWrapper<RoleUser> wrapper = new QueryWrapper<>();
+        wrapper.lambda().eq(RoleUser::getUserId,id);
+        List<RoleUser> list = roleUserService.list(wrapper);
         return list;
     }
     
