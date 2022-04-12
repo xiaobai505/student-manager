@@ -30,11 +30,11 @@ public class RoleUserController {
     private RoleUserService roleUserService;
     
     @GetMapping("/{id}")
-    public List<RoleUser> getByid(@PathVariable Long id) {
+    public ResponseEntity<List<RoleUser>>getByid(@PathVariable Long id) {
         QueryWrapper<RoleUser> wrapper = new QueryWrapper<>();
         wrapper.lambda().eq(RoleUser::getUserId,id);
         List<RoleUser> list = roleUserService.list(wrapper);
-        return list;
+        return new ResponseEntity<List<RoleUser>>(list, HttpStatus.OK);
     }
     
     @GetMapping("/list")
