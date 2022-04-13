@@ -3,6 +3,7 @@ package com.agoni.dgy.controller;
 
 import com.agoni.dgy.model.po.Role;
 import com.agoni.dgy.model.po.RoleUser;
+import com.agoni.dgy.model.po.User;
 import com.agoni.dgy.service.RoleUserService;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 /**
  * <p>
@@ -30,11 +32,12 @@ public class RoleUserController {
     private RoleUserService roleUserService;
     
     @GetMapping("/{id}")
-    public ResponseEntity<List<RoleUser>>getByid(@PathVariable Long id) {
+    public ResponseEntity<List<Long>> getByid(@PathVariable Long id) {
         QueryWrapper<RoleUser> wrapper = new QueryWrapper<>();
         wrapper.lambda().eq(RoleUser::getUserId,id);
         List<RoleUser> list = roleUserService.list(wrapper);
-        return new ResponseEntity<List<RoleUser>>(list, HttpStatus.OK);
+        List<Long> ids = list.stream().map(RoleUser::getRoleId).collect(Collectors.toList());
+        return new ResponseEntity<List<Long>>(ids, HttpStatus.OK);
     }
     
     @GetMapping("/list")
