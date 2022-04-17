@@ -9,10 +9,7 @@ import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -45,4 +42,23 @@ public class RoleUserController {
         List<RoleUser> list = roleUserService.list();
         return new ResponseEntity<List<RoleUser>>(list, HttpStatus.OK);
     }
+    
+    @PostMapping("/{id}")
+    public ResponseEntity<Boolean> save(@PathVariable Long id) {
+        boolean save = roleUserService.save(null);
+        return new ResponseEntity<Boolean>(save, HttpStatus.OK);
+    }
+    
+    @PutMapping("/{id}")
+    public ResponseEntity<Boolean> update(@PathVariable Long id) {
+        boolean save = roleUserService.update(null);
+        return new ResponseEntity<Boolean>(save, HttpStatus.OK);
+    }
+    
+    @PutMapping("/{id}")
+    public ResponseEntity<Boolean> delete(@PathVariable Long id) {
+        boolean res = roleUserService.removeByIds(null);
+        return new ResponseEntity<Boolean>(res, HttpStatus.OK);
+    }
+    
 }
