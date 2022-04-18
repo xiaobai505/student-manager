@@ -33,7 +33,7 @@ public class RoleController {
     @PostMapping("/Page")
     @ApiOperation("分页获取角色信息")
     public ResponseEntity<Page> Page(@RequestBody Page page) {
-        Page res = roleService.page(page,new QueryWrapper<>());
+        Page res = roleService.page(page, new QueryWrapper<>());
         return new ResponseEntity<>(res, HttpStatus.OK);
     }
 

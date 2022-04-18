@@ -1,11 +1,9 @@
 package com.agoni.dgy.controller;
 
 
-import com.agoni.dgy.model.po.Role;
-import com.agoni.dgy.model.po.RoleUser;
-import com.agoni.dgy.model.po.User;
+import com.agoni.dgy.model.vo.RoleUserVo;
 import com.agoni.dgy.service.RoleUserService;
-import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -28,37 +26,19 @@ public class RoleUserController {
     @Autowired
     private RoleUserService roleUserService;
     
-    @GetMapping("/{id}")
-    public ResponseEntity<List<Long>> getByid(@PathVariable Long id) {
-        QueryWrapper<RoleUser> wrapper = new QueryWrapper<>();
-        wrapper.lambda().eq(RoleUser::getUserId,id);
-        List<RoleUser> list = roleUserService.list(wrapper);
-        List<Long> ids = list.stream().map(RoleUser::getRoleId).collect(Collectors.toList());
+    @GetMapping("/{userId}")
+    @ApiOperation("根据用户ID获取角色信息")
+    public ResponseEntity<List<Long>> getByUserId(@PathVariable Long userId) {
+        List<RoleUserVo> roleUserVos = roleUserService.getRolebyUserId(userId);
+        List<Long> ids = roleUserVos.stream().map(RoleUserVo::getRoleId).collect(Collectors.toList());
         return new ResponseEntity<List<Long>>(ids, HttpStatus.OK);
     }
     
-    @GetMapping("/list")
-    public ResponseEntity<List<RoleUser>> list() {
-        List<RoleUser> list = roleUserService.list();
-        return new ResponseEntity<List<RoleUser>>(list, HttpStatus.OK);
-    }
-    
-    @PostMapping("/{id}")
-    public ResponseEntity<Boolean> save(@PathVariable Long id) {
-        boolean save = roleUserService.save(null);
+    @PostMapping("/{userId}")
+    @ApiOperation("根据用户ID添加角色信息")
+    public ResponseEntity<Boolean> saveByUserId(@PathVariable Long userId, List<Long> ids) {
+        boolean save = roleUserService.saveByUserId(userId,ids);
         return new ResponseEntity<Boolean>(save, HttpStatus.OK);
-    }
-    
-    @PutMapping("/{id}")
-    public ResponseEntity<Boolean> update(@PathVariable Long id) {
-        boolean save = roleUserService.update(null);
-        return new ResponseEntity<Boolean>(save, HttpStatus.OK);
-    }
-    
-    @PutMapping("/{id}")
-    public ResponseEntity<Boolean> delete(@PathVariable Long id) {
-        boolean res = roleUserService.removeByIds(null);
-        return new ResponseEntity<Boolean>(res, HttpStatus.OK);
     }
     
 }

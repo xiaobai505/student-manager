@@ -21,7 +21,11 @@ public interface RoleUserService extends IService<RoleUser> {
      * @param id
      * @return list
      */
-    List<RoleUserVo> selectRolebyUserId(Long id);
+    List<RoleUserVo> getRolebyUserId(Long id);
 
     List<String> getSchoolList();
+    
+    boolean saveByUserId(Long userId, List<Long> ids);
+    
+
 }

@@ -5,7 +5,6 @@ import com.agoni.dgy.model.po.Major;
 import com.agoni.dgy.model.po.RoleUser;
 import com.agoni.dgy.model.vo.RoleUserVo;
 import com.agoni.dgy.service.MajorService;
-import com.agoni.dgy.service.RoleService;
 import com.agoni.dgy.service.RoleUserService;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -29,14 +28,11 @@ public class RoleUserServiceImpl extends ServiceImpl<RoleUserMapper, RoleUser> i
     private RoleUserMapper roleUserMapper;
 
     @Autowired
-    private RoleService roleService;
-
-    @Autowired
     private MajorService majorService;
 
 
     @Override
-    public List<RoleUserVo> selectRolebyUserId(Long id) {
+    public List<RoleUserVo> getRolebyUserId(Long id) {
         List<RoleUserVo> roleUserVos = roleUserMapper.selectUserAndRole(id);
         return roleUserVos;
     }
@@ -47,5 +43,11 @@ public class RoleUserServiceImpl extends ServiceImpl<RoleUserMapper, RoleUser> i
         List<String> schoolList = mjlist.stream().map(Major::getSchool).distinct().collect(Collectors.toList());
         return schoolList;
     }
-
+    
+    @Override
+    public boolean saveByUserId(Long userId, List<Long> ids) {
+        
+        return false;
+    }
+    
 }

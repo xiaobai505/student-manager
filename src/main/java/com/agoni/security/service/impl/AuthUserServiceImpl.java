@@ -50,7 +50,7 @@ public class AuthUserServiceImpl implements AuthUserService {
         queryWrapper.lambda().eq(User::getUsername,username);
         User user = userService.getOne(queryWrapper);
         // 2： 根据用户id查询权限
-        List<RoleUserVo> authlist = roleUserService.selectRolebyUserId(user.getId());
+        List<RoleUserVo> authlist = roleUserService.getRolebyUserId(user.getId());
         List<String> codeList = authlist.stream().map(RoleUserVo::getRoleCode).collect(Collectors.toList());
         Iterator<String> iterator = codeList.iterator();
         List<SimpleGrantedAuthority> roles=new ArrayList<SimpleGrantedAuthority>();
