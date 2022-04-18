@@ -4,6 +4,7 @@ package com.agoni.dgy.controller;
 import com.agoni.dgy.model.vo.RoleUserVo;
 import com.agoni.dgy.service.RoleUserService;
 import io.swagger.annotations.ApiOperation;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -22,6 +23,7 @@ import java.util.stream.Collectors;
  */
 @RestController
 @RequestMapping("/dgy/roleUser")
+@Slf4j
 public class RoleUserController {
     @Autowired
     private RoleUserService roleUserService;
@@ -36,8 +38,9 @@ public class RoleUserController {
     
     @PostMapping("/{userId}")
     @ApiOperation("根据用户ID添加角色信息")
-    public ResponseEntity<Boolean> saveByUserId(@PathVariable Long userId, List<Long> ids) {
-        boolean save = roleUserService.saveByUserId(userId,ids);
+    public ResponseEntity<Boolean> saveByUserId(@PathVariable Long userId,String ids) {
+        log.info(ids.toString());
+        boolean save = roleUserService.saveByUserId(null,null);
         return new ResponseEntity<Boolean>(save, HttpStatus.OK);
     }
     

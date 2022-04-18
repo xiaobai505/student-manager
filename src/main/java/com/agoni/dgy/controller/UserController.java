@@ -37,7 +37,7 @@ public class UserController {
     private UserService userService;
 
     @GetMapping
-    @ApiOperation("获取用户")
+    @ApiOperation("获取登录用户")
     public AuthUserVo get(){
         AuthUserVo userPrincipal = UserUtil.getUserPrincipal();
         return userPrincipal;
@@ -72,7 +72,7 @@ public class UserController {
     }
 
     @DeleteMapping
-    @ApiOperation("更新用户")
+    @ApiOperation("删除用户")
     public ResponseEntity<Boolean> removeByIds(@RequestBody List<User> userList){
         List<Long> ids = userList.stream().map(User::getId).collect(Collectors.toList());
         boolean b = userService.removeByIds(ids);

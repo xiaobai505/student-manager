@@ -3,8 +3,8 @@
 <mapper namespace="com.agoni.dgy.mapper.RoleUserMapper">
 
     <select id="selectUserAndRole" resultType="com.agoni.dgy.model.vo.RoleUserVo">
-        SELECT t.user_id,r.role_code,r.role_name,r.role_type FROM tb_role_user t
-        LEFT JOIN ( SELECT * FROM tb_role WHERE del_flag = 0 ) r ON r.id = t.role_id
+        SELECT t.user_id,t.role_id,r.role_code,r.role_name,r.role_type FROM student_status_management.tb_role_user t
+        LEFT JOIN ( SELECT * FROM student_status_management.tb_role WHERE del_flag = 0 ) r ON r.id = t.role_id
         WHERE t.del_flag=0
         <if test="id != null">
             AND t.user_id = #{id}
