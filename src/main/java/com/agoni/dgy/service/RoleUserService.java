@@ -25,6 +25,12 @@ public interface RoleUserService extends IService<RoleUser> {
 
     List<String> getSchoolList();
     
+    /**
+     * 根据 user_id 提交用户权限
+     * @param userId 用户id
+     * @param ids 提交的权限id
+     * @return boolean
+     */
     boolean saveByUserId(Long userId, List<Long> ids);
     
 

@@ -7,6 +7,7 @@ import com.agoni.dgy.model.vo.RoleUserVo;
 import com.agoni.dgy.service.MajorService;
 import com.agoni.dgy.service.RoleUserService;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -22,6 +23,7 @@ import java.util.stream.Collectors;
  * @since 2021-12-22
  */
 @Service
+@Slf4j
 public class RoleUserServiceImpl extends ServiceImpl<RoleUserMapper, RoleUser> implements RoleUserService {
 
     @Autowired
@@ -46,7 +48,9 @@ public class RoleUserServiceImpl extends ServiceImpl<RoleUserMapper, RoleUser> i
     
     @Override
     public boolean saveByUserId(Long userId, List<Long> ids) {
-        
+        List<RoleUserVo> roles = getRolebyUserId(userId);
+        List<Long> nowIds = roles.stream().map(RoleUserVo::getRoleId).collect(Collectors.toList());
+        log.info("这个用户现在拥有的权限是：" + nowIds.toString());
         return false;
     }
     

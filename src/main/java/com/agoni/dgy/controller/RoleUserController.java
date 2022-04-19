@@ -25,6 +25,7 @@ import java.util.stream.Collectors;
 @RequestMapping("/dgy/roleUser")
 @Slf4j
 public class RoleUserController {
+    
     @Autowired
     private RoleUserService roleUserService;
     
@@ -33,15 +34,14 @@ public class RoleUserController {
     public ResponseEntity<List<Long>> getByUserId(@PathVariable Long userId) {
         List<RoleUserVo> roleUserVos = roleUserService.getRolebyUserId(userId);
         List<Long> ids = roleUserVos.stream().map(RoleUserVo::getRoleId).collect(Collectors.toList());
-        return new ResponseEntity<List<Long>>(ids, HttpStatus.OK);
+        return new ResponseEntity<>(ids, HttpStatus.OK);
     }
     
     @PostMapping("/{userId}")
     @ApiOperation("根据用户ID添加角色信息")
-    public ResponseEntity<Boolean> saveByUserId(@PathVariable Long userId,String ids) {
-        log.info(ids.toString());
-        boolean save = roleUserService.saveByUserId(null,null);
-        return new ResponseEntity<Boolean>(save, HttpStatus.OK);
+    public ResponseEntity<Boolean> saveByUserId(@PathVariable Long userId, @RequestBody List<Long> ids) {
+        boolean save = roleUserService.saveByUserId(userId,ids);
+        return new ResponseEntity<>(save, HttpStatus.OK);
     }
     
 }
