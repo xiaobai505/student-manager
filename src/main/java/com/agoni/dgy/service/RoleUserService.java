@@ -33,5 +33,13 @@ public interface RoleUserService extends IService<RoleUser> {
      */
     boolean saveByUserId(Long userId, List<Long> ids);
     
-
+    
+    /**
+     * 根据 user_id 删除用户权限
+     * @param userId
+     *
+     * @return boolean
+     */
+    boolean removeByUserid(Long userId);
+    
 }

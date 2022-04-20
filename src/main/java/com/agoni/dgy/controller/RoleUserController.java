@@ -10,6 +10,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotNull;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -39,7 +41,7 @@ public class RoleUserController {
     
     @PostMapping("/{userId}")
     @ApiOperation("根据用户ID添加角色信息")
-    public ResponseEntity<Boolean> saveByUserId(@PathVariable Long userId, @RequestBody List<Long> ids) {
+    public ResponseEntity<Boolean> saveByUserId(@PathVariable @NotNull Long userId , @RequestBody @NotEmpty List<Long> ids) {
         boolean save = roleUserService.saveByUserId(userId,ids);
         return new ResponseEntity<>(save, HttpStatus.OK);
     }
