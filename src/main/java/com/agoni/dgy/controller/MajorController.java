@@ -1,12 +1,14 @@
 package com.agoni.dgy.controller;
 
 
+import com.agoni.dgy.model.bo.MajorSearchFilter;
 import com.agoni.dgy.model.po.Major;
 import com.agoni.dgy.model.vo.UserAndRole;
 import com.agoni.dgy.service.MajorService;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -25,6 +27,13 @@ public class MajorController {
 
     @Autowired
     private MajorService majorService;
+    
+    @GetMapping
+    public IPage<Major> page(@Validated MajorSearchFilter majorSearchFilter){
+        System.out.printf("majorSearchFilter :"+ majorSearchFilter.toString());
+        return null;
+    }
+    
 
     @PostMapping("/page")
     public IPage<UserAndRole> page(@RequestBody Page page) {
