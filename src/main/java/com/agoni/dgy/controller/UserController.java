@@ -1,19 +1,20 @@
 package com.agoni.dgy.controller;
 
 
+import com.agoni.dgy.model.bo.UserSearchFrom;
 import com.agoni.dgy.model.po.User;
 import com.agoni.dgy.model.vo.AuthUserVo;
 import com.agoni.dgy.model.vo.UserAndRole;
 import com.agoni.dgy.service.UserService;
 import com.agoni.security.utils.UserUtil;
 import com.baomidou.mybatisplus.core.metadata.IPage;
-import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -45,15 +46,9 @@ public class UserController {
 
     @GetMapping("/page")
     @ApiOperation("用户列表")
-    public ResponseEntity<IPage> pageUser(@RequestParam(value = "pageSize") Long Size,
-                                       @RequestParam(value = "currentPage") Long current,
-                                       @RequestParam(value = "name",defaultValue = "") String name,
-                                       @RequestParam(value = "roles",defaultValue = "") String roles){
-        UserAndRole userAndRole = UserAndRole.builder().name(name).roles(roles).build();
-        Page<UserAndRole> page =new Page<>();
-        page.setSize(Size);
-        page.setCurrent(current);
-        IPage<UserAndRole> res = userService.selectpage(page, userAndRole);
+    public ResponseEntity<IPage> pageUser(@Validated UserSearchFrom userSearchFrom){
+        UserAndRole userAndRole = UserAndRole.builder().name(userSearchFrom.getName()).roles(userSearchFrom.getRoles()).build();
+        IPage<UserAndRole> res = userService.selectpage(userSearchFrom, userAndRole);
         return new ResponseEntity<IPage>(res, HttpStatus.OK);
     }
 
