@@ -6,10 +6,13 @@ import com.agoni.dgy.model.po.Major;
 import com.agoni.dgy.service.MajorService;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 /**
  * <p>
@@ -27,22 +30,33 @@ public class MajorController {
     private MajorService majorService;
     
     @GetMapping
-    public IPage<Major> page(@Validated MajorSearchFrom majorSearchFrom){
-        return majorService.page(majorSearchFrom);
+    public ResponseEntity<IPage> majorPage(@Validated MajorSearchFrom from) {
+        IPage<Major> res = majorService.majorPage(from);
+        return new ResponseEntity<IPage>(res, HttpStatus.OK);
     }
     
-    @PostMapping("/saveOrUpdate")
-    public boolean saveOrUpdate(@RequestBody Major major) {
-        return majorService.saveOrUpdate(major);
+    @PostMapping
+    public ResponseEntity<Boolean> save(@RequestBody List<Major> major) {
+        boolean b = majorService.saveBatch(major);
+        return new ResponseEntity<Boolean>(b, HttpStatus.OK);
+    }
+    
+    @PutMapping
+    public ResponseEntity<Boolean> updateBatchById(@RequestBody List<Major> majorList) {
+        boolean b = majorService.updateBatchById(majorList);
+        return new ResponseEntity<Boolean>(b, HttpStatus.OK);
+    }
+    
+    @DeleteMapping
+    public ResponseEntity<Boolean>  delete(@RequestBody List<Major> majorList){
+        List<Integer> ids = majorList.stream().map(Major::getId).collect(Collectors.toList());
+        boolean b = majorService.removeByIds(ids);
+        return new ResponseEntity<Boolean>(b, HttpStatus.OK);
     }
 
-    @DeleteMapping("/deleteById/{id}")
+    @DeleteMapping("/{id}")
     public boolean deleteById(@PathVariable Long id){
         return majorService.removeById(id);
     }
-
-    @GetMapping("/list")
-    public List<Major> list(){
-        return majorService.list();
-    }
+    
 }

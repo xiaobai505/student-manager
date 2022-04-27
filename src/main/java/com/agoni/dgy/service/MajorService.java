@@ -1,6 +1,8 @@
 package com.agoni.dgy.service;
 
+import com.agoni.dgy.model.bo.MajorSearchFrom;
 import com.agoni.dgy.model.po.Major;
+import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.service.IService;
 
 import java.util.List;
@@ -16,4 +18,6 @@ import java.util.List;
 public interface MajorService extends IService<Major> {
 
     List<Major> getSchoolList();
+    
+    IPage<Major> majorPage(MajorSearchFrom from);
 }

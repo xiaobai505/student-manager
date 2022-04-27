@@ -6,6 +6,8 @@ import lombok.Data;
 @Data
 public class MajorSearchFrom extends Page {
     
-    private String name;
+    private String school;
+    
+    private String major;
     
 }

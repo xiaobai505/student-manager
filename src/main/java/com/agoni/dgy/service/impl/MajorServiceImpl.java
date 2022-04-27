@@ -1,8 +1,12 @@
 package com.agoni.dgy.service.impl;
 
 import com.agoni.dgy.mapper.MajorMapper;
+import com.agoni.dgy.model.bo.MajorSearchFrom;
 import com.agoni.dgy.model.po.Major;
 import com.agoni.dgy.service.MajorService;
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import com.baomidou.mybatisplus.core.metadata.IPage;
+import com.baomidou.mybatisplus.core.toolkit.StringUtils;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import org.springframework.stereotype.Service;
 
@@ -29,5 +33,14 @@ public class MajorServiceImpl extends ServiceImpl<MajorMapper, Major> implements
 
         List<String> schoolList = mjlist.stream().map(Major::getSchool).distinct().collect(Collectors.toList());
         return mjlist;
+    }
+    
+    @Override
+    public IPage<Major> majorPage(MajorSearchFrom from) {
+        QueryWrapper<Major> query = new QueryWrapper<>();
+        query.lambda()
+                .likeRight(StringUtils.isNotEmpty(from.getSchool()), Major::getSchool, from.getSchool())
+                .likeRight(StringUtils.isNotEmpty(from.getMajor()), Major::getMajor, from.getMajor());
+        return page(from, query);
     }
 }

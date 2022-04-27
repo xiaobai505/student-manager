@@ -10,6 +10,4 @@ public class UserSearchFrom extends Page {
     
     private String roles;
     
-    private long currentPage;
-    
 }
