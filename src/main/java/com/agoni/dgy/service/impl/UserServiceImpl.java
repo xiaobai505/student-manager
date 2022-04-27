@@ -4,6 +4,7 @@ import com.agoni.dgy.mapper.MajorMapper;
 import com.agoni.dgy.mapper.RoleMapper;
 import com.agoni.dgy.mapper.UserMapper;
 import com.agoni.dgy.model.bo.AddUserFrom;
+import com.agoni.dgy.model.bo.UserSearchFrom;
 import com.agoni.dgy.model.po.Major;
 import com.agoni.dgy.model.po.Role;
 import com.agoni.dgy.model.po.User;
@@ -11,7 +12,6 @@ import com.agoni.dgy.model.vo.UserAndRole;
 import com.agoni.dgy.service.UserService;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
-import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -37,8 +37,10 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
     private MajorMapper majorMapper;
 
     @Override
-    public IPage<UserAndRole> selectpage(Page<UserAndRole> page, UserAndRole userAndRole) {
-        return userMapper.selectUserAndRolepage(page,userAndRole);
+    public IPage<UserAndRole> pageUser(UserSearchFrom userSearchFrom) {
+        UserAndRole userAndRole = UserAndRole.builder().name(userSearchFrom.getName())
+                .roles(userSearchFrom.getRoles()).build();
+        return userMapper.selectUserAndRolepage(userSearchFrom,userAndRole);
     }
 
     @Override

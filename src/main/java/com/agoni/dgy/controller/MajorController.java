@@ -32,26 +32,26 @@ public class MajorController {
     @GetMapping
     public ResponseEntity<IPage> majorPage(@Validated MajorSearchFrom from) {
         IPage<Major> res = majorService.majorPage(from);
-        return new ResponseEntity<IPage>(res, HttpStatus.OK);
+        return new ResponseEntity<>(res, HttpStatus.OK);
     }
     
     @PostMapping
     public ResponseEntity<Boolean> save(@RequestBody List<Major> major) {
         boolean b = majorService.saveBatch(major);
-        return new ResponseEntity<Boolean>(b, HttpStatus.OK);
+        return new ResponseEntity<>(b, HttpStatus.OK);
     }
     
     @PutMapping
     public ResponseEntity<Boolean> updateBatchById(@RequestBody List<Major> majorList) {
         boolean b = majorService.updateBatchById(majorList);
-        return new ResponseEntity<Boolean>(b, HttpStatus.OK);
+        return new ResponseEntity<>(b, HttpStatus.OK);
     }
     
     @DeleteMapping
     public ResponseEntity<Boolean>  delete(@RequestBody List<Major> majorList){
         List<Integer> ids = majorList.stream().map(Major::getId).collect(Collectors.toList());
         boolean b = majorService.removeByIds(ids);
-        return new ResponseEntity<Boolean>(b, HttpStatus.OK);
+        return new ResponseEntity<>(b, HttpStatus.OK);
     }
 
     @DeleteMapping("/{id}")

@@ -47,23 +47,22 @@ public class UserController {
     @GetMapping("/page")
     @ApiOperation("用户列表")
     public ResponseEntity<IPage> pageUser(@Validated UserSearchFrom userSearchFrom){
-        UserAndRole userAndRole = UserAndRole.builder().name(userSearchFrom.getName()).roles(userSearchFrom.getRoles()).build();
-        IPage<UserAndRole> res = userService.selectpage(userSearchFrom, userAndRole);
-        return new ResponseEntity<IPage>(res, HttpStatus.OK);
+        IPage<UserAndRole> res = userService.pageUser(userSearchFrom);
+        return new ResponseEntity<>(res, HttpStatus.OK);
     }
 
     @PostMapping
     @ApiOperation("新增用户")
     public ResponseEntity<Boolean> saveBatch(@RequestBody List<User> user){
         boolean b = userService.saveBatch(user);
-        return new ResponseEntity<Boolean>(b, HttpStatus.OK);
+        return new ResponseEntity<>(b, HttpStatus.OK);
     }
 
     @PutMapping
     @ApiOperation("更新用户")
     public ResponseEntity<Boolean> updateBatchById(@RequestBody List<User> user){
         boolean b = userService.updateBatchById(user);
-        return new ResponseEntity<Boolean>(b, HttpStatus.OK);
+        return new ResponseEntity<>(b, HttpStatus.OK);
     }
 
     @DeleteMapping
@@ -71,6 +70,6 @@ public class UserController {
     public ResponseEntity<Boolean> removeByIds(@RequestBody List<User> userList){
         List<Long> ids = userList.stream().map(User::getId).collect(Collectors.toList());
         boolean b = userService.removeByIds(ids);
-        return new ResponseEntity<Boolean>(b, HttpStatus.OK);
+        return new ResponseEntity<>(b, HttpStatus.OK);
     }
 }
