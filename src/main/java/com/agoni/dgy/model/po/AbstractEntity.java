@@ -1,8 +1,9 @@
 package com.agoni.dgy.model.po;
 
 
-import com.baomidou.mybatisplus.annotation.TableField;
-import com.baomidou.mybatisplus.annotation.TableLogic;
+import com.baomidou.mybatisplus.annotation.*;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+import com.fasterxml.jackson.databind.ser.std.ToStringSerializer;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -16,32 +17,33 @@ import java.time.LocalDateTime;
 @NoArgsConstructor
 @AllArgsConstructor
 public abstract class AbstractEntity {
-
-    //@Id
-    //private String id;
+    
+    @ApiModelProperty("id主键")
+    @TableId(value = "id", type = IdType.AUTO)
+    private Long id;
 
     @ApiModelProperty("创建时间")
-    @TableField("create_time")
+    @TableField(value = "create_time", fill = FieldFill.INSERT)
     private LocalDateTime createTime;
 
     @ApiModelProperty("创建人标识")
-    @TableField("create_by")
+    @TableField(value = "create_by", fill = FieldFill.INSERT)
     private String createBy;
 
     @ApiModelProperty("创建人姓名")
-    @TableField("create_by_name")
+    @TableField(value = "create_by_name", fill = FieldFill.INSERT)
     private String createByName;
 
     @ApiModelProperty("最后修改时间")
-    @TableField("update_time")
+    @TableField(value = "update_time", fill = FieldFill.UPDATE)
     private LocalDateTime updateTime;
 
     @ApiModelProperty("最后修改人标识")
-    @TableField("update_by")
+    @TableField(value = "update_by", fill = FieldFill.UPDATE)
     private String updateBy;
 
     @ApiModelProperty("最后修改人姓名")
-    @TableField("update_by_name")
+    @TableField(value = "update_by_name", fill = FieldFill.UPDATE)
     private String updateByName;
 
     @ApiModelProperty("删除标记（0：正常，1：删除）")
