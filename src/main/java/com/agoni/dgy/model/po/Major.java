@@ -1,8 +1,6 @@
 package com.agoni.dgy.model.po;
 
-import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableField;
-import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
@@ -30,11 +28,7 @@ import java.io.Serializable;
 public class Major extends AbstractEntity  implements Serializable {
 
     private static final long serialVersionUID = 1L;
-
-    @ApiModelProperty("id主键")
-    @TableId(value = "id", type = IdType.AUTO)
-    private Integer id;
-
+    
     @ApiModelProperty("学校分院")
     @TableField("School")
     private String school;

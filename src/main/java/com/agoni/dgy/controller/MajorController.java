@@ -49,7 +49,7 @@ public class MajorController {
     
     @DeleteMapping
     public ResponseEntity<Boolean>  delete(@RequestBody List<Major> majorList){
-        List<Integer> ids = majorList.stream().map(Major::getId).collect(Collectors.toList());
+        List<Long> ids = majorList.stream().map(Major::getId).collect(Collectors.toList());
         boolean b = majorService.removeByIds(ids);
         return new ResponseEntity<>(b, HttpStatus.OK);
     }

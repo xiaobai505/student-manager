@@ -34,4 +34,21 @@ public class UserUtil {
         AuthUserVo userPrincipal = getUserPrincipal();
         return userPrincipal;
     }
+    
+    /**
+     * 活动用户账号
+     * @return
+     */
+    public static String getUserName() {
+        return getUserPrincipal().getUsername();
+    }
+    
+    
+    /**
+     * 获得用户名字
+     * @return
+     */
+    public static String getName() {
+        return getUserPrincipal().getName();
+    }
 }
