@@ -4,10 +4,7 @@ import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import lombok.Data;
 
 @Data
-public class ResultSearchFrom extends Page {
+public class CourseUserSearchFrom extends Page {
     
-    private String studentName;
-    
-    private String className;
-    
+    private String courseName;
 }

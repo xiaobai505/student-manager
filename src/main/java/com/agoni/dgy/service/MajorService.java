@@ -19,5 +19,5 @@ public interface MajorService extends IService<Major> {
 
     List<Major> getSchoolList();
     
-    IPage<Major> majorPage(MajorSearchFrom from);
+    IPage<Major> searchPage(MajorSearchFrom from);
 }

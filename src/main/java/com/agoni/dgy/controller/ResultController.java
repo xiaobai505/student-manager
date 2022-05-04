@@ -31,8 +31,8 @@ public class ResultController {
     private ResultService resultService;
     
     @GetMapping
-    public ResponseEntity<IPage> resultPage(@Validated ResultSearchFrom from) {
-        IPage<Major> res = resultService.resultPage(from);
+    public ResponseEntity<IPage> searchPage(@Validated ResultSearchFrom from) {
+        IPage<Major> res = resultService.searchPage(from);
         return new ResponseEntity<>(res, HttpStatus.OK);
     }
     

@@ -3,7 +3,6 @@ package com.agoni.dgy.controller;
 
 import com.agoni.dgy.model.bo.CourseSearchFrom;
 import com.agoni.dgy.model.po.Course;
-import com.agoni.dgy.model.po.Major;
 import com.agoni.dgy.service.CourseService;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import lombok.extern.slf4j.Slf4j;
@@ -33,8 +32,8 @@ public class CourseController {
     private CourseService courseService;
     
     @GetMapping
-    public ResponseEntity<IPage> coursePage(@Validated CourseSearchFrom from) {
-        IPage<Major> res = courseService.majorPage(from);
+    public ResponseEntity<IPage> searchPage(@Validated CourseSearchFrom from) {
+        IPage<Course> res = courseService.searchPage(from);
         return new ResponseEntity<>(res, HttpStatus.OK);
     }
     
@@ -55,10 +54,5 @@ public class CourseController {
         List<Long> ids = courses.stream().map(Course::getId).collect(Collectors.toList());
         boolean b = courseService.removeByIds(ids);
         return new ResponseEntity<>(b, HttpStatus.OK);
-    }
-    
-    @DeleteMapping("/{id}")
-    public boolean deleteById(@PathVariable Long id){
-        return courseService.removeById(id);
     }
 }

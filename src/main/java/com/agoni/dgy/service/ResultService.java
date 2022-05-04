@@ -16,5 +16,5 @@ import com.baomidou.mybatisplus.extension.service.IService;
  */
 public interface ResultService extends IService<Result> {
     
-    IPage<Major> resultPage(ResultSearchFrom from);
+    IPage<Major> searchPage(ResultSearchFrom from);
 }

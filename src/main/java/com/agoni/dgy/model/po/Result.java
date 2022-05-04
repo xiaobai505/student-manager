@@ -33,13 +33,13 @@ public class Result extends AbstractEntity  implements Serializable {
     @TableField("user_id")
     private Long userId;
 
-    @ApiModelProperty("班级名称")
-    @TableField("class_name")
-    private String className;
+    @ApiModelProperty("课程id")
+    @TableField("course_id")
+    private String courseId;
 
-    @ApiModelProperty("班级code")
-    @TableField("class_code")
-    private String classCode;
+    @ApiModelProperty("学生姓名")
+    @TableField("student_name")
+    private String studentName;
 
     @ApiModelProperty("成绩")
     @TableField("result")

@@ -23,9 +23,9 @@ import org.springframework.stereotype.Service;
 public class ResultServiceImpl extends ServiceImpl<ResultMapper, Result> implements ResultService {
     
     @Override
-    public IPage<Major> resultPage(ResultSearchFrom from) {
+    public IPage<Major> searchPage(ResultSearchFrom from) {
         QueryWrapper<Result> query = new QueryWrapper<>();
-        query.lambda().likeRight(StringUtils.isNotEmpty(from.getClassName()), Result::getClassName, from.getClassName());
+        query.lambda().likeRight(StringUtils.isNotEmpty(from.getClassName()), Result::getStudentName, from.getClassName());
         return page(from, query);
     }
 }

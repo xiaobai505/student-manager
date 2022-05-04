@@ -2,9 +2,10 @@ package com.agoni.dgy.service;
 
 import com.agoni.dgy.model.bo.CourseSearchFrom;
 import com.agoni.dgy.model.po.Course;
-import com.agoni.dgy.model.po.Major;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.service.IService;
+
+import java.util.List;
 
 /**
  * <p>
@@ -16,5 +17,19 @@ import com.baomidou.mybatisplus.extension.service.IService;
  */
 public interface CourseService extends IService<Course> {
     
-    IPage<Major> majorPage(CourseSearchFrom from);
+    /**
+     * 条件分页查询
+     * @param from
+     *
+     * @return
+     */
+    IPage<Course> searchPage(CourseSearchFrom from);
+    
+    /**
+     * 根据名字返回list
+     * @param courseName
+     *
+     * @return
+     */
+    List<Course> listByCourseName(String courseName);
 }
