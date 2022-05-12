@@ -32,4 +32,23 @@ public interface CourseService extends IService<Course> {
      * @return
      */
     List<Course> listByCourseName(String courseName);
+    
+    /**
+     * 校验库存
+     * @param id
+     */
+    Course checkStock(Long id);
+    
+    /**
+     * 扣减库存
+     * @param course
+     */
+    boolean saleStock(Course course);
+    
+    /**
+     * 还原库存
+     * @param id
+     *
+     */
+    boolean delStock(Long id);
 }

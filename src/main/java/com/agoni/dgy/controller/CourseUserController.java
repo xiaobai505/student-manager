@@ -2,6 +2,7 @@ package com.agoni.dgy.controller;
 
 
 import com.agoni.dgy.model.bo.CourseUserSearchFrom;
+import com.agoni.dgy.model.po.Course;
 import com.agoni.dgy.model.po.CourseUser;
 import com.agoni.dgy.service.CourseUserService;
 import com.baomidou.mybatisplus.core.metadata.IPage;
@@ -13,7 +14,6 @@ import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-import java.util.stream.Collectors;
 
 /**
  * <p>
@@ -38,8 +38,8 @@ public class CourseUserController {
     }
     
     @PostMapping
-    public ResponseEntity<Boolean> save(@RequestBody List<CourseUser> courseUserList) {
-        boolean b = courseUserService.saveBatch(courseUserList);
+    public ResponseEntity<Boolean> save(@RequestBody Course course) {
+        boolean b = courseUserService.saveCourse(course.getId());
         return new ResponseEntity<>(b, HttpStatus.OK);
     }
     
@@ -50,9 +50,8 @@ public class CourseUserController {
     }
     
     @DeleteMapping
-    public ResponseEntity<Boolean>  delete(@RequestBody List<CourseUser> courseUserList){
-        List<Long> ids = courseUserList.stream().map(CourseUser::getId).collect(Collectors.toList());
-        boolean b = courseUserService.removeByIds(ids);
+    public ResponseEntity<Boolean> delete(@RequestBody CourseUser courseUser){
+        boolean b = courseUserService.deleteById(courseUser);
         return new ResponseEntity<>(b, HttpStatus.OK);
     }
 

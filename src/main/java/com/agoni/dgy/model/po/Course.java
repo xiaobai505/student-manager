@@ -53,6 +53,10 @@ public class Course extends AbstractEntity implements Serializable {
     @ApiModelProperty("库存")
     @TableField("stock")
     private Integer stock;
+    
+    @ApiModelProperty("占座数量")
+    @TableField("sale")
+    private Integer sale;
 
     @ApiModelProperty("是否必修")
     @TableField("is_must")

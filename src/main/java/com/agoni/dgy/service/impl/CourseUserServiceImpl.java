@@ -2,6 +2,7 @@ package com.agoni.dgy.service.impl;
 
 import com.agoni.dgy.mapper.CourseUserMapper;
 import com.agoni.dgy.model.bo.CourseUserSearchFrom;
+import com.agoni.dgy.model.po.AbstractEntity;
 import com.agoni.dgy.model.po.Course;
 import com.agoni.dgy.model.po.CourseUser;
 import com.agoni.dgy.model.vo.AuthUserVo;
@@ -32,18 +33,18 @@ import java.util.stream.Collectors;
 @Service
 @Slf4j
 public class CourseUserServiceImpl extends ServiceImpl<CourseUserMapper, CourseUser> implements CourseUserService {
-
+    
     @Autowired
     private CourseUserMapper courseUserMapper;
     
     @Autowired
     private CourseService courseService;
-
+    
     @Override
-    public List<CourseUserVo>mylist() {
+    public List<CourseUserVo> mylist() {
         AuthUserVo userVo = UserUtil.getUser();
         SimpleGrantedAuthority admin = new SimpleGrantedAuthority("admin");
-        if (userVo.getAuthorities().contains(admin)){
+        if (userVo.getAuthorities().contains(admin)) {
             log.info("我拥有管理员权限！查询所有！");
             return courseUserMapper.mylist(null);
         }
@@ -57,8 +58,27 @@ public class CourseUserServiceImpl extends ServiceImpl<CourseUserMapper, CourseU
         List<Long> ids = courses.stream().map(Course::getId).collect(Collectors.toList());
         // 根据 课程id 查找 选课信息
         QueryWrapper<CourseUser> query = new QueryWrapper<>();
-        query.lambda().in(CollectionUtils.isEmpty(ids),CourseUser::getCourseId,ids);
+        query.lambda().in(CollectionUtils.isEmpty(ids), CourseUser::getCourseId, ids).orderByDesc(AbstractEntity::getCreateTime);
         return page(from, query);
     }
     
+    @Override
+    public boolean saveCourse(Long id) {
+        // 校验库存
+        Course course = courseService.checkStock(id);
+        // 减库存
+        courseService.saleStock(course);
+        // 保存记录
+        AuthUserVo user = UserUtil.getUser();
+        CourseUser build = CourseUser.builder().userId(user.getId()).courseId(id).build();
+        return this.save(build);
+    }
+    
+    @Override
+    public boolean deleteById(CourseUser courseUser) {
+        // 加库存
+        courseService.delStock(courseUser.getCourseId());
+        // 删除记录
+        return this.removeById(courseUser.getId());
+    }
 }

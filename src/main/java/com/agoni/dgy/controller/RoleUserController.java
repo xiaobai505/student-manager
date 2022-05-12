@@ -33,7 +33,7 @@ public class RoleUserController {
     
     @GetMapping("/{userId}")
     @ApiOperation("根据用户ID获取角色信息")
-    public ResponseEntity<List<Long>> getByUserId(@PathVariable Long userId) {
+    public ResponseEntity<List<Long>> getByUserId(@PathVariable @NotNull Long userId) {
         List<RoleUserVo> roleUserVos = roleUserService.getRolebyUserId(userId);
         List<Long> ids = roleUserVos.stream().map(RoleUserVo::getRoleId).collect(Collectors.toList());
         return new ResponseEntity<>(ids, HttpStatus.OK);

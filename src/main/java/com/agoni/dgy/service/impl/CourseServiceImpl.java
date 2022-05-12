@@ -29,7 +29,7 @@ import java.util.List;
 @Slf4j
 public class CourseServiceImpl extends ServiceImpl<CourseMapper, Course> implements CourseService {
     
-    private static SimpleGrantedAuthority admin = new SimpleGrantedAuthority("admin");
+    private static final SimpleGrantedAuthority admin = new SimpleGrantedAuthority("admin");
     
     @Override
     public IPage<Course> searchPage(CourseSearchFrom from) {
@@ -52,5 +52,27 @@ public class CourseServiceImpl extends ServiceImpl<CourseMapper, Course> impleme
         QueryWrapper<Course> query = new QueryWrapper<>();
         query.lambda().likeRight(StringUtils.isNotEmpty(courseName), Course::getCourseName, courseName);
         return list(query);
+    }
+    
+    @Override
+    public Course checkStock(Long id) {
+        Course course = this.getById(id);
+        if (course.getSale().equals(course.getStock())) {
+            throw new RuntimeException("库存不足");
+        }
+        return course;
+    }
+    
+    @Override
+    public boolean saleStock(Course course) {
+        course.setSale(course.getSale() + 1);
+        return updateById(course);
+    }
+    
+    @Override
+    public boolean delStock(Long id) {
+        Course course = this.getById(id);
+        course.setSale(course.getSale() - 1);
+        return updateById(course);
     }
 }

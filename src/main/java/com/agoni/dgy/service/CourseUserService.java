@@ -20,7 +20,29 @@ public interface CourseUserService extends IService<CourseUser> {
 
     List<CourseUserVo>  mylist();
     
+    /**
+     * 查询 用户课程关系表 信息
+     * @param from
+     *
+     * @return
+     */
     IPage<CourseUser> searchPage(CourseUserSearchFrom from);
+    
+    /**
+     * 创建 用户课程关系表
+     * @param id
+     *
+     * @return
+     */
+    boolean saveCourse(Long id);
+    
+    /**
+     * 放弃 用户选课信息
+     * @param id
+     *
+     * @return
+     */
+    boolean deleteById(CourseUser courseUser);
     
     
 }
