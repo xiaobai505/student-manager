@@ -1,8 +1,6 @@
 package com.agoni.dgy.model.po;
 
-import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableField;
-import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
@@ -31,11 +29,7 @@ import java.time.LocalDateTime;
 public class Course extends AbstractEntity implements Serializable {
 
     private static final long serialVersionUID = 1L;
-
-    @ApiModelProperty("id主键")
-    @TableId(value = "id", type = IdType.AUTO)
-    private Integer id;
-
+    
     @ApiModelProperty("课程名称")
     @TableField("course_name")
     private String courseName;
@@ -59,6 +53,10 @@ public class Course extends AbstractEntity implements Serializable {
     @ApiModelProperty("库存")
     @TableField("stock")
     private Integer stock;
+    
+    @ApiModelProperty("占座数量")
+    @TableField("sale")
+    private Integer sale;
 
     @ApiModelProperty("是否必修")
     @TableField("is_must")

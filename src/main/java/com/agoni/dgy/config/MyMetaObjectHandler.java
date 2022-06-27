@@ -1,5 +1,6 @@
 package com.agoni.dgy.config;
 
+import com.agoni.security.utils.UserUtil;
 import com.baomidou.mybatisplus.annotation.DbType;
 import com.baomidou.mybatisplus.core.handlers.MetaObjectHandler;
 import com.baomidou.mybatisplus.extension.plugins.MybatisPlusInterceptor;
@@ -25,8 +26,8 @@ public class MyMetaObjectHandler implements MetaObjectHandler {
      */
     @Override
     public void insertFill(MetaObject metaObject) {
-        this.setFieldValByName("createBy", "xb", metaObject);
-        this.setFieldValByName("createByName", "xb", metaObject);
+        this.setFieldValByName("createBy", UserUtil.getUserName(), metaObject);
+        this.setFieldValByName("createByName", UserUtil.getName(), metaObject);
         this.setFieldValByName("createTime", LocalDateTime.now(), metaObject);
     }
 
@@ -36,8 +37,8 @@ public class MyMetaObjectHandler implements MetaObjectHandler {
      */
     @Override
     public void updateFill(MetaObject metaObject) {
-        this.setFieldValByName("updateBy", "xb", metaObject);
-        this.setFieldValByName("updateByName", "xb", metaObject);
+        this.setFieldValByName("updateBy", UserUtil.getUserName(), metaObject);
+        this.setFieldValByName("updateByName", UserUtil.getName(), metaObject);
         this.setFieldValByName("updateTime", LocalDateTime.now(), metaObject);
     }
 

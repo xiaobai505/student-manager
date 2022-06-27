@@ -36,7 +36,7 @@ public class MajorServiceImpl extends ServiceImpl<MajorMapper, Major> implements
     }
     
     @Override
-    public IPage<Major> majorPage(MajorSearchFrom from) {
+    public IPage<Major> searchPage(MajorSearchFrom from) {
         QueryWrapper<Major> query = new QueryWrapper<>();
         query.lambda()
                 .likeRight(StringUtils.isNotEmpty(from.getSchool()), Major::getSchool, from.getSchool())

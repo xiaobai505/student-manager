@@ -1,12 +1,16 @@
 package com.agoni.dgy.controller;
 
 
+import com.agoni.dgy.model.bo.CourseUserSearchFrom;
+import com.agoni.dgy.model.po.Course;
 import com.agoni.dgy.model.po.CourseUser;
-import com.agoni.dgy.model.vo.CourseUserVo;
 import com.agoni.dgy.service.CourseUserService;
-import com.agoni.security.utils.UserUtil;
+import com.baomidou.mybatisplus.core.metadata.IPage;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -20,37 +24,35 @@ import java.util.List;
  * @since 2021-12-22
  */
 @RestController
-@RequestMapping("/dgy/course-user")
+@RequestMapping("/dgy/courseUser")
 @Slf4j
 public class CourseUserController {
 
     @Autowired
     private CourseUserService courseUserService;
-
-    @GetMapping("/list")
-    public List<CourseUser> list(){
-        return courseUserService.list();
+    
+    @GetMapping
+    public ResponseEntity<IPage> searchPage(@Validated CourseUserSearchFrom from) {
+        IPage<CourseUser> res = courseUserService.searchPage(from);
+        return new ResponseEntity<>(res, HttpStatus.OK);
     }
-
-    @GetMapping("/mylist")
-    public List<CourseUserVo> mylist(){
-        return courseUserService.mylist();
+    
+    @PostMapping
+    public ResponseEntity<Boolean> save(@RequestBody Course course) {
+        boolean b = courseUserService.saveCourse(course.getId());
+        return new ResponseEntity<>(b, HttpStatus.OK);
     }
-
-
-    @PostMapping("/saveOrUpdate")
-    public Boolean saveOrUpdate(@RequestBody CourseUser courseUser) {
-        log.info("courseUser.getId:" + courseUser.getId());
-        Long userId = UserUtil.getUserPrincipal().getId();
-        courseUser.setUserId(userId);
-        boolean res = courseUserService.saveOrUpdate(courseUser);
-        return res;
+    
+    @PutMapping
+    public ResponseEntity<Boolean> updateBatchById(@RequestBody List<CourseUser> courseUserList) {
+        boolean b = courseUserService.updateBatchById(courseUserList);
+        return new ResponseEntity<>(b, HttpStatus.OK);
     }
-
-    @DeleteMapping("/{id}")
-    public boolean delete(@PathVariable Long id){
-        boolean res = courseUserService.removeById(id);
-        return res;
+    
+    @DeleteMapping
+    public ResponseEntity<Boolean> delete(@RequestBody CourseUser courseUser){
+        boolean b = courseUserService.deleteById(courseUser);
+        return new ResponseEntity<>(b, HttpStatus.OK);
     }
 
 }

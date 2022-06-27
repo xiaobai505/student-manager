@@ -1,8 +1,6 @@
 package com.agoni.dgy.model.po;
 
-import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableField;
-import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
@@ -30,22 +28,18 @@ import java.io.Serializable;
 public class Result extends AbstractEntity  implements Serializable {
 
     private static final long serialVersionUID = 1L;
-
-    @ApiModelProperty("主键id")
-    @TableId(value = "id", type = IdType.AUTO)
-    private Integer id;
-
+    
     @ApiModelProperty("用户id")
     @TableField("user_id")
     private Long userId;
 
-    @ApiModelProperty("班级名称")
-    @TableField("class_name")
-    private String className;
+    @ApiModelProperty("课程id")
+    @TableField("course_id")
+    private String courseId;
 
-    @ApiModelProperty("班级code")
-    @TableField("class_code")
-    private String classCode;
+    @ApiModelProperty("学生姓名")
+    @TableField("student_name")
+    private String studentName;
 
     @ApiModelProperty("成绩")
     @TableField("result")

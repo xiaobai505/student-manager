@@ -35,8 +35,8 @@ public class MajorController {
     
     
     @GetMapping
-    public ResponseEntity<IPage> majorPage(@Validated MajorSearchFrom from) {
-        IPage<Major> res = majorService.majorPage(from);
+    public ResponseEntity<IPage> searchPage(@Validated MajorSearchFrom from) {
+        IPage<Major> res = majorService.searchPage(from);
         return new ResponseEntity<>(res, HttpStatus.OK);
     }
     
