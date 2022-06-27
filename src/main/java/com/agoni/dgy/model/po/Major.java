@@ -1,15 +1,13 @@
 package com.agoni.dgy.model.po;
 
-import com.baomidou.mybatisplus.annotation.IdType;
+import com.agoni.dgy.model.enums.majorEnum;
 import com.baomidou.mybatisplus.annotation.TableField;
-import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
+import lombok.experimental.Accessors;
+import lombok.experimental.SuperBuilder;
 
 import java.io.Serializable;
 
@@ -22,19 +20,17 @@ import java.io.Serializable;
  * @since 2022-01-04
  */
 @Data
-@Builder
+@SuperBuilder
 @NoArgsConstructor
 @AllArgsConstructor
 @TableName("tb_major")
 @ApiModel(value = "Major对象", description = "班级表")
+@EqualsAndHashCode(callSuper = true)
+@Accessors(chain = true)
 public class Major extends AbstractEntity  implements Serializable {
 
     private static final long serialVersionUID = 1L;
-
-    @ApiModelProperty("id主键")
-    @TableId(value = "id", type = IdType.AUTO)
-    private Integer id;
-
+    
     @ApiModelProperty("学校分院")
     @TableField("School")
     private String school;
@@ -45,6 +41,5 @@ public class Major extends AbstractEntity  implements Serializable {
 
     @ApiModelProperty("班级code")
     @TableField("major_code")
-    private String majorCode;
-
+    private majorEnum majorCode;
 }
