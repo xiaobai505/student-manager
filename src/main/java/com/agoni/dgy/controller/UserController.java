@@ -46,7 +46,7 @@ public class UserController {
 
     @GetMapping("/page")
     @ApiOperation("用户列表")
-    public ResponseEntity<IPage> pageUser(@Validated UserSearchFrom userSearchFrom){
+    public ResponseEntity<IPage> page(@Validated UserSearchFrom userSearchFrom){
         IPage<UserAndRole> res = userService.pageUser(userSearchFrom);
         return new ResponseEntity<>(res, HttpStatus.OK);
     }

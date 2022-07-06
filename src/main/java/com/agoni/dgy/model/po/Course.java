@@ -9,7 +9,6 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.experimental.SuperBuilder;
 
-import java.io.Serializable;
 import java.time.LocalDateTime;
 
 /**
@@ -26,7 +25,7 @@ import java.time.LocalDateTime;
 @AllArgsConstructor
 @TableName("tb_course")
 @ApiModel(value = "Course对象", description = "课程表")
-public class Course extends AbstractEntity implements Serializable {
+public class Course extends AbstractEntity{
 
     private static final long serialVersionUID = 1L;
     

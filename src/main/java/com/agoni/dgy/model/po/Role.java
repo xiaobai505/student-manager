@@ -46,5 +46,13 @@ public class Role extends AbstractEntity  implements Serializable {
     @ApiModelProperty("角色类型")
     @TableField("role_type")
     private String roleType;
-
+    
+    @ApiModelProperty("显示顺序")
+    @TableField("role_sort")
+    private String roleSort;
+    
+    @ApiModelProperty("状态")
+    @TableField("status")
+    private String status;
+    
 }

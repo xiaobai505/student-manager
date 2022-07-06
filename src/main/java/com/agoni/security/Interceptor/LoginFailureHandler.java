@@ -2,7 +2,7 @@ package com.agoni.security.Interceptor;
 
 import com.agoni.security.exception.ErrorResponse;
 import com.agoni.security.exception.ExceptionType;
-import com.alibaba.fastjson.JSONObject;
+import com.alibaba.fastjson2.JSONObject;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.web.authentication.AuthenticationFailureHandler;
