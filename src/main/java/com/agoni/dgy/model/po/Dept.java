@@ -1,6 +1,8 @@
 package com.agoni.dgy.model.po;
 
+import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableName;
+import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 
 /**
@@ -12,49 +14,32 @@ import lombok.Data;
 @Data
 public class Dept extends AbstractEntity {
     
-    /**
-     * 公司名字
-     */
+    @ApiModelProperty("公司名字")
     private String name;
     
-    /**
-     * 1 公司 2 分公司 3 部门
-     */
+    @ApiModelProperty("类型")
     private Integer type;
     
-    /**
-     *
-     */
-    private Integer parentid;
+    @ApiModelProperty("父id")
+    @TableField("parentId")
+    private Integer parentId;
     
-    /**
-     *
-     */
+    @ApiModelProperty("排序字段")
     private String sort;
     
-    /**
-     *
-     */
+    @ApiModelProperty("1 公司 2 分公司 3 部门")
     private Integer leaderuserid;
     
-    /**
-     *
-     */
+    @ApiModelProperty("联系方式")
     private String phone;
     
-    /**
-     *
-     */
+    @ApiModelProperty("邮箱")
     private String email;
     
-    /**
-     * 状态
-     */
+    @ApiModelProperty("状态")
     private Integer status;
     
-    /**
-     * remark
-     */
+    @ApiModelProperty("理由")
     private String remark;
     
 }

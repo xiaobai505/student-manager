@@ -3,6 +3,7 @@
 ## 前言
 
 - 学生学籍管理系统采用Springboot+vue开发，前后分离的设计使本项目有更好的可扩展性，该部分为学生管理系统后端，主要用到的技术栈有：Springboot，Mybatis，druid
+- -Dspring.security.strategy=MODE_INHERITABLETHREADLOCAL
 
 ## 如何启动？
 
