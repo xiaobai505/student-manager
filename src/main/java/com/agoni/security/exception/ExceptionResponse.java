@@ -19,13 +19,13 @@ public class ExceptionResponse<T> implements Serializable {
     
     private static final long serialVersionUID = 1L;
     private Integer code;
-    private String message;
+    private String msg;
     
     private T data;
     
     private ExceptionResponse(Integer code, String msg) {
         this.code = code;
-        this.message = msg;
+        this.msg = msg;
     }
     
     public static <T> ExceptionResponse<T> body(T data) {

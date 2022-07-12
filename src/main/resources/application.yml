@@ -22,7 +22,7 @@ mybatis-plus:
 
 # jwt创建 超时时间 和 密钥
 JWT:
-  timeOut: 20
+  timeOut: 2
   SecurityKey: dgy
 
 # 微信登录

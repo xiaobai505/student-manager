@@ -24,7 +24,8 @@ import java.io.UnsupportedEncodingException;
 @Slf4j
 @Api(tags="微信")
 public class WeChatController {
-
+    
+    public static final String CODE = "code";
     private WxMpService wxMpService;
 
 
@@ -44,7 +45,7 @@ public class WeChatController {
     @GetMapping("invoke")
     @ApiOperation("回调接口，获得用户信息")
     public Object weChatInvoke(HttpServletRequest httpServletRequest) {
-        String code = httpServletRequest.getParameter("code");
+        String code = httpServletRequest.getParameter(CODE);
         log.info("code:"+code);
         try {
             WxOAuth2AccessToken wxOAuth2AccessToken = wxMpService.getOAuth2Service().getAccessToken(code);
