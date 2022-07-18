@@ -67,6 +67,13 @@ public class WeChatController {
         String url = wxMpService.getQrcodeService().qrCodePictureUrl(ticket.getTicket());
         return new ResponseEntity<>(url, HttpStatus.OK);
     }
+    
+    @GetMapping("/get")
+    @ApiOperation("二维码Url")
+    public ResponseEntity<String> get() throws WxErrorException {
+        String url = wxMpService.buildQrConnectUrl("https://g2i2570656.goho.co/wechat/invoke", "snsapi_userinfo", "dgy");
+        return new ResponseEntity<>(url, HttpStatus.OK);
+    }
 
     @ResponseBody
     @GetMapping("/file")

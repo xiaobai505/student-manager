@@ -39,9 +39,9 @@ public class UserController {
 
     @GetMapping
     @ApiOperation("获取登录用户")
-    public AuthUserVo get(){
+    public ResponseEntity<AuthUserVo> get(){
         AuthUserVo userPrincipal = UserUtil.getUserPrincipal();
-        return userPrincipal;
+        return new ResponseEntity<>(userPrincipal, HttpStatus.OK);
     }
 
     @GetMapping("/page")

@@ -64,9 +64,9 @@ public class CourseUserServiceImpl extends ServiceImpl<CourseUserMapper, CourseU
     
     @Override
     public boolean saveCourse(Long id) {
-        // 校验库存
+        // 校验座位数量
         Course course = courseService.checkStock(id);
-        // 减库存
+        // 减座位数量
         courseService.saleStock(course);
         // 保存记录
         AuthUserVo user = UserUtil.getUser();
@@ -76,7 +76,7 @@ public class CourseUserServiceImpl extends ServiceImpl<CourseUserMapper, CourseU
     
     @Override
     public boolean deleteById(CourseUser courseUser) {
-        // 加库存
+        // 增加座位数量
         courseService.delStock(courseUser.getCourseId());
         // 删除记录
         return this.removeById(courseUser.getId());
