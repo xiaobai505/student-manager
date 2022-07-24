@@ -6,6 +6,8 @@ import com.agoni.dgy.service.DictService;
 import com.agoni.dgy.mapper.DictMapper;
 import org.springframework.stereotype.Service;
 
+import java.beans.Transient;
+
 /**
 * @author Admin
 * @description 针对表【tb_dict】的数据库操作Service实现
@@ -13,7 +15,14 @@ import org.springframework.stereotype.Service;
 */
 @Service
 public class DictServiceImpl extends ServiceImpl<DictMapper, Dict> implements DictService{
-
+    
+    @Override
+    @Transient
+    public boolean del(long id) {
+        Dict dict = this.getById(id);
+        this.removeById(dict.getParentId());
+        return this.removeById(id);
+    }
 }
 
 

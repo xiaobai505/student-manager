@@ -9,5 +9,7 @@ import com.baomidou.mybatisplus.extension.service.IService;
 * @createDate 2022-06-30 17:19:03
 */
 public interface DictService extends IService<Dict> {
+    
+    boolean del(long id);
 
 }

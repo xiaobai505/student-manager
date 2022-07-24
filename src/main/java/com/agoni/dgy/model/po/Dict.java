@@ -1,75 +1,28 @@
 package com.agoni.dgy.model.po;
 
 import com.baomidou.mybatisplus.annotation.TableField;
-import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
+import io.swagger.annotations.ApiModel;
+import io.swagger.annotations.ApiModelProperty;
+import lombok.AllArgsConstructor;
 import lombok.Data;
-
-import java.io.Serializable;
-import java.time.LocalDateTime;
+import lombok.NoArgsConstructor;
+import lombok.experimental.SuperBuilder;
 
 /**
  * @TableName tb_dict
  */
 @TableName(value = "tb_dict")
 @Data
-public class Dict implements Serializable {
-    /**
-     * 数据字典id
-     */
-    @TableId
-    private Long id;
+@SuperBuilder
+@NoArgsConstructor
+@AllArgsConstructor
+@ApiModel(value = "Dict对象", description = "字典表")
+public class Dict extends AbstractEntity {
     
-    /**
-     * 创建时间
-     */
-    private LocalDateTime createTime;
-    
-    /**
-     * 创建人标识
-     */
-    private String createBy;
-    
-    /**
-     * 创建人姓名
-     */
-    private String createByName;
-    
-    /**
-     * 最后修改时间
-     */
-    private LocalDateTime updateTime;
-    
-    /**
-     * 最后修改人标识
-     */
-    private String updateBy;
-    
-    /**
-     * 最后修改人姓名
-     */
-    private String updateByName;
-    
-    /**
-     * 删除标记（0：正常，1：删除）
-     */
-    private Integer delFlag;
-    
-    /**
-     * 字典显示
-     */
-    private String dictDisplay;
-    
-    /**
-     * 字典实际值
-     */
-    private String dictValue;
-    
-    /**
-     * 备注
-     */
-    private String remark;
-    
+    @ApiModelProperty("父id")
+    @TableField("parentId")
+    private Integer parentId;
     /**
      * 字典名字(大类)
      */
@@ -81,10 +34,7 @@ public class Dict implements Serializable {
     private String model;
     
     /**
-     * 子类
+     * 备注
      */
-    private Object children;
-    
-    @TableField(exist = false)
-    private static final long serialVersionUID = 1L;
+    private String remark;
 }

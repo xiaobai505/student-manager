@@ -1,11 +1,13 @@
 package com.agoni.dgy.model.po;
 
-import com.agoni.dgy.model.enums.majorEnum;
 import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableName;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
-import lombok.*;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.EqualsAndHashCode;
+import lombok.NoArgsConstructor;
 import lombok.experimental.Accessors;
 import lombok.experimental.SuperBuilder;
 
@@ -41,5 +43,5 @@ public class Major extends AbstractEntity  implements Serializable {
 
     @ApiModelProperty("班级code")
     @TableField("major_code")
-    private majorEnum majorCode;
+    private String majorCode;
 }

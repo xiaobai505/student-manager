@@ -19,6 +19,7 @@ import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.stereotype.Service;
 import org.springframework.util.CollectionUtils;
 
+import java.beans.Transient;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -63,6 +64,7 @@ public class CourseUserServiceImpl extends ServiceImpl<CourseUserMapper, CourseU
     }
     
     @Override
+    @Transient
     public boolean saveCourse(Long id) {
         // 校验座位数量
         Course course = courseService.checkStock(id);
