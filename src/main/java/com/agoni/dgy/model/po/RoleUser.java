@@ -42,7 +42,6 @@ public class RoleUser extends AbstractEntity {
 
     @ApiModelProperty("用户id")
     @TableField("user_id")
-    @BindDict(type="USER_STATUS", field = "status")
     private Long userId;
     
     @ApiModelProperty("角色ID")
@@ -56,5 +55,5 @@ public class RoleUser extends AbstractEntity {
     @ApiModelProperty("状态")
     @TableField("state")
     private String state;
-
+    
 }

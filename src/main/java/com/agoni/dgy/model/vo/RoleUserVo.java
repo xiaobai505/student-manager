@@ -1,8 +1,12 @@
 package com.agoni.dgy.model.vo;
 
+import com.agoni.dgy.model.po.Role;
 import com.agoni.dgy.model.po.RoleUser;
+import com.agoni.dgy.model.po.User;
 import com.baomidou.mybatisplus.annotation.TableField;
 import com.diboot.core.binding.annotation.BindDict;
+import com.diboot.core.binding.annotation.BindEntity;
+import com.diboot.core.binding.annotation.BindField;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.AllArgsConstructor;
@@ -28,15 +32,22 @@ import java.io.Serializable;
 @ApiModel(value = "RoleUser对象", description = "用户角色关系表")
 public class RoleUserVo extends RoleUser {
     
-    @ApiModelProperty("状态")
-    @TableField("state")
-    @BindDict(type="String", field = "status")
-    private String stateLabel;
+    @BindEntity(entity = User.class, condition="this.user_id=id")
+    private User user;
+    
+    @ApiModelProperty("角色ID")
+    @TableField("role_id")
+    private Long roleId;
+    
+    @BindField(entity= Role.class, field="roleName", condition="this.role_id=id")
+    private String roles;
     
     @ApiModelProperty("角色编码")
     private String roleCode;
     
     @ApiModelProperty("角色类型")
     private String roleType;
-
+    
+    @BindDict(type="USER_STATUS", field = "state")
+    private String statusLabel;
 }

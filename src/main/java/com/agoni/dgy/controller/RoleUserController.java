@@ -1,6 +1,8 @@
 package com.agoni.dgy.controller;
 
 
+import com.agoni.core.binding.Binder;
+import com.agoni.dgy.model.po.RoleUser;
 import com.agoni.dgy.model.vo.RoleUserVo;
 import com.agoni.dgy.service.RoleUserService;
 import io.swagger.annotations.ApiOperation;
@@ -30,6 +32,13 @@ public class RoleUserController {
     
     @Autowired
     private RoleUserService roleUserService;
+    
+    @GetMapping
+    public Object get(){
+        List<RoleUser> list = roleUserService.list();
+        List<RoleUserVo> voList = Binder.convertAndBindRelations(list, RoleUserVo.class);
+        return voList;
+    }
     
     @GetMapping("/{userId}")
     @ApiOperation("根据用户ID获取角色信息")

@@ -3,6 +3,8 @@ package com.agoni.dgy.service;
 import com.agoni.dgy.model.po.Dict;
 import com.baomidou.mybatisplus.extension.service.IService;
 
+import java.util.List;
+
 /**
 * @author Admin
 * @description 针对表【tb_dict】的数据库操作Service
@@ -11,5 +13,6 @@ import com.baomidou.mybatisplus.extension.service.IService;
 public interface DictService extends IService<Dict> {
     
     boolean del(long id);
-
+    
+    void bindItemLabel(List voList, String setFieldName, String getFieldName, String type);
 }
