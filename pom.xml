@@ -191,6 +191,13 @@
 			<artifactId>diboot-core-spring-boot-starter</artifactId>
 			<version>2.6.0</version>
 		</dependency>
+
+		<!-- 不绑定数字字典-->
+		<!--<dependency>-->
+		<!--	<groupId>com.diboot</groupId>-->
+		<!--	<artifactId>diboot-core</artifactId>-->
+		<!--	<version>2.6.0</version>-->
+		<!--</dependency>-->
 	</dependencies>
 
 
