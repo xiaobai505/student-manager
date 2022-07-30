@@ -5,6 +5,7 @@ import com.agoni.core.binding.Binder;
 import com.agoni.dgy.model.po.RoleUser;
 import com.agoni.dgy.model.vo.RoleUserVo;
 import com.agoni.dgy.service.RoleUserService;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import io.swagger.annotations.ApiOperation;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -35,9 +36,9 @@ public class RoleUserController {
     
     @GetMapping
     public Object get(){
-        List<RoleUser> list = roleUserService.list();
-        List<RoleUserVo> voList = Binder.convertAndBindRelations(list, RoleUserVo.class);
-        return voList;
+        Page<RoleUser> page = roleUserService.page(new Page<>());
+        Page<RoleUserVo> pageVo = Binder.convertAndBindRelations(page, RoleUserVo.class);
+        return pageVo;
     }
     
     @GetMapping("/{userId}")

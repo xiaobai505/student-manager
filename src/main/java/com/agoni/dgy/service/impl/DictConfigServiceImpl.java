@@ -24,6 +24,11 @@ public class DictConfigServiceImpl extends ServiceImpl<DictConfigMapper, DictCon
         query.lambda().eq(DictConfig::getDictId,id);
         return this.list(query);
     }
+    
+    @Override
+    public boolean delDictId(long id) {
+        return false;
+    }
 }
 
 

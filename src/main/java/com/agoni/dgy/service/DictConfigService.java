@@ -13,5 +13,7 @@ import java.util.List;
 public interface DictConfigService extends IService<DictConfig> {
     
     List<DictConfig> getDictId(long id);
+    
+    boolean delDictId(long id);
 
 }

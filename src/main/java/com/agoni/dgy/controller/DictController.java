@@ -1,7 +1,10 @@
 package com.agoni.dgy.controller;
 
+import com.agoni.core.binding.Binder;
 import com.agoni.dgy.model.po.Dict;
+import com.agoni.dgy.model.vo.DictVo;
 import com.agoni.dgy.service.DictService;
+import com.diboot.core.util.BeanUtils;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,6 +24,14 @@ public class DictController {
     
     @Autowired
     private DictService dictService;
+    
+    @GetMapping("/test")
+    public Object get(){
+        List<Dict> list = dictService.list();
+        List<DictVo> voList = Binder.convertAndBindRelations(list, DictVo.class);
+        List<DictVo> dicts = BeanUtils.buildTree(voList);
+        return dicts;
+    }
     
     @GetMapping
     @ApiOperation("获取角色信息集合")

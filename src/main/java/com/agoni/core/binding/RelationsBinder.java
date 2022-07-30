@@ -1,6 +1,5 @@
 package com.agoni.core.binding;
 
-import com.agoni.core.binding.binder.parallel.ParallelBindingManager;
 import com.diboot.core.binding.helper.DeepRelationsBinder;
 import com.diboot.core.binding.parser.BindAnnotationGroup;
 import com.diboot.core.binding.parser.FieldAnnotation;
@@ -97,7 +96,7 @@ public class RelationsBinder {
             return;
         }
         RequestContextHolder.setRequestAttributes(RequestContextHolder.getRequestAttributes(), true);
-        ParallelBindingManager parallelBindingManager = ContextHelper.getBean(ParallelBindingManager.class);
+        ParallelBindingManagerPlus parallelBindingManager = ContextHelper.getBean(ParallelBindingManagerPlus.class);
         // 不可能出现的错误，但是编译器需要
         assert parallelBindingManager != null;
         List<CompletableFuture<Boolean>> binderFutures = new ArrayList<>();

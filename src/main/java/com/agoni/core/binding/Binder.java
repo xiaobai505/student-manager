@@ -16,6 +16,7 @@ package com.agoni.core.binding;
  */
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.diboot.core.binding.JoinsBinder;
 import com.diboot.core.vo.Pagination;
 
@@ -74,6 +75,11 @@ public class Binder {
         return RelationsBinder.convertAndBind(entity, voClass);
     }
     
+    public static <E, VO> Page<VO> convertAndBindRelations(Page page, Class<VO> voClass){
+        List<VO> vos = RelationsBinder.convertAndBind(page.getRecords(), voClass);
+        page.setRecords(vos);
+        return page;
+    }
     /**
      * 自动转换和绑定多个VO中的注解关联
      * @param entityList 需要转换的VO list
@@ -83,6 +89,7 @@ public class Binder {
      * @return
      */
     public static <E, VO> List<VO> convertAndBindRelations(List<E> entityList, Class<VO> voClass){
+        List<VO> vos = RelationsBinder.convertAndBind(entityList, voClass);
         return RelationsBinder.convertAndBind(entityList, voClass);
     }
     

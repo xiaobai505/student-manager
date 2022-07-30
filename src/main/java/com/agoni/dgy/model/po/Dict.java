@@ -22,13 +22,14 @@ public class Dict extends AbstractEntity {
     
     @ApiModelProperty("父id")
     @TableField("parentId")
-    private Integer parentId;
-    /**
+    private Long parentId;
+     /**
      * 字典名字(大类)
      */
     private String name;
     
     /**
+     * type 为数据库特殊自负
      * 字典类型
      */
     private String model;
