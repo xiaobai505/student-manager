@@ -1,5 +1,6 @@
 package com.agoni.dgy.service.impl;
 
+import com.agoni.core.binding.Binder;
 import com.agoni.dgy.mapper.CourseUserMapper;
 import com.agoni.dgy.model.bo.CourseUserSearchFrom;
 import com.agoni.dgy.model.po.AbstractEntity;
@@ -53,14 +54,14 @@ public class CourseUserServiceImpl extends ServiceImpl<CourseUserMapper, CourseU
     }
     
     @Override
-    public IPage<CourseUser> searchPage(CourseUserSearchFrom from) {
+    public IPage<CourseUserVo> searchPage(CourseUserSearchFrom from) {
         // 根据 名称 查找 课程id
         List<Course> courses = courseService.listByCourseName(from.getCourseName());
         List<Long> ids = courses.stream().map(Course::getId).collect(Collectors.toList());
         // 根据 课程id 查找 选课信息
         QueryWrapper<CourseUser> query = new QueryWrapper<>();
         query.lambda().in(CollectionUtils.isEmpty(ids), CourseUser::getCourseId, ids).orderByDesc(AbstractEntity::getCreateTime);
-        return page(from, query);
+        return Binder.convertAndBindRelations(page(from, query),CourseUserVo.class);
     }
     
     @Override

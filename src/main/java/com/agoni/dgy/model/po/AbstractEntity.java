@@ -2,6 +2,8 @@ package com.agoni.dgy.model.po;
 
 
 import com.baomidou.mybatisplus.annotation.*;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+import com.fasterxml.jackson.databind.ser.std.ToStringSerializer;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -19,8 +21,9 @@ public abstract class AbstractEntity implements Serializable {
     
     @ApiModelProperty("id主键")
     @TableId(value = "id", type = IdType.AUTO)
+    @JsonSerialize(using= ToStringSerializer.class)
     private Long id;
-
+    
     @ApiModelProperty("创建时间")
     @TableField(value = "create_time", fill = FieldFill.INSERT)
     private LocalDateTime createTime;

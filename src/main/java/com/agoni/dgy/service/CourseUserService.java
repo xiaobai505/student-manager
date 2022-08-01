@@ -26,7 +26,7 @@ public interface CourseUserService extends IService<CourseUser> {
      *
      * @return
      */
-    IPage<CourseUser> searchPage(CourseUserSearchFrom from);
+    IPage<CourseUserVo> searchPage(CourseUserSearchFrom from);
     
     /**
      * 创建 用户课程关系表

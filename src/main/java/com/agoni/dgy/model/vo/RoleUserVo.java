@@ -10,12 +10,9 @@ import com.diboot.core.binding.annotation.BindField;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.AllArgsConstructor;
-import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.experimental.SuperBuilder;
-
-import java.io.Serializable;
 
 /**
  * <p>
@@ -39,7 +36,7 @@ public class RoleUserVo extends RoleUser {
     @TableField("role_id")
     private Long roleId;
     
-    @BindField(entity= Role.class, field="roleName", condition="this.role_id=id")
+    @BindField(entity= Role.class, field="roleName", condition="this.course_id=id")
     private String roles;
     
     @ApiModelProperty("角色编码")

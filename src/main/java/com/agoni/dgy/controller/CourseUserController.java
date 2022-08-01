@@ -4,6 +4,7 @@ package com.agoni.dgy.controller;
 import com.agoni.dgy.model.bo.CourseUserSearchFrom;
 import com.agoni.dgy.model.po.Course;
 import com.agoni.dgy.model.po.CourseUser;
+import com.agoni.dgy.model.vo.CourseUserVo;
 import com.agoni.dgy.service.CourseUserService;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import lombok.extern.slf4j.Slf4j;
@@ -33,7 +34,7 @@ public class CourseUserController {
     
     @GetMapping
     public ResponseEntity<IPage> searchPage(@Validated CourseUserSearchFrom from) {
-        IPage<CourseUser> res = courseUserService.searchPage(from);
+        IPage<CourseUserVo> res = courseUserService.searchPage(from);
         return new ResponseEntity<>(res, HttpStatus.OK);
     }
     
