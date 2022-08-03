@@ -5,11 +5,9 @@ import com.baomidou.mybatisplus.annotation.TableName;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.AllArgsConstructor;
-import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-
-import java.io.Serializable;
+import lombok.experimental.SuperBuilder;
 
 /**
  * <p>
@@ -20,12 +18,12 @@ import java.io.Serializable;
  * @since 2021-12-22
  */
 @Data
-@Builder
+@SuperBuilder
 @NoArgsConstructor
 @AllArgsConstructor
 @TableName("tb_result")
 @ApiModel(value = "Result对象", description = "成绩表")
-public class Result extends AbstractEntity  implements Serializable {
+public class Result extends AbstractEntity {
 
     private static final long serialVersionUID = 1L;
     
@@ -36,10 +34,6 @@ public class Result extends AbstractEntity  implements Serializable {
     @ApiModelProperty("课程id")
     @TableField("course_id")
     private String courseId;
-
-    @ApiModelProperty("学生姓名")
-    @TableField("student_name")
-    private String studentName;
 
     @ApiModelProperty("成绩")
     @TableField("result")

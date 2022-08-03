@@ -1,8 +1,8 @@
 package com.agoni.dgy.service;
 
 import com.agoni.dgy.model.bo.ResultSearchFrom;
-import com.agoni.dgy.model.po.Major;
 import com.agoni.dgy.model.po.Result;
+import com.agoni.dgy.model.vo.ResultVo;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.service.IService;
 
@@ -16,5 +16,5 @@ import com.baomidou.mybatisplus.extension.service.IService;
  */
 public interface ResultService extends IService<Result> {
     
-    IPage<Major> searchPage(ResultSearchFrom from);
+    IPage<ResultVo> searchPage(ResultSearchFrom from);
 }

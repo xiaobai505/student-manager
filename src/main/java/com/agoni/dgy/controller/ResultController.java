@@ -2,8 +2,8 @@ package com.agoni.dgy.controller;
 
 
 import com.agoni.dgy.model.bo.ResultSearchFrom;
-import com.agoni.dgy.model.po.Major;
 import com.agoni.dgy.model.po.Result;
+import com.agoni.dgy.model.vo.ResultVo;
 import com.agoni.dgy.service.ResultService;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -32,7 +32,7 @@ public class ResultController {
     
     @GetMapping
     public ResponseEntity<IPage> searchPage(@Validated ResultSearchFrom from) {
-        IPage<Major> res = resultService.searchPage(from);
+        IPage<ResultVo> res = resultService.searchPage(from);
         return new ResponseEntity<>(res, HttpStatus.OK);
     }
     

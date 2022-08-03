@@ -2,4 +2,24 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.agoni.dgy.mapper.ResultMapper">
 
+    <select id="getPageToVo" resultType="com.agoni.dgy.model.vo.ResultVo">
+        select
+            t1.*,
+            t2.name as studentName
+        from
+            tb_result t1
+        LEFT JOIN
+             tb_user t2
+        on t1.user_id = t2.id
+        and t1.del_flag = 0
+        and t2.del_flag = 0
+    <where>
+        <if test="from.studentName != null and from.studentName != ''">
+            AND t2.name like concat("%",#{from.studentName},"%")
+        </if>
+        <if test="from.className != null and from.className != ''">
+            AND t2.roleIds like concat("%",#{userAndRole.roles},"%")
+        </if>
+    </where>
+    </select>
 </mapper>

@@ -36,7 +36,7 @@ public class RoleUserVo extends RoleUser {
     @TableField("role_id")
     private Long roleId;
     
-    @BindField(entity= Role.class, field="roleName", condition="this.course_id=id")
+    @BindField(entity= Role.class, field="roleName", condition="this.role_id=id")
     private String roles;
     
     @ApiModelProperty("角色编码")
