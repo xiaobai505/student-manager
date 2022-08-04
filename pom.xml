@@ -205,34 +205,23 @@
 					<target>8</target>
 				</configuration>
 			</plugin>
+			<plugin>
+				<groupId>org.springframework.boot</groupId>
+				<artifactId>spring-boot-maven-plugin</artifactId>
+				<configuration>
+					<executable>true</executable>
+				</configuration>
+			</plugin>
 		</plugins>
 		<!--解决不编译XML等文件-->
-		<!--<resources>
-			&lt;!&ndash;不编译数据库配置文件&ndash;&gt;
+		<resources>
 			<resource>
 				<directory>src/main/resources</directory>
-				<includes>
-					<include>**/*.yml</include>
-					<include>**/*.properties</include>
-					<include>**/*.xml</include>
-					<include>**/*.html</include>
-					<include>**/*.js</include>
-					<include>**/*.jpg</include>
-					<include>**/*.png</include>
-					<include>**/*.css</include>
-					<include>**/*.gif</include>
-				</includes>
-				<filtering>false</filtering>
-			</resource>
-			&lt;!&ndash;不编译webapp静态文件&ndash;&gt;
-			<resource>
-				<directory>src/main/webapp</directory>
-				<targetPath>META-INF/resources</targetPath>
 				<includes>
 					<include>**/*.*</include>
 				</includes>
 			</resource>
-		</resources>-->
+		</resources>
 	</build>
 
 
