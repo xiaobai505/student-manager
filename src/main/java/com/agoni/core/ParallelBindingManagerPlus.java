@@ -1,4 +1,4 @@
-package com.agoni.core.binding;
+package com.agoni.core;
 
 import com.agoni.dgy.service.DictService;
 import com.diboot.core.binding.annotation.BindDict;

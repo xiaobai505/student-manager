@@ -1,4 +1,4 @@
-package com.agoni.core.binding;
+package com.agoni.core;
 /*
  * Copyright (c) 2015-2020, www.dibo.ltd (service@dibo.ltd).
  * <p>

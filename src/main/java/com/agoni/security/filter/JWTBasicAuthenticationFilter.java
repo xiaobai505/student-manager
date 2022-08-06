@@ -5,7 +5,7 @@ import com.agoni.security.exception.ExceptionEnum;
 import com.agoni.security.exception.ExceptionResponse;
 import com.agoni.security.service.AuthUserService;
 import com.agoni.security.utils.JwtTokenUtil;
-import com.alibaba.fastjson2.JSONObject;
+import com.alibaba.fastjson2.JSON;
 import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
@@ -85,6 +85,6 @@ public class JWTBasicAuthenticationFilter extends OncePerRequestFilter {
         response.setHeader("Cache-Control", "no-cache");
         response.setContentType("application/json;charset=utf-8");
         response.setStatus(status);
-        response.getWriter().write(JSONObject.toJSONString(exceptionResponse));
+        response.getWriter().write(JSON.toJSONString(exceptionResponse));
     }
 }

@@ -1,6 +1,6 @@
 package com.agoni.security.exception;
 
-import com.alibaba.fastjson2.JSONObject;
+import com.alibaba.fastjson2.JSON;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.web.AuthenticationEntryPoint;
@@ -21,7 +21,7 @@ public class RestAuthenticationEntryPoint implements AuthenticationEntryPoint {
         response.setCharacterEncoding("UTF-8");
         response.setContentType("application/json");
         response.setStatus(HttpStatus.BAD_REQUEST.value());
-        response.getWriter().println(JSONObject.toJSONString(ExceptionResponse.body(ExceptionEnum.TOKEN_CHECK_FAIL)));
+        response.getWriter().println(JSON.toJSONString(ExceptionResponse.body(ExceptionEnum.TOKEN_CHECK_FAIL)));
         response.getWriter().flush();
     }
 }

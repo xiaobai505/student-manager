@@ -1,4 +1,4 @@
-package com.agoni.core.binding;
+package com.agoni.core;
 
 import com.diboot.core.binding.helper.DeepRelationsBinder;
 import com.diboot.core.binding.parser.BindAnnotationGroup;

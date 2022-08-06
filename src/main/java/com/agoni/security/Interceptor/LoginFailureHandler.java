@@ -2,7 +2,7 @@ package com.agoni.security.Interceptor;
 
 import com.agoni.security.exception.ExceptionEnum;
 import com.agoni.security.exception.ExceptionResponse;
-import com.alibaba.fastjson2.JSONObject;
+import com.alibaba.fastjson2.JSON;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.web.authentication.AuthenticationFailureHandler;
@@ -32,6 +32,6 @@ public class LoginFailureHandler implements AuthenticationFailureHandler {
         response.setHeader("Cache-Control","no-cache");
         response.setContentType("application/json;charset=utf-8");
         response.setStatus(HttpStatus.BAD_REQUEST.value());
-        response.getWriter().write(JSONObject.toJSONString(ExceptionResponse.body(ExceptionEnum.LOGIN_FAILURE)));
+        response.getWriter().write(JSON.toJSONString(ExceptionResponse.body(ExceptionEnum.LOGIN_FAILURE)));
     }
 }

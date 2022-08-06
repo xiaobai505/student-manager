@@ -1,7 +1,7 @@
 package com.agoni.dgy.controller;
 
 
-import com.agoni.core.binding.Binder;
+import com.agoni.core.Binder;
 import com.agoni.dgy.model.po.RoleUser;
 import com.agoni.dgy.model.vo.RoleUserVo;
 import com.agoni.dgy.service.RoleUserService;

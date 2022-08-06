@@ -1,6 +1,6 @@
 package com.agoni.dgy.service.impl;
 
-import com.agoni.core.binding.RelationsBinder;
+import com.agoni.core.RelationsBinder;
 import com.agoni.dgy.mapper.DictMapper;
 import com.agoni.dgy.model.po.Dict;
 import com.agoni.dgy.model.po.DictConfig;

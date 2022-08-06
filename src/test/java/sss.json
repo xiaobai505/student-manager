@@ -1,42 +1,6 @@
 {
-  "systemRouter": {
-    "path": "/system",
-    "redirect": "/system/user/index",
-    "meta": {
-      "icon": "setting",
-      "title": "menus.hssysManagement",
-      "i18n": true,
-      "rank": 6
-    },
-    "children": [
-      {
-        "path": "/iframe/pure",
-        "name": "reFramePure",
-        "meta": {
-          "i18n": true,
-          "title": "menus.hsPureDocument",
-          "frameSrc": "https://pure-admin-doc.vercel.app"
-        }
-      },
-      {
-        "path": "/external",
-        "name": "https://pure-admin-doc.vercel.app",
-        "meta": {
-          "title": "menus.externalLink",
-          "i18n": true
-        }
-      },
-      {
-        "path": "/external",
-        "name": "https://pure-admin-doc.vercel.app",
-        "meta": {
-          "title": "menus.externalLink",
-          "i18n": true
-        }
-      }
-    ]
-  }
+  "title": "",
+  "showLink": false,
+  "dynamicLevel": 3,
+  "refreshRedirect": "/tabs/index"
 }
-
-
-

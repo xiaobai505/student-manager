@@ -1,9 +1,9 @@
 package com.agoni.dgy.model.po;
 
-import com.alibaba.fastjson2.JSONObject;
+import com.agoni.security.Interceptor.Fastjson2TypeHandler;
+import com.alibaba.fastjson2.JSON;
 import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableName;
-import com.baomidou.mybatisplus.extension.handlers.FastjsonTypeHandler;
 import io.swagger.annotations.ApiModel;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -30,8 +30,8 @@ public class History extends AbstractEntity  implements Serializable {
 
     private static final long serialVersionUID = 1L;
     
-    @TableField(value = "log_data",typeHandler = FastjsonTypeHandler.class)
-    private JSONObject logData;
+    @TableField(value = "log_data",typeHandler = Fastjson2TypeHandler.class)
+    private JSON logData;
 
     @TableField("log_type")
     private String logType;

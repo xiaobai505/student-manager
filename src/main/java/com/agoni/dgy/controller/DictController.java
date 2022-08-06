@@ -1,6 +1,6 @@
 package com.agoni.dgy.controller;
 
-import com.agoni.core.binding.Binder;
+import com.agoni.core.Binder;
 import com.agoni.dgy.model.po.Dict;
 import com.agoni.dgy.model.vo.DictVo;
 import com.agoni.dgy.service.DictService;

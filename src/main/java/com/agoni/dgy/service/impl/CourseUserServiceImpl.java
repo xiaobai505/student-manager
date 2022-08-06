@@ -1,6 +1,6 @@
 package com.agoni.dgy.service.impl;
 
-import com.agoni.core.binding.Binder;
+import com.agoni.core.Binder;
 import com.agoni.dgy.mapper.CourseUserMapper;
 import com.agoni.dgy.model.bo.CourseUserSearchFrom;
 import com.agoni.dgy.model.po.AbstractEntity;

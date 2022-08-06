@@ -19,6 +19,9 @@ import java.time.LocalDateTime;
 @AllArgsConstructor
 public abstract class AbstractEntity implements Serializable {
     
+    @TableField(exist = false)
+    private static final long serialVersionUID = 1L;
+    
     @ApiModelProperty("id主键")
     @TableId(value = "id", type = IdType.AUTO)
     @JsonSerialize(using= ToStringSerializer.class)
