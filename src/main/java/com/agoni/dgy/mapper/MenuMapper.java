@@ -1,6 +1,6 @@
 package com.agoni.dgy.mapper;
 
-import com.agoni.dgy.model.po.Menutree;
+import com.agoni.dgy.model.po.Menu;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 
 /**
@@ -9,7 +9,7 @@ import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 * @createDate 2022-08-06 19:36:33
 * @Entity generator.domain.Menutree
 */
-public interface MenutreeMapper extends BaseMapper<Menutree> {
+public interface MenuMapper extends BaseMapper<Menu> {
 
 }
 

@@ -1,6 +1,6 @@
 package com.agoni.dgy.model.vo;
 
-import com.agoni.dgy.model.po.Menutree;
+import com.agoni.dgy.model.po.Menu;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -12,7 +12,7 @@ import java.util.List;
 @SuperBuilder
 @NoArgsConstructor
 @AllArgsConstructor
-public class MenutreeVo extends Menutree {
+public class MenuTreeVo extends Menu {
     
-    private List<MenutreeVo> children;
+    private List<MenuTreeVo> children;
 }

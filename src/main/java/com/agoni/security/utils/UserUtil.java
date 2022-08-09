@@ -1,8 +1,10 @@
 package com.agoni.security.utils;
 
 import com.agoni.dgy.model.vo.AuthUserVo;
+import com.baomidou.mybatisplus.core.toolkit.StringUtils;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.core.Authentication;
+import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.context.SecurityContext;
 import org.springframework.security.core.context.SecurityContextHolder;
 
@@ -24,6 +26,34 @@ public class UserUtil {
 
         }
         return authUserVo;
+    }
+    
+    /**
+     * 获取当前用户第一个权限
+     * @return
+     */
+    public static String getFirstRole() {
+        AuthUserVo userPrincipal = getUserPrincipal();
+        for (GrantedAuthority authority : userPrincipal.getAuthorities()) {
+            return authority.getAuthority();
+        }
+        return null;
+    }
+    
+    /**
+     * 判断当前用户是否有这个权限
+     * @param role
+     *
+     * @return
+     */
+    public static boolean hasRole(String role){
+        AuthUserVo userPrincipal = getUserPrincipal();
+        for (GrantedAuthority authority : userPrincipal.getAuthorities()) {
+            if (StringUtils.equals(authority.getAuthority(),role)){
+                return true;
+            }
+        }
+        return false;
     }
 
     /**

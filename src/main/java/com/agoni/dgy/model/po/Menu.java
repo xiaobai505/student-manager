@@ -19,7 +19,7 @@ import lombok.experimental.SuperBuilder;
 @SuperBuilder
 @NoArgsConstructor
 @AllArgsConstructor
-public class Menutree extends AbstractEntity {
+public class Menu extends AbstractEntity {
 
     /**
      * 父id
@@ -33,7 +33,7 @@ public class Menutree extends AbstractEntity {
      */
     @TableField("menu_type")
     private String menuType;
-
+    
     /**
      * 路径
      */

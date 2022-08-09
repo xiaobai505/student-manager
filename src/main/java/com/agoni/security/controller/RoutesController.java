@@ -1,10 +1,9 @@
 package com.agoni.security.controller;
 
 import com.agoni.core.Binder;
-import com.agoni.dgy.model.po.Menutree;
-import com.agoni.dgy.model.vo.AuthUserVo;
-import com.agoni.dgy.model.vo.MenutreeVo;
-import com.agoni.dgy.service.MenutreeService;
+import com.agoni.dgy.model.po.Menu;
+import com.agoni.dgy.model.vo.MenuTreeVo;
+import com.agoni.dgy.service.MenuService;
 import com.agoni.security.utils.UserUtil;
 import com.diboot.core.util.BeanUtils;
 import io.swagger.annotations.Api;
@@ -30,14 +29,14 @@ import java.util.List;
 public class RoutesController {
     
     @Autowired
-    private MenutreeService menutreeService;
+    private MenuService menutreeService;
     
     @GetMapping("/getAsyncRoutes/{userName}")
     @ApiOperation("获取用户")
     public ResponseEntity<List> get(@PathVariable String userName) {
-        AuthUserVo userPrincipal = UserUtil.getUserPrincipal();
-        List<Menutree> list = menutreeService.list();
-        List<MenutreeVo> tree = BeanUtils.buildTree(Binder.convertAndBindRelations(list, MenutreeVo.class));
+        String role = UserUtil.getFirstRole();
+        List<Menu> list = menutreeService.list();
+        List<MenuTreeVo> tree = BeanUtils.buildTree(Binder.convertAndBindRelations(list, MenuTreeVo.class));
         return new ResponseEntity<>(tree, HttpStatus.OK);
     }
 }

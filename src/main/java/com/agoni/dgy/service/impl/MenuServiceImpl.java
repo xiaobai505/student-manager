@@ -1,9 +1,9 @@
 package com.agoni.dgy.service.impl;
 
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
-import com.agoni.dgy.model.po.Menutree;
-import com.agoni.dgy.service.MenutreeService;
-import com.agoni.dgy.mapper.MenutreeMapper;
+import com.agoni.dgy.model.po.Menu;
+import com.agoni.dgy.service.MenuService;
+import com.agoni.dgy.mapper.MenuMapper;
 import org.springframework.stereotype.Service;
 
 /**
@@ -12,7 +12,7 @@ import org.springframework.stereotype.Service;
  * @createDate 2022-08-06 19:36:33
  */
 @Service
-public class MenutreeServiceImpl extends ServiceImpl<MenutreeMapper, Menutree> implements MenutreeService {
+public class MenuServiceImpl extends ServiceImpl<MenuMapper, Menu> implements MenuService {
 
 }
 

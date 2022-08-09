@@ -1,6 +1,6 @@
 package com.agoni.dgy.service;
 
-import com.agoni.dgy.model.po.Menutree;
+import com.agoni.dgy.model.po.Menu;
 import com.baomidou.mybatisplus.extension.service.IService;
 
 /**
@@ -8,6 +8,6 @@ import com.baomidou.mybatisplus.extension.service.IService;
 * @description 针对表【tb_menutree(菜单表)】的数据库操作Service
 * @createDate 2022-08-06 19:36:33
 */
-public interface MenutreeService extends IService<Menutree> {
+public interface MenuService extends IService<Menu> {
 
 }
