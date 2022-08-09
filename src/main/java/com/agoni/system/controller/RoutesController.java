@@ -4,6 +4,7 @@ import com.agoni.core.Binder;
 import com.agoni.dgy.model.po.Menu;
 import com.agoni.dgy.model.vo.MenuTreeVo;
 import com.agoni.dgy.service.MenuService;
+import com.agoni.dgy.service.MeunRoleService;
 import com.agoni.system.utils.UserUtil;
 import com.diboot.core.util.BeanUtils;
 import io.swagger.annotations.Api;
@@ -30,6 +31,9 @@ public class RoutesController {
     
     @Autowired
     private MenuService menutreeService;
+    
+    @Autowired
+    private MeunRoleService meunRoleService;
     
     @GetMapping("/getAsyncRoutes/{userName}")
     @ApiOperation("获取用户")
