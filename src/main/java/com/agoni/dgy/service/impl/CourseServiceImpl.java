@@ -5,7 +5,7 @@ import com.agoni.dgy.model.bo.CourseSearchFrom;
 import com.agoni.dgy.model.po.Course;
 import com.agoni.dgy.model.vo.AuthUserVo;
 import com.agoni.dgy.service.CourseService;
-import com.agoni.security.utils.UserUtil;
+import com.agoni.system.utils.UserUtil;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.core.toolkit.ObjectUtils;

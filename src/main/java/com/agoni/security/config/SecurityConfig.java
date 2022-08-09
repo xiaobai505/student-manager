@@ -3,7 +3,7 @@ package com.agoni.security.config;
 import com.agoni.security.Interceptor.LoginFailureHandler;
 import com.agoni.security.Interceptor.LoginSuccessHandler;
 import com.agoni.security.constants.SecurityConstants;
-import com.agoni.security.exception.RestAuthenticationEntryPoint;
+import com.agoni.system.exception.RestAuthenticationEntryPoint;
 import com.agoni.security.filter.JWTBasicAuthenticationFilter;
 import com.agoni.security.service.AuthUserService;
 import org.springframework.beans.factory.annotation.Autowired;

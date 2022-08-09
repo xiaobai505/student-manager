@@ -1,4 +1,4 @@
-package com.agoni.security.controller;
+package com.agoni.system.controller;
 
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;

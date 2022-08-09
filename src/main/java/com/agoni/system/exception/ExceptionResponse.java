@@ -1,4 +1,4 @@
-package com.agoni.security.exception;
+package com.agoni.system.exception;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;

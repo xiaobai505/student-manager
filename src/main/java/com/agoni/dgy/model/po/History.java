@@ -1,6 +1,6 @@
 package com.agoni.dgy.model.po;
 
-import com.agoni.security.Interceptor.Fastjson2TypeHandler;
+import com.agoni.system.Interceptor.Fastjson2TypeHandler;
 import com.alibaba.fastjson2.JSON;
 import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableName;

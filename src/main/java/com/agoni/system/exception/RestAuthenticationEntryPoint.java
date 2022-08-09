@@ -1,4 +1,4 @@
-package com.agoni.security.exception;
+package com.agoni.system.exception;
 
 import com.alibaba.fastjson2.JSON;
 import org.springframework.http.HttpStatus;

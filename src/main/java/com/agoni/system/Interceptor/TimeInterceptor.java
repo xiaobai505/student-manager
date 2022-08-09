@@ -1,8 +1,9 @@
 /**
  * 
  */
-package com.agoni.security.Interceptor;
+package com.agoni.system.Interceptor;
 
+import com.agoni.system.utils.httpUitl;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
 import org.springframework.web.servlet.HandlerInterceptor;
@@ -27,8 +28,8 @@ public class TimeInterceptor implements HandlerInterceptor {
 	public void postHandle(HttpServletRequest request, HttpServletResponse response, Object handler, ModelAndView modelAndView){
 		log.info("2：postHandle");
 		Long start = (Long) request.getAttribute("startTime");
-		log.info("time interceptor 耗时:"+ (System.currentTimeMillis() - start));
-
+		String requestIp = httpUitl.getRequestIp(request);
+		log.info("%s, time interceptor 耗时: %s ", requestIp, (System.currentTimeMillis() - start));
 	}
 
 	//都会被调用

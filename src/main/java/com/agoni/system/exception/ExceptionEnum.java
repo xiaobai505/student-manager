@@ -1,4 +1,4 @@
-package com.agoni.security.exception;
+package com.agoni.system.exception;
 
 public enum ExceptionEnum {
     

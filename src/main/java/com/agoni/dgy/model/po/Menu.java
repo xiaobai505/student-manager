@@ -1,6 +1,6 @@
 package com.agoni.dgy.model.po;
 
-import com.agoni.security.Interceptor.Fastjson2TypeHandler;
+import com.agoni.system.Interceptor.Fastjson2TypeHandler;
 import com.alibaba.fastjson2.JSONObject;
 import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableName;
@@ -14,7 +14,7 @@ import lombok.experimental.SuperBuilder;
  * 菜单表
  * @TableName tb_menutree
  */
-@TableName(value ="tb_menutree",autoResultMap=true)
+@TableName(value ="tb_menu",autoResultMap=true)
 @Data
 @SuperBuilder
 @NoArgsConstructor

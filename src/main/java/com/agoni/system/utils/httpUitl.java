@@ -1,4 +1,4 @@
-package com.agoni.security.utils;
+package com.agoni.system.utils;
 
 import com.diboot.core.config.Cons;
 import com.diboot.core.util.V;

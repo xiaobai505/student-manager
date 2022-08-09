@@ -6,7 +6,7 @@ import com.agoni.dgy.model.po.User;
 import com.agoni.dgy.model.vo.AuthUserVo;
 import com.agoni.dgy.model.vo.UserAndRole;
 import com.agoni.dgy.service.UserService;
-import com.agoni.security.utils.UserUtil;
+import com.agoni.system.utils.UserUtil;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;

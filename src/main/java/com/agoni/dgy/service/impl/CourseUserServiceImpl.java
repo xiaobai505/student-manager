@@ -10,7 +10,7 @@ import com.agoni.dgy.model.vo.AuthUserVo;
 import com.agoni.dgy.model.vo.CourseUserVo;
 import com.agoni.dgy.service.CourseService;
 import com.agoni.dgy.service.CourseUserService;
-import com.agoni.security.utils.UserUtil;
+import com.agoni.system.utils.UserUtil;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;

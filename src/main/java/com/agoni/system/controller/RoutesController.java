@@ -1,10 +1,10 @@
-package com.agoni.security.controller;
+package com.agoni.system.controller;
 
 import com.agoni.core.Binder;
 import com.agoni.dgy.model.po.Menu;
 import com.agoni.dgy.model.vo.MenuTreeVo;
 import com.agoni.dgy.service.MenuService;
-import com.agoni.security.utils.UserUtil;
+import com.agoni.system.utils.UserUtil;
 import com.diboot.core.util.BeanUtils;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;

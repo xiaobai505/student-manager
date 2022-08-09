@@ -1,4 +1,4 @@
-package com.agoni.security.config;
+package com.agoni.system.config;
 
 import me.chanjar.weixin.mp.api.WxMpService;
 import me.chanjar.weixin.mp.api.impl.WxMpServiceImpl;

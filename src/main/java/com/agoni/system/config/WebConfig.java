@@ -1,6 +1,6 @@
-package com.agoni.security.config;
+package com.agoni.system.config;
 
-import com.agoni.security.Interceptor.TimeInterceptor;
+import com.agoni.system.Interceptor.TimeInterceptor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.servlet.config.annotation.InterceptorRegistry;

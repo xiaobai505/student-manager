@@ -1,6 +1,6 @@
-package com.agoni.dgy.config;
+package com.agoni.system.config;
 
-import com.agoni.security.utils.UserUtil;
+import com.agoni.system.utils.UserUtil;
 import com.baomidou.mybatisplus.annotation.DbType;
 import com.baomidou.mybatisplus.core.handlers.MetaObjectHandler;
 import com.baomidou.mybatisplus.extension.plugins.MybatisPlusInterceptor;

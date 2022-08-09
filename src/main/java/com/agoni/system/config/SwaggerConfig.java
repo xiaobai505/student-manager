@@ -1,4 +1,4 @@
-package com.agoni.security.config;
+package com.agoni.system.config;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;

@@ -1,4 +1,4 @@
-package com.agoni.security.utils;
+package com.agoni.system.utils;
 
 import com.agoni.dgy.model.vo.AuthUserVo;
 import com.baomidou.mybatisplus.core.toolkit.StringUtils;
