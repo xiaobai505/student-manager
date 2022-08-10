@@ -2,6 +2,9 @@ package com.agoni.dgy.mapper;
 
 import com.agoni.dgy.model.po.Menu;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
+import org.apache.ibatis.annotations.Param;
+
+import java.util.List;
 
 /**
 * @author gyd
@@ -10,7 +13,8 @@ import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 * @Entity generator.domain.Menutree
 */
 public interface MenuMapper extends BaseMapper<Menu> {
-
+    
+    List<Menu> getByCode(@Param("code") String code);
 }
 
 

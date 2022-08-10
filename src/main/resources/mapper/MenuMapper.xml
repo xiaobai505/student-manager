@@ -3,5 +3,50 @@
         PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.agoni.dgy.mapper.MenuMapper">
-    
+    <resultMap id="BaseResultMap" type="com.agoni.dgy.model.po.Menu">
+        <id property="id" column="id" jdbcType="BIGINT"/>
+        <result property="parentId" column="parent_id" jdbcType="BIGINT"/>
+        <result property="menuType" column="menu_type" jdbcType="VARCHAR"/>
+        <result property="path" column="path" jdbcType="VARCHAR"/>
+        <result property="redirect" column="redirect" jdbcType="VARCHAR"/>
+        <result property="name" column="name" jdbcType="VARCHAR"/>
+        <result property="meta" column="meta" jdbcType="OTHER"
+                javaType="com.alibaba.fastjson2.JSONObject"
+                typeHandler="com.agoni.system.Interceptor.Fastjson2TypeHandler"/>
+        <result property="remark" column="remark" jdbcType="VARCHAR"/>
+        <result property="createTime" column="create_time" jdbcType="TIMESTAMP"/>
+        <result property="createBy" column="create_by" jdbcType="VARCHAR"/>
+        <result property="createByName" column="create_by_name" jdbcType="VARCHAR"/>
+        <result property="updateTime" column="update_time" jdbcType="TIMESTAMP"/>
+        <result property="updateBy" column="update_by" jdbcType="VARCHAR"/>
+        <result property="updateByName" column="update_by_name" jdbcType="VARCHAR"/>
+        <result property="delFlag" column="del_flag" jdbcType="INTEGER"/>
+    </resultMap>
+
+    <sql id="Base_Column_List">
+        id,parent_id,menu_type,
+        path,redirect,name,
+        meta,remark,create_time,
+        create_by,create_by_name,update_time,
+        update_by,update_by_name,del_flag
+    </sql>
+
+
+
+    <select id="getByCode" resultType="com.agoni.dgy.model.po.Menu" resultMap="BaseResultMap">
+        select
+            *
+        from
+            student_status_management.tb_menu t
+        left join
+            student_status_management.tb_meun_role t1
+            on t1.del_flag=0 and t1.meun_id = t.id
+        left join
+            student_status_management.tb_role t2
+            on t2.del_flag=0 and t1.role_id = t2.id
+        where t.del_flag=0
+        <if test="code != null">
+            and t2.role_code =#{code}
+        </if>
+    </select>
 </mapper>

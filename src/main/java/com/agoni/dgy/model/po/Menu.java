@@ -25,7 +25,7 @@ public class Menu extends AbstractEntity {
      * 父id
      */
     @ApiModelProperty("父id")
-    @TableField("parentId")
+    @TableField("parent_id")
     private Long parentId;
 
     /**
