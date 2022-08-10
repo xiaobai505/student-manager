@@ -2,7 +2,6 @@ package com.agoni.system.controller;
 
 import com.agoni.dgy.model.vo.MenuTreeVo;
 import com.agoni.dgy.service.MenuService;
-import com.agoni.dgy.service.MeunRoleService;
 import com.agoni.system.utils.UserUtil;
 import com.baomidou.mybatisplus.core.toolkit.StringUtils;
 import io.swagger.annotations.Api;
@@ -29,8 +28,6 @@ public class RoutesController {
     
     @Autowired
     private MenuService menuService;
-    @Autowired
-    private MeunRoleService meunRoleService;
     
     @GetMapping("/getAsyncRoutes/{userName}")
     @ApiOperation("获取用户")
