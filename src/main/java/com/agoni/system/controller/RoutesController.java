@@ -1,9 +1,9 @@
 package com.agoni.system.controller;
 
+import com.agoni.dgy.model.bo.MenuFrom;
 import com.agoni.dgy.model.vo.MenuTreeVo;
 import com.agoni.dgy.service.MenuService;
 import com.agoni.system.utils.UserUtil;
-import com.baomidou.mybatisplus.core.toolkit.StringUtils;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import lombok.extern.slf4j.Slf4j;
@@ -32,11 +32,8 @@ public class RoutesController {
     @GetMapping("/getAsyncRoutes/{userName}")
     @ApiOperation("获取用户")
     public ResponseEntity<List> get(@PathVariable String userName) {
-        String code = UserUtil.getFirstRole();
-        if (StringUtils.isEmpty(code)){
-            return null;
-        }
-        List<MenuTreeVo> tree = menuService.getTree(code);
+        MenuFrom build = MenuFrom.builder().code(UserUtil.getFirstRole()).build();
+        List<MenuTreeVo> tree = menuService.getTree(build);
         return new ResponseEntity<>(tree, HttpStatus.OK);
     }
 }

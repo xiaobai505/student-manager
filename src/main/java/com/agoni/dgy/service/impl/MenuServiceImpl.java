@@ -2,6 +2,7 @@ package com.agoni.dgy.service.impl;
 
 import com.agoni.core.Binder;
 import com.agoni.dgy.mapper.MenuMapper;
+import com.agoni.dgy.model.bo.MenuFrom;
 import com.agoni.dgy.model.po.Menu;
 import com.agoni.dgy.model.vo.MenuTreeVo;
 import com.agoni.dgy.service.MenuService;
@@ -25,8 +26,8 @@ public class MenuServiceImpl extends ServiceImpl<MenuMapper, Menu> implements Me
      * @return menu菜单
      */
     @Override
-    public List<MenuTreeVo> getTree(String code) {
-        List<Menu> list = baseMapper.getByCode(code);
+    public List<MenuTreeVo> getTree(MenuFrom from) {
+        List<Menu> list = baseMapper.getByMenuFrom(from);
         // 转换vo
         List<MenuTreeVo> menuTreeVos = Binder.convertAndBindRelations(list, MenuTreeVo.class);
         // 构建树

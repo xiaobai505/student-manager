@@ -33,7 +33,7 @@
 
 
 
-    <select id="getByCode" resultType="com.agoni.dgy.model.po.Menu" resultMap="BaseResultMap">
+    <select id="getByMenuFrom" resultType="com.agoni.dgy.model.po.Menu" resultMap="BaseResultMap">
         select
             *
         from
@@ -45,8 +45,11 @@
             student_status_management.tb_role t2
             on t2.del_flag=0 and t1.role_id = t2.id
         where t.del_flag=0
-        <if test="code != null">
-            and t2.role_code =#{code}
+        <if test="from.code != null and from.code != ''">
+            and t2.role_code =#{from.code}
+        </if>
+        <if test="from.roleId != null ">
+            and t2.id = #{from.roleId}
         </if>
     </select>
 </mapper>
