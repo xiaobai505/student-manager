@@ -1,6 +1,7 @@
 package com.agoni.system.controller;
 
 import com.agoni.dgy.model.bo.MenuFrom;
+import com.agoni.dgy.model.po.Menu;
 import com.agoni.dgy.model.vo.MenuTreeVo;
 import com.agoni.dgy.service.MenuService;
 import com.agoni.system.utils.UserUtil;
@@ -35,5 +36,12 @@ public class RoutesController {
         MenuFrom build = MenuFrom.builder().code(UserUtil.getFirstRole()).build();
         List<MenuTreeVo> tree = menuService.getTree(build);
         return new ResponseEntity<>(tree, HttpStatus.OK);
+    }
+    
+    @GetMapping()
+    @ApiOperation("获取用户")
+    public ResponseEntity<List> list() {
+        List<Menu> list = menuService.list();
+        return new ResponseEntity<>(list, HttpStatus.OK);
     }
 }
