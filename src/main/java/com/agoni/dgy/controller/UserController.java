@@ -38,35 +38,35 @@ public class UserController {
     private UserService userService;
 
     @GetMapping
-    @ApiOperation("获取登录用户")
+    @ApiOperation("获取当前登录用户")
     public ResponseEntity<AuthUserVo> get(){
         AuthUserVo userPrincipal = UserUtil.getUserPrincipal();
         return new ResponseEntity<>(userPrincipal, HttpStatus.OK);
     }
 
     @GetMapping("/page")
-    @ApiOperation("用户列表")
+    @ApiOperation("列表")
     public ResponseEntity<IPage> page(@Validated UserSearchFrom userSearchFrom){
         IPage<UserAndRole> res = userService.pageUser(userSearchFrom);
         return new ResponseEntity<>(res, HttpStatus.OK);
     }
 
     @PostMapping
-    @ApiOperation("新增用户")
+    @ApiOperation("新增")
     public ResponseEntity<Boolean> saveBatch(@RequestBody List<User> user){
         boolean b = userService.saveBatch(user);
         return new ResponseEntity<>(b, HttpStatus.OK);
     }
 
     @PutMapping
-    @ApiOperation("更新用户")
+    @ApiOperation("更新")
     public ResponseEntity<Boolean> updateBatchById(@RequestBody List<User> user){
         boolean b = userService.updateBatchById(user);
         return new ResponseEntity<>(b, HttpStatus.OK);
     }
 
     @DeleteMapping
-    @ApiOperation("删除用户")
+    @ApiOperation("删除")
     public ResponseEntity<Boolean> removeByIds(@RequestBody List<User> userList){
         List<Long> ids = userList.stream().map(User::getId).collect(Collectors.toList());
         boolean b = userService.removeByIds(ids);

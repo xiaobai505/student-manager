@@ -26,6 +26,7 @@ public class DictController {
     private DictService dictService;
     
     @GetMapping("/test")
+    @ApiOperation("列表")
     public Object get(){
         List<Dict> list = dictService.list();
         List<DictVo> voList = Binder.convertAndBindRelations(list, DictVo.class);
@@ -34,28 +35,28 @@ public class DictController {
     }
     
     @GetMapping
-    @ApiOperation("获取角色信息集合")
+    @ApiOperation("列表")
     public ResponseEntity<List<Dict>> list() {
         List<Dict> list = dictService.list();
         return new ResponseEntity<>(list, HttpStatus.OK);
     }
     
     @PostMapping
-    @ApiOperation("获取角色信息集合")
+    @ApiOperation("保存")
     public ResponseEntity<Boolean> save(@RequestBody Dict dict) {
         boolean res = dictService.save(dict);
         return new ResponseEntity<>(res, HttpStatus.OK);
     }
     
     @PutMapping
-    @ApiOperation("获取角色信息集合")
+    @ApiOperation("更新")
     public ResponseEntity<Boolean> update(@RequestBody Dict dict) {
         boolean res = dictService.updateById(dict);
         return new ResponseEntity<>(res, HttpStatus.OK);
     }
     
     @DeleteMapping("/{id}")
-    @ApiOperation("获取角色信息集合")
+    @ApiOperation("删除")
     public ResponseEntity<Boolean> del(@PathVariable long id) {
         boolean res = dictService.del(id);
         return new ResponseEntity<>(res, HttpStatus.OK);
