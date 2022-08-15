@@ -6,6 +6,7 @@ import com.agoni.dgy.model.po.Result;
 import com.agoni.dgy.model.vo.ResultVo;
 import com.agoni.dgy.service.ResultService;
 import com.baomidou.mybatisplus.core.metadata.IPage;
+import io.swagger.annotations.Api;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -25,6 +26,7 @@ import java.util.stream.Collectors;
  */
 @RestController
 @RequestMapping("/dgy/result")
+@Api(tags="成绩")
 public class ResultController {
 
     @Autowired

@@ -6,6 +6,7 @@ import com.agoni.dgy.model.po.RoleUser;
 import com.agoni.dgy.model.vo.RoleUserVo;
 import com.agoni.dgy.service.RoleUserService;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,9 +27,10 @@ import java.util.stream.Collectors;
  * @author dgy
  * @since 2021-12-22
  */
+@Slf4j
+@Api(tags="角色和权限")
 @RestController
 @RequestMapping("/dgy/roleUser")
-@Slf4j
 public class RoleUserController {
     
     @Autowired

@@ -7,6 +7,7 @@ import com.agoni.dgy.model.po.CourseUser;
 import com.agoni.dgy.model.vo.CourseUserVo;
 import com.agoni.dgy.service.CourseUserService;
 import com.baomidou.mybatisplus.core.metadata.IPage;
+import io.swagger.annotations.Api;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -27,6 +28,7 @@ import java.util.List;
 @RestController
 @RequestMapping("/dgy/courseUser")
 @Slf4j
+@Api(tags="课程与用户关系")
 public class CourseUserController {
 
     @Autowired
