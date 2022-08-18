@@ -31,7 +31,7 @@ public class RoutesController {
     private MenuService menuService;
     
     @GetMapping("/getAsyncRoutes/{userName}")
-    @ApiOperation("获取用户")
+    @ApiOperation("当前用户菜单")
     public ResponseEntity<List> get(@PathVariable String userName) {
         MenuFrom build = MenuFrom.builder().code(UserUtil.getFirstRole()).build();
         List<MenuTreeVo> tree = menuService.getTree(build);
@@ -39,7 +39,7 @@ public class RoutesController {
     }
     
     @GetMapping()
-    @ApiOperation("获取用户")
+    @ApiOperation("菜单")
     public ResponseEntity<List> list() {
         List<Menu> list = menuService.list();
         return new ResponseEntity<>(list, HttpStatus.OK);

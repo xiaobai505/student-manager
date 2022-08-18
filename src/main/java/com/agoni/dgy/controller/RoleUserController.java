@@ -27,16 +27,17 @@ import java.util.stream.Collectors;
  * @author dgy
  * @since 2021-12-22
  */
-@Slf4j
-@Api(tags="角色和权限")
 @RestController
 @RequestMapping("/dgy/roleUser")
+@Slf4j
+@Api(tags="角色权限关联")
 public class RoleUserController {
     
     @Autowired
     private RoleUserService roleUserService;
     
     @GetMapping
+    @ApiOperation("列表")
     public Object get(){
         Page<RoleUser> page = roleUserService.page(new Page<>());
         Page<RoleUserVo> pageVo = Binder.convertAndBindRelations(page, RoleUserVo.class);

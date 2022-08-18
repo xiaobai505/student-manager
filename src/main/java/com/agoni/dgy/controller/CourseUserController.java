@@ -8,6 +8,7 @@ import com.agoni.dgy.model.vo.CourseUserVo;
 import com.agoni.dgy.service.CourseUserService;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -35,24 +36,28 @@ public class CourseUserController {
     private CourseUserService courseUserService;
     
     @GetMapping
+    @ApiOperation("列表")
     public ResponseEntity<IPage> searchPage(@Validated CourseUserSearchFrom from) {
         IPage<CourseUserVo> res = courseUserService.searchPage(from);
         return new ResponseEntity<>(res, HttpStatus.OK);
     }
     
     @PostMapping
+    @ApiOperation("保存")
     public ResponseEntity<Boolean> save(@RequestBody Course course) {
         boolean b = courseUserService.saveCourse(course.getId());
         return new ResponseEntity<>(b, HttpStatus.OK);
     }
     
     @PutMapping
+    @ApiOperation("更新")
     public ResponseEntity<Boolean> updateBatchById(@RequestBody List<CourseUser> courseUserList) {
         boolean b = courseUserService.updateBatchById(courseUserList);
         return new ResponseEntity<>(b, HttpStatus.OK);
     }
     
     @DeleteMapping
+    @ApiOperation("删除")
     public ResponseEntity<Boolean> delete(@RequestBody CourseUser courseUser){
         boolean b = courseUserService.deleteById(courseUser);
         return new ResponseEntity<>(b, HttpStatus.OK);

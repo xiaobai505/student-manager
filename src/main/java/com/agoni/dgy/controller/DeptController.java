@@ -27,7 +27,7 @@ public class DeptController {
     private DeptService deptService;
     
     @GetMapping
-    @ApiOperation("获取角色信息集合")
+    @ApiOperation("列表")
     public ResponseEntity<List> list(@Validated DeptSearchFrom deptSearchFrom) {
         List<Dept> list = deptService.list();
         return new ResponseEntity<>(list, HttpStatus.OK);

@@ -35,14 +35,14 @@ public class RoleController {
     private RoleService roleService;
 
     @GetMapping("/page")
-    @ApiOperation("分页获取角色信息")
+    @ApiOperation("分页列表")
     public ResponseEntity<Page> page(@Validated RoleSearchFrom roleSearchFrom) {
         Page res = roleService.page(roleSearchFrom, new QueryWrapper<>());
         return new ResponseEntity<>(res, HttpStatus.OK);
     }
 
     @GetMapping
-    @ApiOperation("获取角色信息")
+    @ApiOperation("列表")
     public ResponseEntity<List> list(){
         List<Role> list = roleService.list();
         return new ResponseEntity<>(list, HttpStatus.OK);
