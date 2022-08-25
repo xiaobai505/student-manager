@@ -8,7 +8,6 @@ import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.web.authentication.AuthenticationFailureHandler;
 import org.springframework.stereotype.Component;
 
-import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
@@ -27,11 +26,12 @@ public class LoginFailureHandler implements AuthenticationFailureHandler {
      * @param exception the exception which was thrown to reject the authentication
      */
     @Override
-    public void onAuthenticationFailure(HttpServletRequest request, HttpServletResponse response, AuthenticationException exception) throws IOException, ServletException {
+    public void onAuthenticationFailure(HttpServletRequest request, HttpServletResponse response, AuthenticationException exception) throws IOException {
         response.setHeader("Access-Control-Allow-Origin", "*");
         response.setHeader("Cache-Control","no-cache");
         response.setContentType("application/json;charset=utf-8");
         response.setStatus(HttpStatus.BAD_REQUEST.value());
         response.getWriter().write(JSON.toJSONString(ExceptionResponse.body(ExceptionEnum.LOGIN_FAILURE)));
+        
     }
 }

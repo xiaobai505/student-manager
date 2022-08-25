@@ -1,7 +1,7 @@
 package com.agoni.security.Interceptor;
 
-import com.agoni.system.exception.ExceptionResponse;
 import com.agoni.security.utils.JwtTokenUtil;
+import com.agoni.system.exception.ExceptionResponse;
 import com.alibaba.fastjson2.JSON;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.core.Authentication;
@@ -28,7 +28,7 @@ public class LoginSuccessHandler implements AuthenticationSuccessHandler {
                                         Authentication authentication) throws IOException {
         UserDetails principal = (UserDetails) authentication.getPrincipal();
         String token = JwtTokenUtil.generateToken(principal.getUsername());
-        
+    
         response.setHeader("Access-Control-Allow-Origin", "*");
         response.setHeader("Cache-Control", "no-cache");
         response.setContentType("application/json;charset=utf-8");
