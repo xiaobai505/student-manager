@@ -40,7 +40,8 @@ public class MajorServiceImpl extends ServiceImpl<MajorMapper, Major> implements
         QueryWrapper<Major> query = new QueryWrapper<>();
         query.lambda()
                 .likeRight(StringUtils.isNotEmpty(from.getSchool()), Major::getSchool, from.getSchool())
-                .likeRight(StringUtils.isNotEmpty(from.getMajor()), Major::getMajor, from.getMajor());
+                .likeRight(StringUtils.isNotEmpty(from.getMajor()), Major::getMajor, from.getMajor())
+                .orderByDesc(Major::getCreateTime);
         return page(from, query);
     }
 }

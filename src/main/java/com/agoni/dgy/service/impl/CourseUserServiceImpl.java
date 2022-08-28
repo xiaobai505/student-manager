@@ -3,7 +3,6 @@ package com.agoni.dgy.service.impl;
 import com.agoni.core.Binder;
 import com.agoni.dgy.mapper.CourseUserMapper;
 import com.agoni.dgy.model.bo.CourseUserSearchFrom;
-import com.agoni.dgy.model.po.AbstractEntity;
 import com.agoni.dgy.model.po.Course;
 import com.agoni.dgy.model.po.CourseUser;
 import com.agoni.dgy.model.vo.AuthUserVo;
@@ -60,7 +59,7 @@ public class CourseUserServiceImpl extends ServiceImpl<CourseUserMapper, CourseU
         List<Long> ids = courses.stream().map(Course::getId).collect(Collectors.toList());
         // 根据 课程id 查找 选课信息
         QueryWrapper<CourseUser> query = new QueryWrapper<>();
-        query.lambda().in(CollectionUtils.isEmpty(ids), CourseUser::getCourseId, ids).orderByDesc(AbstractEntity::getCreateTime);
+        query.lambda().in(CollectionUtils.isEmpty(ids), CourseUser::getCourseId, ids);
         return Binder.convertAndBindRelations(page(from, query),CourseUserVo.class);
     }
     
@@ -82,6 +81,6 @@ public class CourseUserServiceImpl extends ServiceImpl<CourseUserMapper, CourseU
         // 增加座位数量
         courseService.delStock(courseUser.getCourseId());
         // 删除记录
-        return this.removeById(courseUser.getId());
+        return this.removeById(courseUser);
     }
 }

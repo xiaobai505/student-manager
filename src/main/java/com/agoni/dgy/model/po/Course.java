@@ -2,6 +2,7 @@ package com.agoni.dgy.model.po;
 
 import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableName;
+import com.baomidou.mybatisplus.annotation.Version;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.AllArgsConstructor;
@@ -63,6 +64,7 @@ public class Course extends AbstractEntity{
 
     @ApiModelProperty("版本号")
     @TableField("vetsion")
+    @Version
     private Integer vetsion;
 
 }

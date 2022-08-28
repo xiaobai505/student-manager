@@ -38,9 +38,7 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
 
     @Override
     public IPage<UserAndRole> pageUser(UserSearchFrom userSearchFrom) {
-        UserAndRole userAndRole = UserAndRole.builder().name(userSearchFrom.getName())
-                .roles(userSearchFrom.getRoles()).build();
-        return userMapper.selectUserAndRolepage(userSearchFrom,userAndRole);
+        return userMapper.selectUserAndRolepage(userSearchFrom,userSearchFrom);
     }
 
     @Override

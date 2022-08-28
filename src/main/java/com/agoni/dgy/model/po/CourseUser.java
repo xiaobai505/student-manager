@@ -1,7 +1,6 @@
 package com.agoni.dgy.model.po;
 
-import com.baomidou.mybatisplus.annotation.TableField;
-import com.baomidou.mybatisplus.annotation.TableName;
+import com.baomidou.mybatisplus.annotation.*;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import com.fasterxml.jackson.databind.ser.std.ToStringSerializer;
 import io.swagger.annotations.ApiModel;
@@ -10,6 +9,9 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.experimental.SuperBuilder;
+
+import java.io.Serializable;
+import java.time.LocalDateTime;
 
 /**
  * <p>
@@ -25,9 +27,11 @@ import lombok.experimental.SuperBuilder;
 @AllArgsConstructor
 @TableName("tb_course_user")
 @ApiModel(value = "CourseUser对象", description = "用户课程关系表")
-public class CourseUser extends AbstractEntity {
-
-    private static final long serialVersionUID = 1L;
+public class CourseUser implements Serializable {
+    
+    @ApiModelProperty("id主键")
+    @TableId(value = "id", type = IdType.ASSIGN_UUID)
+    private String id;
     
     @ApiModelProperty("用户ID")
     @TableField("user_id")
@@ -38,9 +42,9 @@ public class CourseUser extends AbstractEntity {
     @TableField("course_id")
     @JsonSerialize(using= ToStringSerializer.class)
     private Long courseId;
-
-    @ApiModelProperty("最高分数")
-    @TableField("best_score")
-    private String bestScore;
-
+    
+    @ApiModelProperty("创建时间")
+    @TableField(value = "create_time", fill = FieldFill.INSERT)
+    private LocalDateTime createTime;
+    
 }

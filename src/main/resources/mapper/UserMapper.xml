@@ -14,11 +14,14 @@
             ) t2 ON t2.user_id = t1.id
         where
               t1.del_flag=0
-        <if test="userAndRole.name != null and userAndRole.name != ''">
-            AND t1.name like concat("%",#{userAndRole.name},"%")
+        <if test="userSearchFrom.name != null and userSearchFrom.name != ''">
+            AND t1.name like concat("%",#{userSearchFrom.name},"%")
         </if>
-        <if test="userAndRole.roles != null and userAndRole.roles != ''">
-            AND t2.roleIds like concat("%",#{userAndRole.roles},"%")
+        <if test="userSearchFrom.roles != null and userSearchFrom.roles != ''">
+            AND t2.roleIds like concat("%",#{userSearchFrom.roles},"%")
+        </if>
+        <if test="userSearchFrom.deptId != null and userSearchFrom.deptId != 0">
+            AND (t1.dept_id = #{userSearchFrom.deptId} OR t1.dept_id IN ( SELECT t.id FROM tb_dept t WHERE find_in_set(#{userSearchFrom.deptId}, ancestors) ))
         </if>
     </select>
 </mapper>

@@ -59,6 +59,10 @@ public class User extends AbstractEntity implements Serializable {
     @ApiModelProperty("注册手机号")
     @TableField("phone")
     private String phone;
+    
+    @ApiModelProperty("部门ID")
+    @TableField("dept_id")
+    private String deptId;
 
     @ApiModelProperty("手机是否验证 （0否  1是）")
     @TableField("is_mobile_check")
@@ -103,6 +107,10 @@ public class User extends AbstractEntity implements Serializable {
     @ApiModelProperty("生日")
     @TableField("birthday")
     private LocalDateTime birthday;
+    
+    @ApiModelProperty("最后登录IP")
+    @TableField("last_login_ip")
+    private LocalDateTime lastLoginIp;
 
     @ApiModelProperty("最后登录时间")
     @TableField("last_login_time")

@@ -17,8 +17,8 @@ public class Dept extends AbstractEntity {
     @ApiModelProperty("公司名字")
     private String name;
     
-    @ApiModelProperty("类型")
-    private Integer type;
+    @ApiModelProperty("祖级列表")
+    private String ancestors;
     
     @ApiModelProperty("父id")
     @TableField("parentId")
@@ -36,7 +36,7 @@ public class Dept extends AbstractEntity {
     @ApiModelProperty("邮箱")
     private String email;
     
-    @ApiModelProperty("状态")
+    @ApiModelProperty("部门状态（0正常 1停用）")
     private Integer status;
     
     @ApiModelProperty("理由")

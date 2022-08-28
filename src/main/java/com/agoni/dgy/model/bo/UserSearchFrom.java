@@ -10,4 +10,6 @@ public class UserSearchFrom extends Page {
     
     private String roles;
     
+    private Long deptId;
+    
 }

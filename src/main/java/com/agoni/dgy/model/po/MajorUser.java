@@ -26,7 +26,7 @@ import java.io.Serializable;
 @AllArgsConstructor
 @TableName("tb_major_user")
 @ApiModel(value = "MajorUser对象", description = "用户角色关系表")
-public class MajorUser extends AbstractEntity  implements Serializable {
+public class MajorUser implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
