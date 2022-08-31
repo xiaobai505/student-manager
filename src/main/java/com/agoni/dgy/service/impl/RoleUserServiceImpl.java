@@ -1,5 +1,6 @@
 package com.agoni.dgy.service.impl;
 
+import com.agoni.core.Binder;
 import com.agoni.dgy.mapper.RoleUserMapper;
 import com.agoni.dgy.model.po.Major;
 import com.agoni.dgy.model.po.Role;
@@ -43,7 +44,8 @@ public class RoleUserServiceImpl extends ServiceImpl<RoleUserMapper, RoleUser> i
 
     @Override
     public List<RoleUserVo> getRolebyUserId(Long id) {
-        return roleUserMapper.selectUserAndRole(id);
+        List<RoleUserVo> roleUserVos = roleUserMapper.selectUserAndRole(id);
+        return Binder.convertAndBindRelations(roleUserVos,RoleUserVo.class);
     }
 
     @Override

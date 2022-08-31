@@ -9,8 +9,7 @@
                        user_id, GROUP_CONCAT( role_id ) AS roleIds, GROUP_CONCAT( role_name ) AS roles
                 FROM
                      tb_role_user
-                WHERE
-                      del_flag = 0 GROUP BY user_id
+                GROUP BY user_id
             ) t2 ON t2.user_id = t1.id
         where
               t1.del_flag=0

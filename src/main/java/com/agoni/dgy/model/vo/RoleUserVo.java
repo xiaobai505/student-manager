@@ -4,7 +4,6 @@ import com.agoni.dgy.model.po.Role;
 import com.agoni.dgy.model.po.RoleUser;
 import com.agoni.dgy.model.po.User;
 import com.baomidou.mybatisplus.annotation.TableField;
-import com.diboot.core.binding.annotation.BindDict;
 import com.diboot.core.binding.annotation.BindEntity;
 import com.diboot.core.binding.annotation.BindField;
 import io.swagger.annotations.ApiModel;
@@ -40,11 +39,7 @@ public class RoleUserVo extends RoleUser {
     private String roles;
     
     @ApiModelProperty("角色编码")
+    @BindField(entity= Role.class, field="roleCode", condition="this.role_id=id")
     private String roleCode;
     
-    @ApiModelProperty("角色类型")
-    private String roleType;
-    
-    @BindDict(type="USER_STATUS", field = "state")
-    private String statusLabel;
 }

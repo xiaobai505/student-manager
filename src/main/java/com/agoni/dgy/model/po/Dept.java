@@ -33,7 +33,7 @@ public class Dept extends AbstractEntity {
     private Integer parentId;
     
     @ApiModelProperty("排序字段")
-    private String sort;
+    private Integer sort;
     
     @ApiModelProperty("1 公司 2 分公司 3 部门")
     private Integer leaderuserid;

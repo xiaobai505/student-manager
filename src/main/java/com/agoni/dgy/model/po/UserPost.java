@@ -24,21 +24,19 @@ import java.io.Serializable;
 @ApiModel(value = "UserPost对象", description = "用户与岗位关联表")
 public class UserPost implements Serializable {
     
+    @TableField(exist = false)
+    private static final long serialVersionUID = 1L;
+    
     @ApiModelProperty("用户角色关系")
     @TableId("id")
     private Long id;
     
-    /**
-     * 用户ID
-     */
+    @ApiModelProperty("用户ID")
     private Long userId;
-
-    /**
-     * 岗位ID
-     */
+    
+    @ApiModelProperty("岗位ID")
     private Long postId;
 
-    @TableField(exist = false)
-    private static final long serialVersionUID = 1L;
+
     
 }

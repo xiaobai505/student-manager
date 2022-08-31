@@ -1,7 +1,9 @@
 package com.agoni.dgy.controller;
 
+import com.agoni.core.Binder;
 import com.agoni.dgy.model.bo.DeptSearchFrom;
 import com.agoni.dgy.model.po.Dept;
+import com.agoni.dgy.model.vo.DeptVo;
 import com.agoni.dgy.service.DeptService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -28,7 +30,8 @@ public class DeptController {
     @ApiOperation("列表")
     public ResponseEntity<List> list(@Validated DeptSearchFrom deptSearchFrom) {
         List<Dept> list = deptService.list();
-        return new ResponseEntity<>(list, HttpStatus.OK);
+        List<DeptVo> vos = Binder.convertAndBindRelations(list, DeptVo.class);
+        return new ResponseEntity<>(vos, HttpStatus.OK);
     }
     
     @PostMapping

@@ -8,8 +8,6 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import java.io.Serializable;
-
 /**
  * 累计学分表
  * @TableName tb_graduate
@@ -20,7 +18,7 @@ import java.io.Serializable;
 @AllArgsConstructor
 @TableName(value = "tb_graduate",autoResultMap = true)
 @ApiModel(value = "graduate对象", description = "累计学分表")
-public class Graduate extends AbstractEntity implements Serializable {
+public class Graduate extends AbstractEntity {
     
     @TableField(exist = false)
     private static final long serialVersionUID = 1L;
