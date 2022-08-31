@@ -10,8 +10,6 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import java.io.Serializable;
-
 /**
  * <p>
  * 
@@ -24,9 +22,9 @@ import java.io.Serializable;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-@TableName(value = "tb_history",autoResultMap = true)
-@ApiModel(value = "History对象", description = "")
-public class History extends AbstractEntity  implements Serializable {
+@TableName(value = "tb_history", autoResultMap = true)
+@ApiModel(value = "History对象", description = "历史记录表", parent = AbstractEntity.class)
+public class History extends AbstractEntity {
 
     private static final long serialVersionUID = 1L;
     

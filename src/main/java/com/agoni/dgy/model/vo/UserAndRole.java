@@ -25,7 +25,7 @@ import java.time.LocalDateTime;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-@ApiModel(value = "User对象", description = "用户表")
+@ApiModel(value = "UserAndRole对象", description = "用户表")
 public class UserAndRole implements Serializable {
 
 

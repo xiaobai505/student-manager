@@ -13,7 +13,7 @@ import java.util.List;
 @SuperBuilder
 @NoArgsConstructor
 @AllArgsConstructor
-@ApiModel(value = "Dict对象", description = "字典表")
+@ApiModel(value = "DictVo对象", description = "字典表")
 public class DictVo extends Dict {
     
     private List<DictVo> children;

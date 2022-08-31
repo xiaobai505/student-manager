@@ -19,7 +19,7 @@ import java.io.Serializable;
 @NoArgsConstructor
 @AllArgsConstructor
 @TableName(value = "tb_graduate",autoResultMap = true)
-@ApiModel(value = "graduate对象", description = "")
+@ApiModel(value = "graduate对象", description = "累计学分表")
 public class Graduate extends AbstractEntity implements Serializable {
     
     @TableField(exist = false)

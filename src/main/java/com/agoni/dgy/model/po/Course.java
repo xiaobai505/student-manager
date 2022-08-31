@@ -12,20 +12,13 @@ import lombok.experimental.SuperBuilder;
 
 import java.time.LocalDateTime;
 
-/**
- * <p>
- * 课程表
- * </p>
- *
- * @author dgy
- * @since 2021-12-22
- */
+
+@TableName("tb_course")
 @Data
 @SuperBuilder
 @NoArgsConstructor
 @AllArgsConstructor
-@TableName("tb_course")
-@ApiModel(value = "Course对象", description = "课程表")
+@ApiModel(value = "DictConfig对象", description = "字典配置表")
 public class Course extends AbstractEntity{
 
     private static final long serialVersionUID = 1L;

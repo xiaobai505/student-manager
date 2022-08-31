@@ -22,7 +22,7 @@ import lombok.experimental.SuperBuilder;
 @SuperBuilder
 @NoArgsConstructor
 @AllArgsConstructor
-@ApiModel(value = "CourseUser对象", description = "用户课程关系表")
+@ApiModel(value = "CourseUserVo对象", description = "用户课程关系表")
 public class CourseUserVo extends CourseUser {
 
     private static final long serialVersionUID = 1L;

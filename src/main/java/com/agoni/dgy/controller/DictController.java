@@ -27,11 +27,11 @@ public class DictController {
     
     @GetMapping("/test")
     @ApiOperation("列表")
-    public Object get(){
+    public ResponseEntity<List<DictVo>> get(){
         List<Dict> list = dictService.list();
         List<DictVo> voList = Binder.convertAndBindRelations(list, DictVo.class);
         List<DictVo> dicts = BeanUtils.buildTree(voList);
-        return dicts;
+        return new ResponseEntity<>(dicts, HttpStatus.OK);
     }
     
     @GetMapping

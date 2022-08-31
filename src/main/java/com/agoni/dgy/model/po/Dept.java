@@ -2,8 +2,12 @@ package com.agoni.dgy.model.po;
 
 import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableName;
+import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
+import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
+import lombok.experimental.SuperBuilder;
 
 /**
  * 分校部门表
@@ -12,6 +16,10 @@ import lombok.Data;
  */
 @TableName(value = "tb_dept")
 @Data
+@SuperBuilder
+@NoArgsConstructor
+@AllArgsConstructor
+@ApiModel(value = "Dept对象", description = "部门表")
 public class Dept extends AbstractEntity {
     
     @ApiModelProperty("公司名字")
