@@ -9,5 +9,12 @@ import com.baomidou.mybatisplus.extension.service.IService;
  * @createDate 2022-07-07 01:19:03
  */
 public interface DeptService extends IService<Dept> {
-
+    
+    /**
+     * 保存更新部门
+     * @param dept
+     *
+     * @return
+     */
+    Boolean saveDept(Dept dept);
 }

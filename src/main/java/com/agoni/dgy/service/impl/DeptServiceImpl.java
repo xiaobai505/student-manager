@@ -3,7 +3,9 @@ package com.agoni.dgy.service.impl;
 import com.agoni.dgy.mapper.DeptMapper;
 import com.agoni.dgy.model.po.Dept;
 import com.agoni.dgy.service.DeptService;
+import com.agoni.dgy.service.UserService;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 /**
@@ -13,7 +15,28 @@ import org.springframework.stereotype.Service;
  */
 @Service
 public class DeptServiceImpl extends ServiceImpl<DeptMapper, Dept> implements DeptService {
-
+    
+    @Autowired
+    private UserService userService;
+    
+    /**
+     * 保存更新部门
+     *
+     * @param dept
+     *
+     * @return
+     */
+    @Override
+    public Boolean saveDept(Dept dept) {
+        // 上级部门信息
+        Dept info = this.getById(dept.getParentId());
+        // 如果父节点不为正常状态,则不允许新增子节点
+        if ("1".equals(info.getStatus())) {
+            throw new RuntimeException("部门停用，不允许新增");
+        }
+        dept.setAncestors(info.getAncestors() + "," + dept.getParentId());
+        return this.saveOrUpdate(dept);
+    }
 }
 
 
