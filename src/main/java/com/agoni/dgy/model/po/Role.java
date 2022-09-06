@@ -4,7 +4,6 @@ import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
-import com.diboot.core.data.access.DataAccessCheckpoint;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.AllArgsConstructor;
@@ -46,14 +45,14 @@ public class Role extends AbstractEntity  implements Serializable {
 
     @ApiModelProperty("角色类型")
     @TableField("role_type")
-    private String roleType;
+    private Integer roleType;
     
     @ApiModelProperty("显示顺序")
     @TableField("role_sort")
-    private String roleSort;
+    private Integer roleSort;
     
     @ApiModelProperty("状态")
     @TableField("status")
-    private String status;
+    private Integer status;
     
 }

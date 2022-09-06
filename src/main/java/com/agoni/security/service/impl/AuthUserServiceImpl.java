@@ -53,11 +53,15 @@ public class AuthUserServiceImpl implements AuthUserService {
         List<RoleUserVo> authlist = roleUserService.getRolebyUserId(user.getId());
         List<String> codeList = authlist.stream().map(RoleUserVo::getRoleCode).collect(Collectors.toList());
         Iterator<String> iterator = codeList.iterator();
-        List<SimpleGrantedAuthority> roles=new ArrayList<SimpleGrantedAuthority>();
+        List<SimpleGrantedAuthority> roles= new ArrayList<>();
         while (iterator.hasNext()){
-            roles.add(new SimpleGrantedAuthority(iterator.next()));
+            roles.add(new SimpleGrantedAuthority(iterator.next().toUpperCase()));
         }
         AuthUserVo authUserVo = AuthUserVo.create(user, roles);
+        //设置权限和角色
+        // 1. commaSeparatedStringToAuthorityList放入角色时需要加前缀ROLE_，而在controller使用时不需要加ROLE_前缀
+        // 2. 放入的是权限时，不能加ROLE_前缀，hasAuthority与放入的权限名称对应即可
+        //AuthUserVo authUserVo = AuthUserVo.create(user, AuthorityUtils.commaSeparatedStringToAuthorityList("ROLE_ADMIN"+",r,w"));
         return authUserVo;
     }
 }
