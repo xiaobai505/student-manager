@@ -7,9 +7,9 @@ import com.baomidou.mybatisplus.annotation.TableName;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.AllArgsConstructor;
-import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import lombok.experimental.SuperBuilder;
 
 import java.io.Serializable;
 
@@ -21,13 +21,13 @@ import java.io.Serializable;
  * @author dgy
  * @since 2021-12-22
  */
+@TableName("tb_role")
 @Data
-@Builder
+@SuperBuilder
 @NoArgsConstructor
 @AllArgsConstructor
-@TableName("tb_role")
 @ApiModel(value = "Role对象", description = "角色表")
-public class Role extends AbstractEntity  implements Serializable {
+public class Role extends AbstractEntity implements Serializable {
 
     private static final long serialVersionUID = 1L;
 

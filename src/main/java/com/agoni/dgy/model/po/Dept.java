@@ -9,6 +9,8 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.experimental.SuperBuilder;
 
+import java.io.Serializable;
+
 /**
  * 分校部门表
  *
@@ -20,7 +22,7 @@ import lombok.experimental.SuperBuilder;
 @NoArgsConstructor
 @AllArgsConstructor
 @ApiModel(value = "Dept对象", description = "部门表")
-public class Dept extends AbstractEntity {
+public class Dept extends AbstractEntity implements Serializable {
     
     @ApiModelProperty("公司名字")
     private String name;
