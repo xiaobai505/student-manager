@@ -37,12 +37,12 @@ public class DeptController {
     @PostMapping
     @ApiOperation("保存部门")
     public ResponseEntity<Boolean> save(@RequestBody Dept dept) {
-        boolean save = deptService.save(dept);
+        boolean save = deptService.saveDept(dept);
         return new ResponseEntity<>(save, HttpStatus.OK);
     }
     
     @PutMapping
-    @ApiOperation("保存部门")
+    @ApiOperation("更新部门")
     public ResponseEntity<Boolean> update(@RequestBody Dept dept) {
         boolean save = deptService.updateById(dept);
         return new ResponseEntity<>(save, HttpStatus.OK);
