@@ -1,13 +1,15 @@
 package com.agoni.dgy.controller;
 
 
-import com.agoni.dgy.model.bo.ResultSearchFrom;
 import com.agoni.dgy.model.po.Result;
+import com.agoni.dgy.model.query.ResultQuery;
 import com.agoni.dgy.model.vo.ResultVo;
 import com.agoni.dgy.service.ResultService;
+import com.agoni.system.config.ExecutorConfig;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -15,6 +17,8 @@ import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.StringJoiner;
+import java.util.concurrent.CompletableFuture;
 import java.util.stream.Collectors;
 
 /**
@@ -28,14 +32,46 @@ import java.util.stream.Collectors;
 @RestController
 @RequestMapping("/dgy/result")
 @Api(tags="成绩")
+@Slf4j
 public class ResultController {
 
     @Autowired
     private ResultService resultService;
     
+    @Autowired
+    private ExecutorConfig executorConfig;
+    
+    @GetMapping("/test")
+    @ApiOperation("列表")
+    public ResponseEntity<Object> test() {
+        long start = System.currentTimeMillis();
+        //extracted3();
+        printimeAndThread("耗时:"+ (System.currentTimeMillis() - start));
+        return new ResponseEntity<>("ok", HttpStatus.OK);
+    }
+    
+    private void extracted3() {
+        CompletableFuture<String> futureA = resultService.test(5);
+        CompletableFuture<String> futureB = resultService.test(2);
+        String join = futureA.thenCombine(futureB, (resultA, resultB) -> resultA + ";" + resultB).join();
+        printimeAndThread("join:" + join);
+    }
+    
+    
+    public static void printimeAndThread(String tag){
+        String res=new StringJoiner("\t|\t")
+                .add(String.valueOf(System.currentTimeMillis()))
+                .add(String.valueOf(Thread.currentThread().getId()))
+                .add(Thread.currentThread().getName())
+                .add(tag)
+                .toString();
+        System.out.println(res);
+    }
+    
+    
     @GetMapping
     @ApiOperation("列表")
-    public ResponseEntity<IPage> searchPage(@Validated ResultSearchFrom from) {
+    public ResponseEntity<IPage> searchPage(@Validated ResultQuery from) {
         IPage<ResultVo> res = resultService.searchPage(from);
         return new ResponseEntity<>(res, HttpStatus.OK);
     }

@@ -104,8 +104,9 @@ public class RelationsBinder {
         Map<String, List<FieldAnnotation>> bindFieldGroupMap = bindAnnotationGroup.getBindFieldGroupMap();
         if(bindFieldGroupMap != null){
             for(Map.Entry<String, List<FieldAnnotation>> entry : bindFieldGroupMap.entrySet()){
-                CompletableFuture<Boolean> bindFieldFuture = parallelBindingManager.doBindingField(voList, entry.getValue());
-                binderFutures.add(bindFieldFuture);
+                parallelBindingManager.doBindingField(voList, entry.getValue()).join();
+                //CompletableFuture<Boolean> bindFieldFuture = parallelBindingManager.doBindingField(voList, entry.getValue());
+                //binderFutures.add(bindFieldFuture);
             }
         }
         // 绑定数据字典

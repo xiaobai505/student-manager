@@ -19,5 +19,5 @@ public final class SecurityConstants {
     public static final String TOKEN_PREFIX = "Bearer ";
     // 不校验的 URL
     public static final String[] SYSTEM_WHITELIST = {"/auth/**", "/wechat/**","/routes/**",
-            "/swagger**/**", "/webjars/**", "/v3/**", "/doc.html"};
+            "/swagger**/**", "/webjars/**", "/v3/**", "/doc.html","/dgy/result/**"};
 }

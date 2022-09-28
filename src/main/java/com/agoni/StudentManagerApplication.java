@@ -3,10 +3,12 @@ package com.agoni;
 import org.mybatis.spring.annotation.MapperScan;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.scheduling.annotation.EnableAsync;
 import org.springframework.security.core.context.SecurityContextHolder;
 
 
 //@EnableCaching//开启缓存
+@EnableAsync
 @SpringBootApplication
 @MapperScan(basePackages = {"com.agoni.dgy.mapper.**"})
 public class StudentManagerApplication {

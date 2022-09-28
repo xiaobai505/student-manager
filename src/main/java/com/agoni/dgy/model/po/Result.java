@@ -34,9 +34,19 @@ public class Result extends AbstractEntity {
     @ApiModelProperty("课程id")
     @TableField("course_id")
     private String courseId;
-
+    
+    @ApiModelProperty("课程名")
+    @TableField("course_name")
+    private String courseName;
+    
     @ApiModelProperty("成绩")
     @TableField("result")
     private String result;
+    
+    @ApiModelProperty("补考标记")
+    private Integer isReset;
+    
+    @ApiModelProperty("获得的学分")
+    private Long graduate;
 
 }

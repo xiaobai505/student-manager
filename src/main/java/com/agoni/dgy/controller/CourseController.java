@@ -34,6 +34,13 @@ public class CourseController {
     @Autowired
     private CourseService courseService;
     
+    @GetMapping("/list")
+    @ApiOperation("列表")
+    public ResponseEntity<List<Course>> list() {
+        List<Course> list = courseService.list();
+        return new ResponseEntity<>(list, HttpStatus.OK);
+    }
+    
     @GetMapping
     @ApiOperation("列表")
     public ResponseEntity<IPage> searchPage(@Validated CourseSearchFrom from) {

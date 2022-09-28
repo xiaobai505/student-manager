@@ -35,12 +35,6 @@ public class Menu extends AbstractEntity {
     private String menuType;
     
     /**
-     * 级别
-     */
-    @TableField("level")
-    private String level;
-    
-    /**
      * 路径
      */
     @TableField("path")
@@ -51,12 +45,6 @@ public class Menu extends AbstractEntity {
      */
     @TableField("redirect")
     private String redirect;
-    
-    /**
-     * 顺序
-     */
-    @TableField("orderNum")
-    private Integer orderNum;
     
     /**
      * 页面name，作为一种规范
