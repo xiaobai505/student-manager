@@ -3,6 +3,7 @@ package com.agoni.dgy.controller;
 
 import com.agoni.dgy.model.bo.CourseSearchFrom;
 import com.agoni.dgy.model.po.Course;
+import com.agoni.dgy.model.vo.CourseVo;
 import com.agoni.dgy.service.CourseService;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import io.swagger.annotations.Api;
@@ -44,7 +45,7 @@ public class CourseController {
     @GetMapping
     @ApiOperation("列表")
     public ResponseEntity<IPage> searchPage(@Validated CourseSearchFrom from) {
-        IPage<Course> res = courseService.searchPage(from);
+        IPage<CourseVo> res = courseService.searchPage(from);
         return new ResponseEntity<>(res, HttpStatus.OK);
     }
     

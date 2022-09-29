@@ -3,7 +3,6 @@ package com.agoni.dgy.controller;
 
 import com.agoni.dgy.model.bo.UserSearchFrom;
 import com.agoni.dgy.model.po.User;
-import com.agoni.dgy.model.vo.AuthUserVo;
 import com.agoni.dgy.model.vo.UserAndRole;
 import com.agoni.dgy.service.UserService;
 import com.agoni.system.utils.UserUtil;
@@ -39,9 +38,9 @@ public class UserController {
 
     @GetMapping
     @ApiOperation("获取当前登录用户")
-    public ResponseEntity<AuthUserVo> get(){
-        AuthUserVo userPrincipal = UserUtil.getUserPrincipal();
-        return new ResponseEntity<>(userPrincipal, HttpStatus.OK);
+    public ResponseEntity<User> get(){
+        User user = UserUtil.getUser();
+        return new ResponseEntity<>(user, HttpStatus.OK);
     }
 
     @GetMapping("/page")

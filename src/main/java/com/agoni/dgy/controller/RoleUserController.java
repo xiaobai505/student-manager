@@ -1,11 +1,8 @@
 package com.agoni.dgy.controller;
 
 
-import com.agoni.core.Binder;
-import com.agoni.dgy.model.po.RoleUser;
 import com.agoni.dgy.model.vo.RoleUserVo;
 import com.agoni.dgy.service.RoleUserService;
-import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import lombok.extern.slf4j.Slf4j;
@@ -35,14 +32,6 @@ public class RoleUserController {
     
     @Autowired
     private RoleUserService roleUserService;
-    
-    @GetMapping
-    @ApiOperation("列表")
-    public Object get(){
-        Page<RoleUser> page = roleUserService.page(new Page<>());
-        Page<RoleUserVo> pageVo = Binder.convertAndBindRelations(page, RoleUserVo.class);
-        return pageVo;
-    }
     
     @GetMapping("/{userId}")
     @ApiOperation("根据用户ID获取角色信息")

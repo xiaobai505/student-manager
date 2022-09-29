@@ -2,6 +2,7 @@ package com.agoni.dgy.service;
 
 import com.agoni.dgy.model.bo.CourseSearchFrom;
 import com.agoni.dgy.model.po.Course;
+import com.agoni.dgy.model.vo.CourseVo;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.service.IService;
 
@@ -23,7 +24,7 @@ public interface CourseService extends IService<Course> {
      *
      * @return
      */
-    IPage<Course> searchPage(CourseSearchFrom from);
+    IPage<CourseVo> searchPage(CourseSearchFrom from);
     
     /**
      * 根据名字返回list

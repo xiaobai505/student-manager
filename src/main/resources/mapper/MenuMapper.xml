@@ -51,5 +51,6 @@
         <if test="from.roleId != null ">
             and t2.id = #{from.roleId}
         </if>
+        ORDER BY json_extract(t.meta,'$.rank') asc
     </select>
 </mapper>

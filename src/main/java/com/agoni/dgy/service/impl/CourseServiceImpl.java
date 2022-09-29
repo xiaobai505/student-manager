@@ -1,15 +1,16 @@
 package com.agoni.dgy.service.impl;
 
+import com.agoni.core.Binder;
 import com.agoni.dgy.mapper.CourseMapper;
 import com.agoni.dgy.model.bo.CourseSearchFrom;
 import com.agoni.dgy.model.po.Course;
-import com.agoni.dgy.model.vo.AuthUserVo;
+import com.agoni.dgy.model.vo.CourseVo;
 import com.agoni.dgy.service.CourseService;
-import com.agoni.system.utils.UserUtil;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.core.toolkit.ObjectUtils;
 import com.baomidou.mybatisplus.core.toolkit.StringUtils;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
@@ -32,12 +33,12 @@ public class CourseServiceImpl extends ServiceImpl<CourseMapper, Course> impleme
     private static final SimpleGrantedAuthority admin = new SimpleGrantedAuthority("admin");
     
     @Override
-    public IPage<Course> searchPage(CourseSearchFrom from) {
-        return page(from, checkValid(from));
+    public IPage<CourseVo> searchPage(CourseSearchFrom from) {
+        Page<Course> page = page(from, checkValid(from));
+        return Binder.convertAndBindRelations(page, CourseVo.class);
     }
     
     private QueryWrapper<Course> checkValid(CourseSearchFrom from) {
-        AuthUserVo userVo = UserUtil.getUser();
         QueryWrapper<Course> query = new QueryWrapper<>();
         query.lambda()
                 .likeRight(StringUtils.isNotEmpty(from.getCourseName()), Course::getCourseName, from.getCourseName())

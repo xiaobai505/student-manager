@@ -5,6 +5,7 @@ import com.agoni.dgy.mapper.CourseUserMapper;
 import com.agoni.dgy.model.bo.CourseUserSearchFrom;
 import com.agoni.dgy.model.po.Course;
 import com.agoni.dgy.model.po.CourseUser;
+import com.agoni.dgy.model.po.User;
 import com.agoni.dgy.model.vo.AuthUserVo;
 import com.agoni.dgy.model.vo.CourseUserVo;
 import com.agoni.dgy.service.CourseService;
@@ -43,7 +44,7 @@ public class CourseUserServiceImpl extends ServiceImpl<CourseUserMapper, CourseU
     
     @Override
     public List<CourseUserVo> mylist() {
-        AuthUserVo userVo = UserUtil.getUser();
+        AuthUserVo userVo = UserUtil.getUserPrincipal();
         SimpleGrantedAuthority admin = new SimpleGrantedAuthority("admin");
         if (userVo.getAuthorities().contains(admin)) {
             log.info("我拥有管理员权限！查询所有！");
@@ -71,7 +72,7 @@ public class CourseUserServiceImpl extends ServiceImpl<CourseUserMapper, CourseU
         // 减座位数量
         courseService.saleStock(course);
         // 保存记录
-        AuthUserVo user = UserUtil.getUser();
+        User user = UserUtil.getUser();
         CourseUser build = CourseUser.builder().userId(user.getId()).courseId(id).build();
         return this.save(build);
     }

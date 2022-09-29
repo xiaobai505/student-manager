@@ -1,96 +1,30 @@
 package com.agoni.dgy.model.vo;
 
-import com.baomidou.mybatisplus.annotation.IdType;
-import com.baomidou.mybatisplus.annotation.TableId;
+import com.agoni.dgy.model.po.User;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.AllArgsConstructor;
-import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-
-import java.io.Serializable;
-import java.math.BigDecimal;
-import java.time.LocalDateTime;
+import lombok.experimental.SuperBuilder;
 
 /**
- * <p>
- * 用户表
- * </p>
+ * 关联用户表信息，不显示密码，所以不继承USER表了
  *
  * @author dgy
  * @since 2021-12-22
  */
 @Data
-@Builder
+@SuperBuilder
 @NoArgsConstructor
 @AllArgsConstructor
 @ApiModel(value = "UserAndRole对象", description = "用户表")
-public class UserAndRole implements Serializable {
-
-
-    private static final long serialVersionUID = 1L;
-
-    @TableId(value = "id", type = IdType.AUTO)
-    private Long id;
-
-    @ApiModelProperty("昵称")
-    private String nickName;
-
-    @ApiModelProperty("真实姓名")
-    private String name;
-
-    @ApiModelProperty("性别，1男，2女")
-    private String sex;
-
-    @ApiModelProperty("用户名")
-    private String username;
-
-    @ApiModelProperty("密码，加密存储")
-    private String password;
+public class UserAndRole extends User {
 
     @ApiModelProperty("角色ids")
     private String roleIds;
 
     @ApiModelProperty("角色名称")
     private String roles;
-
-    @ApiModelProperty("注册手机号")
-    private String phone;
-
-    @ApiModelProperty("手机是否验证 （0否  1是）")
-    private String isMobileCheck;
-
-    @ApiModelProperty("注册邮箱")
-    private String email;
-
-    @ApiModelProperty("邮箱是否检测（0否  1是）")
-    private String isEmailCheck;
-
-    @ApiModelProperty("QQ号码")
-    private String qq;
-
-    @ApiModelProperty("头像地址")
-    private String headPic;
-
-    @ApiModelProperty("账户余额")
-    private BigDecimal accountBalance;
-
-    @ApiModelProperty("联系地址")
-    private String address;
-
-    @ApiModelProperty("会员等级")
-    private Integer userLevel;
-
-    @ApiModelProperty("积分")
-    private Integer points;
-
-    @ApiModelProperty("经验值")
-    private Integer experienceValue;
-
-    @ApiModelProperty("生日")
-    private LocalDateTime birthday;
-
-    @ApiModelProperty("最后登录时间")
-    private LocalDateTime lastLoginTime;
+    
 }

@@ -2,6 +2,7 @@ package com.agoni.dgy.model.po;
 
 import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableName;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.AllArgsConstructor;
@@ -45,7 +46,8 @@ public class User extends AbstractEntity {
     @ApiModelProperty("用户名")
     @TableField("username")
     private String username;
-
+    
+    @JsonIgnore
     @ApiModelProperty("密码，加密存储")
     @TableField("password")
     private String password;

@@ -30,7 +30,6 @@ public class MajorCourse implements Serializable {
     @ApiModelProperty("id")
     private Long id;
     
-    
     @ApiModelProperty("部门ID")
     private Long majorId;
 

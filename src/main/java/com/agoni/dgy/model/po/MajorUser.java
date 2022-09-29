@@ -37,9 +37,14 @@ public class MajorUser implements Serializable {
     @ApiModelProperty("用户id")
     @TableField("user_id")
     private Long userId;
+    
+    /**
+     * 专业id
+     */
+    @ApiModelProperty("专业id")
+    @TableField("major_id")
+    private Long majorId;
+    
 
-    @ApiModelProperty("班级id")
-    @TableField("class_id")
-    private Long classId;
 
 }

@@ -44,8 +44,10 @@ public class RoleUserServiceImpl extends ServiceImpl<RoleUserMapper, RoleUser> i
 
     @Override
     public List<RoleUserVo> getRolebyUserId(Long id) {
-        List<RoleUserVo> roleUserVos = roleUserMapper.selectUserAndRole(id);
-        return Binder.convertAndBindRelations(roleUserVos,RoleUserVo.class);
+        QueryWrapper<RoleUser> queryWrapper = new QueryWrapper<>();
+        queryWrapper.lambda().eq(RoleUser::getUserId,id);
+        List<RoleUser> list = this.list(queryWrapper);
+        return Binder.convertAndBindRelations(list,RoleUserVo.class);
     }
 
     @Override

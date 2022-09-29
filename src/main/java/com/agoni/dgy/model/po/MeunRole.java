@@ -1,6 +1,5 @@
 package com.agoni.dgy.model.po;
 
-import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.AllArgsConstructor;
@@ -21,16 +20,9 @@ import java.io.Serializable;
 @AllArgsConstructor
 public class MeunRole implements Serializable {
     
-    @ApiModelProperty("用户角色关系")
-    @TableId("id")
-    private Long id;
-    
     @ApiModelProperty("角色id")
     private Long roleId;
 
-    /**
-     * 菜单id
-     */
     @ApiModelProperty("菜单id")
     private Long meunId;
 

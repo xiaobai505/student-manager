@@ -39,7 +39,7 @@ public class RoutesController {
     }
     
     @GetMapping()
-    @ApiOperation("菜单")
+    @ApiOperation("菜单列表")
     public ResponseEntity<List> list() {
         List<Menu> list = menuService.list();
         return new ResponseEntity<>(list, HttpStatus.OK);

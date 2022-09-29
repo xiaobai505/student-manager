@@ -1,10 +1,14 @@
 package com.agoni.dgy.service.impl;
 
-import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import com.agoni.dgy.mapper.MeunRoleMapper;
 import com.agoni.dgy.model.po.MeunRole;
 import com.agoni.dgy.service.MeunRoleService;
-import com.agoni.dgy.mapper.MeunRoleMapper;
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import com.baomidou.mybatisplus.core.toolkit.ObjectUtils;
+import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
 
 /**
 * @author gyd
@@ -14,7 +18,19 @@ import org.springframework.stereotype.Service;
 @Service
 public class MeunRoleServiceImpl extends ServiceImpl<MeunRoleMapper, MeunRole>
     implements MeunRoleService{
-
+    
+    /**
+     * 根据角色 id 查询菜单ids
+     * @param mr
+     *
+     * @return
+     */
+    @Override
+    public List<MeunRole> getlist(MeunRole mr) {
+        QueryWrapper<MeunRole> queryWrapper = new QueryWrapper<>();
+        queryWrapper.lambda().eq(ObjectUtils.isNotEmpty(mr.getRoleId()),MeunRole::getRoleId,mr.getRoleId());
+        return list(queryWrapper);
+    }
 }
 
 
