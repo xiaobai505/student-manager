@@ -1,9 +1,11 @@
 package com.agoni.dgy.controller;
 
 
+import com.agoni.core.Binder;
 import com.agoni.dgy.model.bo.UserSearchFrom;
 import com.agoni.dgy.model.po.User;
 import com.agoni.dgy.model.vo.UserAndRole;
+import com.agoni.dgy.model.vo.UserVo;
 import com.agoni.dgy.service.UserService;
 import com.agoni.system.utils.UserUtil;
 import com.baomidou.mybatisplus.core.metadata.IPage;
@@ -38,9 +40,10 @@ public class UserController {
 
     @GetMapping
     @ApiOperation("获取当前登录用户")
-    public ResponseEntity<User> get(){
+    public ResponseEntity<UserVo> get(){
         User user = UserUtil.getUser();
-        return new ResponseEntity<>(user, HttpStatus.OK);
+        UserVo userVo = Binder.convertAndBindRelations(user, UserVo.class);
+        return new ResponseEntity<>(userVo, HttpStatus.OK);
     }
 
     @GetMapping("/page")

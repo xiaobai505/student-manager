@@ -1,7 +1,7 @@
 package com.agoni.system.controller;
 
-import com.agoni.dgy.model.bo.MenuFrom;
 import com.agoni.dgy.model.po.Menu;
+import com.agoni.dgy.model.query.MenuQuery;
 import com.agoni.dgy.model.vo.MenuTreeVo;
 import com.agoni.dgy.service.MenuService;
 import com.agoni.system.utils.UserUtil;
@@ -33,7 +33,8 @@ public class RoutesController {
     @GetMapping("/getAsyncRoutes/{userName}")
     @ApiOperation("当前用户菜单")
     public ResponseEntity<List> get(@PathVariable String userName) {
-        MenuFrom build = MenuFrom.builder().code(UserUtil.getFirstRole()).build();
+        // todo 用户有多个角色，根据用户选择的一个角色查询列表
+        MenuQuery build = MenuQuery.builder().code(UserUtil.getFirstRole()).build();
         List<MenuTreeVo> tree = menuService.getTree(build);
         return new ResponseEntity<>(tree, HttpStatus.OK);
     }

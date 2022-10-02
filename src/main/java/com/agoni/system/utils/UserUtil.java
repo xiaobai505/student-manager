@@ -2,6 +2,8 @@ package com.agoni.system.utils;
 
 import com.agoni.dgy.model.po.User;
 import com.agoni.dgy.model.vo.AuthUserVo;
+import com.baomidou.mybatisplus.core.toolkit.CollectionUtils;
+import com.baomidou.mybatisplus.core.toolkit.ObjectUtils;
 import com.baomidou.mybatisplus.core.toolkit.StringUtils;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.core.Authentication;
@@ -9,9 +11,12 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.context.SecurityContext;
 import org.springframework.security.core.context.SecurityContextHolder;
 
+import java.util.ArrayList;
+import java.util.List;
+
 @Slf4j
 public class UserUtil {
-
+    
     /**
      * 获取当前登录用户
      *
@@ -20,13 +25,24 @@ public class UserUtil {
     public static AuthUserVo getUserPrincipal() {
         SecurityContext securityContext = SecurityContextHolder.getContext();
         Authentication authentication = securityContext.getAuthentication();
-        AuthUserVo authUserVo = null;
         try {
-            authUserVo = (AuthUserVo) authentication.getPrincipal();
+            return (AuthUserVo) authentication.getPrincipal();
         } catch (Exception ignored) {
 
         }
-        return authUserVo;
+        return null;
+    }
+    
+    /**
+     * 获得当前用户权限
+     */
+    public static List<String> getRoles() {
+        AuthUserVo authUserVo = getUserPrincipal();
+        List<String> roles = new ArrayList<>();
+        for (GrantedAuthority ga : authUserVo.getAuthorities()) {
+            roles.add(ga.getAuthority());
+        }
+        return roles;
     }
     
     /**
@@ -34,9 +50,9 @@ public class UserUtil {
      * @return
      */
     public static String getFirstRole() {
-        AuthUserVo userPrincipal = getUserPrincipal();
-        for (GrantedAuthority authority : userPrincipal.getAuthorities()) {
-            return authority.getAuthority();
+        List<String> roles = getRoles();
+        if (CollectionUtils.isNotEmpty(roles)) {
+            return roles.get(0);
         }
         return null;
     }
@@ -71,7 +87,10 @@ public class UserUtil {
      * @return
      */
     public static String getUserName() {
-        return getUserPrincipal().getUsername();
+        if (ObjectUtils.isNotEmpty(getUserPrincipal())){
+            return getUserPrincipal().getUsername();
+        }
+        return null;
     }
     
     
@@ -80,6 +99,9 @@ public class UserUtil {
      * @return
      */
     public static String getName() {
-        return getUserPrincipal().getName();
+        if (ObjectUtils.isNotEmpty(getUserPrincipal())){
+            return getUserPrincipal().getName();
+        }
+        return null;
     }
 }

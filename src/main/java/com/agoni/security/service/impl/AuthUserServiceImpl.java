@@ -1,6 +1,5 @@
 package com.agoni.security.service.impl;
 
-import com.agoni.dgy.model.po.Logininfor;
 import com.agoni.dgy.model.po.User;
 import com.agoni.dgy.model.vo.AuthUserVo;
 import com.agoni.dgy.model.vo.RoleUserVo;
@@ -69,8 +68,6 @@ public class AuthUserServiceImpl implements AuthUserService {
         // 1. commaSeparatedStringToAuthorityList放入角色时需要加前缀ROLE_，而在controller使用时不需要加ROLE_前缀
         // 2. 放入的是权限时，不能加ROLE_前缀，hasAuthority与放入的权限名称对应即可
         //AuthUserVo authUserVo = AuthUserVo.create(user, AuthorityUtils.commaSeparatedStringToAuthorityList("ROLE_ADMIN"+",r,w"));
-        Logininfor logininfor = Logininfor.builder().userName(username).build();
-        logininforService.save(logininfor);
         return authUserVo;
     }
 }

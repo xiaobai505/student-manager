@@ -8,9 +8,9 @@ import lombok.Data;
 
 @Data
 @Builder
-@ApiModel(value = "ResultQuery对象", description = "结果查询条件")
-public class ResultQuery extends Page {
+@ApiModel(value = "MenuQuery对象", description = "菜单查询条件")
+public class LogininforQuery extends Page {
     
-    @ApiModelProperty("课程名字")
-    private String courseName;
+    @ApiModelProperty("用户账号")
+    private String userName;
 }

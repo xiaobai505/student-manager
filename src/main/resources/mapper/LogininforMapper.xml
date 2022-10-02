@@ -5,7 +5,7 @@
 <mapper namespace="com.agoni.dgy.mapper.LogininforMapper">
 
     <resultMap id="BaseResultMap" type="com.agoni.dgy.model.po.Logininfor">
-            <id property="infoId" column="info_id" jdbcType="BIGINT"/>
+            <id property="id" column="info_id" jdbcType="BIGINT"/>
             <result property="userName" column="user_name" jdbcType="VARCHAR"/>
             <result property="ipaddr" column="ipaddr" jdbcType="VARCHAR"/>
             <result property="loginLocation" column="login_location" jdbcType="VARCHAR"/>

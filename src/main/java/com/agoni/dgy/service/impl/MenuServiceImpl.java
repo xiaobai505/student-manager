@@ -2,10 +2,12 @@ package com.agoni.dgy.service.impl;
 
 import com.agoni.core.Binder;
 import com.agoni.dgy.mapper.MenuMapper;
-import com.agoni.dgy.model.bo.MenuFrom;
 import com.agoni.dgy.model.po.Menu;
+import com.agoni.dgy.model.query.MenuQuery;
 import com.agoni.dgy.model.vo.MenuTreeVo;
 import com.agoni.dgy.service.MenuService;
+import com.agoni.system.utils.UserUtil;
+import com.alibaba.fastjson2.JSONObject;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.diboot.core.util.BeanUtils;
 import org.springframework.stereotype.Service;
@@ -26,14 +28,26 @@ public class MenuServiceImpl extends ServiceImpl<MenuMapper, Menu> implements Me
      * @return menu菜单
      */
     @Override
-    public List<MenuTreeVo> getTree(MenuFrom from) {
-        List<Menu> list = baseMapper.getByMenuFrom(from);
+    public List<MenuTreeVo> getTree(MenuQuery from) {
+        List<Menu> menus = baseMapper.getByMenuFrom(from);
         // 转换vo
-        List<MenuTreeVo> menuTreeVos = Binder.convertAndBindRelations(list, MenuTreeVo.class);
+        List<MenuTreeVo> menuTreeVos = Binder.convertAndBindRelations(menus, MenuTreeVo.class);
         // 构建树
         return BeanUtils.buildTree(menuTreeVos);
     }
     
+    /**
+     * 给路由增加权限
+     * @param menus
+     */
+    private static void setAuthority(List<Menu> menus) {
+        // 用户选择的一个权限
+        menus.forEach(menu -> {
+            JSONObject meta = menu.getMeta();
+            meta.put("authority",UserUtil.getRoles());
+            menu.setMeta(meta);
+        });
+    }
     
     
 }

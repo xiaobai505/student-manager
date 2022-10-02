@@ -1,8 +1,10 @@
-package com.agoni.security.Interceptor;
+package com.agoni.security.interceptor;
 
+import com.agoni.dgy.service.LogininforService;
 import com.agoni.system.exception.ExceptionEnum;
 import com.agoni.system.exception.ExceptionResponse;
 import com.alibaba.fastjson2.JSON;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.web.authentication.AuthenticationFailureHandler;
@@ -18,6 +20,11 @@ import java.io.IOException;
  */
 @Component
 public class LoginFailureHandler implements AuthenticationFailureHandler {
+    
+    public static final String loginFailure = "登录失败";
+    @Autowired
+    private LogininforService logininforService;
+    
     /**
      * Called when an authentication attempt fails.
      *
@@ -32,6 +39,7 @@ public class LoginFailureHandler implements AuthenticationFailureHandler {
         response.setContentType("application/json;charset=utf-8");
         response.setStatus(HttpStatus.BAD_REQUEST.value());
         response.getWriter().write(JSON.toJSONString(ExceptionResponse.body(ExceptionEnum.LOGIN_FAILURE)));
+        logininforService.asyncLogininfor("***", "1", loginFailure,request);
         
     }
 }
