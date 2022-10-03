@@ -30,6 +30,7 @@ public class MenuServiceImpl extends ServiceImpl<MenuMapper, Menu> implements Me
     @Override
     public List<MenuTreeVo> getTree(MenuQuery from) {
         List<Menu> menus = baseMapper.getByMenuFrom(from);
+        setAuthority(menus);
         // 转换vo
         List<MenuTreeVo> menuTreeVos = Binder.convertAndBindRelations(menus, MenuTreeVo.class);
         // 构建树
@@ -44,8 +45,12 @@ public class MenuServiceImpl extends ServiceImpl<MenuMapper, Menu> implements Me
         // 用户选择的一个权限
         menus.forEach(menu -> {
             JSONObject meta = menu.getMeta();
-            meta.put("authority",UserUtil.getRoles());
-            menu.setMeta(meta);
+            List autchority = (List) meta.get("authority");
+            // autchority != null 说明有 authority 的属性
+            if (autchority != null) {
+                meta.put("authority", UserUtil.getRoles());
+                menu.setMeta(meta);
+            }
         });
     }
     
