@@ -1,7 +1,11 @@
 package com.agoni.dgy.service;
 
 import com.agoni.dgy.model.po.Dept;
+import com.agoni.dgy.model.query.DeptQuery;
+import com.agoni.dgy.model.vo.DeptVo;
 import com.baomidou.mybatisplus.extension.service.IService;
+
+import java.util.List;
 
 /**
  * @author gyd
@@ -9,6 +13,14 @@ import com.baomidou.mybatisplus.extension.service.IService;
  * @createDate 2022-07-07 01:19:03
  */
 public interface DeptService extends IService<Dept> {
+    
+    /**
+     * 根据 dq 查询 list
+     * @param dq
+     *
+     * @return
+     */
+    List<DeptVo> listByQuery(DeptQuery dq);
     
     /**
      * 保存更新部门

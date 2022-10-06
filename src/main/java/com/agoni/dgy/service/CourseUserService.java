@@ -1,7 +1,7 @@
 package com.agoni.dgy.service;
 
-import com.agoni.dgy.model.bo.CourseUserSearchFrom;
 import com.agoni.dgy.model.po.CourseUser;
+import com.agoni.dgy.model.query.CourseUserQuery;
 import com.agoni.dgy.model.vo.CourseUserVo;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.service.IService;
@@ -26,7 +26,7 @@ public interface CourseUserService extends IService<CourseUser> {
      *
      * @return
      */
-    IPage<CourseUserVo> searchPage(CourseUserSearchFrom from);
+    IPage<CourseUserVo> searchPage(CourseUserQuery from);
     
     /**
      * 创建 用户课程关系表

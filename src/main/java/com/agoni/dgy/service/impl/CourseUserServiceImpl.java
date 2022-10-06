@@ -2,14 +2,16 @@ package com.agoni.dgy.service.impl;
 
 import com.agoni.core.Binder;
 import com.agoni.dgy.mapper.CourseUserMapper;
-import com.agoni.dgy.model.bo.CourseUserSearchFrom;
 import com.agoni.dgy.model.po.Course;
 import com.agoni.dgy.model.po.CourseUser;
+import com.agoni.dgy.model.po.Result;
 import com.agoni.dgy.model.po.User;
+import com.agoni.dgy.model.query.CourseUserQuery;
 import com.agoni.dgy.model.vo.AuthUserVo;
 import com.agoni.dgy.model.vo.CourseUserVo;
 import com.agoni.dgy.service.CourseService;
 import com.agoni.dgy.service.CourseUserService;
+import com.agoni.dgy.service.ResultService;
 import com.agoni.system.utils.UserUtil;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
@@ -42,6 +44,9 @@ public class CourseUserServiceImpl extends ServiceImpl<CourseUserMapper, CourseU
     @Autowired
     private CourseService courseService;
     
+    @Autowired
+    private ResultService resultService;
+    
     @Override
     public List<CourseUserVo> mylist() {
         AuthUserVo userVo = UserUtil.getUserPrincipal();
@@ -54,7 +59,7 @@ public class CourseUserServiceImpl extends ServiceImpl<CourseUserMapper, CourseU
     }
     
     @Override
-    public IPage<CourseUserVo> searchPage(CourseUserSearchFrom from) {
+    public IPage<CourseUserVo> searchPage(CourseUserQuery from) {
         // 根据 名称 查找 课程id
         List<Course> courses = courseService.listByCourseName(from.getCourseName());
         List<Long> ids = courses.stream().map(Course::getId).collect(Collectors.toList());
@@ -68,19 +73,26 @@ public class CourseUserServiceImpl extends ServiceImpl<CourseUserMapper, CourseU
     @Transient
     public boolean saveCourse(Long id) {
         // 校验座位数量
-        Course course = courseService.checkStock(id);
+        Course c = courseService.checkStock(id);
         // 减座位数量
-        courseService.saleStock(course);
+        courseService.saleStock(c);
         // 保存记录
-        User user = UserUtil.getUser();
-        CourseUser build = CourseUser.builder().userId(user.getId()).courseId(id).build();
+        User u = UserUtil.getUser();
+        CourseUser build = CourseUser.builder().userId(u.getId()).courseId(id).build();
+        // 增选选修课成绩信息
+        Result r = Result.builder().userId(u.getId()).courseId(c.getId()).graduate(c.getGraduate())
+                         .courseName(c.getCourseName()).build();
+        resultService.save(r);
         return this.save(build);
     }
     
     @Override
+    @Transient
     public boolean deleteById(CourseUser courseUser) {
         // 增加座位数量
         courseService.delStock(courseUser.getCourseId());
+        // 根据选修课程ID删除对应记录
+        resultService.delByCourseId(courseUser.getCourseId());
         // 删除记录
         return this.removeById(courseUser);
     }

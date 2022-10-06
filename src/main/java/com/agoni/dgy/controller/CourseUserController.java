@@ -1,9 +1,9 @@
 package com.agoni.dgy.controller;
 
 
-import com.agoni.dgy.model.bo.CourseUserSearchFrom;
 import com.agoni.dgy.model.po.Course;
 import com.agoni.dgy.model.po.CourseUser;
+import com.agoni.dgy.model.query.CourseUserQuery;
 import com.agoni.dgy.model.vo.CourseUserVo;
 import com.agoni.dgy.service.CourseUserService;
 import com.baomidou.mybatisplus.core.metadata.IPage;
@@ -37,8 +37,8 @@ public class CourseUserController {
     
     @GetMapping
     @ApiOperation("列表")
-    public ResponseEntity<IPage> searchPage(@Validated CourseUserSearchFrom from) {
-        IPage<CourseUserVo> res = courseUserService.searchPage(from);
+    public ResponseEntity<IPage> searchPage(@Validated CourseUserQuery cq) {
+        IPage<CourseUserVo> res = courseUserService.searchPage(cq);
         return new ResponseEntity<>(res, HttpStatus.OK);
     }
     

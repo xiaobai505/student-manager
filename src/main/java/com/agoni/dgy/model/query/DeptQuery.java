@@ -1,4 +1,4 @@
-package com.agoni.dgy.model.bo;
+package com.agoni.dgy.model.query;
 
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
@@ -8,7 +8,7 @@ import java.io.Serializable;
 
 @Data
 @ApiModel(value = "Dept对象", description = "部门分页查询")
-public class DeptSearchFrom implements Serializable {
+public class DeptQuery implements Serializable {
     
     @ApiModelProperty("公司名字")
     private String name;

@@ -2,8 +2,9 @@ package com.agoni.dgy.controller;
 
 
 import com.agoni.core.Binder;
-import com.agoni.dgy.model.bo.UserSearchFrom;
 import com.agoni.dgy.model.po.User;
+import com.agoni.dgy.model.query.PwdQuery;
+import com.agoni.dgy.model.query.UserQuery;
 import com.agoni.dgy.model.vo.UserAndRole;
 import com.agoni.dgy.model.vo.UserVo;
 import com.agoni.dgy.service.UserService;
@@ -48,8 +49,8 @@ public class UserController {
 
     @GetMapping("/page")
     @ApiOperation("列表")
-    public ResponseEntity<IPage> page(@Validated UserSearchFrom userSearchFrom){
-        IPage<UserAndRole> res = userService.pageUser(userSearchFrom);
+    public ResponseEntity<IPage> page(@Validated UserQuery userQuery){
+        IPage<UserAndRole> res = userService.pageUser(userQuery);
         return new ResponseEntity<>(res, HttpStatus.OK);
     }
 
@@ -72,6 +73,13 @@ public class UserController {
     public ResponseEntity<Boolean> removeByIds(@RequestBody List<User> userList){
         List<Long> ids = userList.stream().map(User::getId).collect(Collectors.toList());
         boolean b = userService.removeByIds(ids);
+        return new ResponseEntity<>(b, HttpStatus.OK);
+    }
+    
+    @PutMapping("/resetPwd")
+    @ApiOperation("更新密码")
+    public ResponseEntity<Boolean> resetPwd(@RequestBody PwdQuery pq){
+        boolean b = userService.resetPwd(pq);
         return new ResponseEntity<>(b, HttpStatus.OK);
     }
 }

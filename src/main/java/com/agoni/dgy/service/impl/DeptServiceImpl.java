@@ -1,12 +1,20 @@
 package com.agoni.dgy.service.impl;
 
+import com.agoni.core.Binder;
 import com.agoni.dgy.mapper.DeptMapper;
 import com.agoni.dgy.model.po.Dept;
+import com.agoni.dgy.model.query.DeptQuery;
+import com.agoni.dgy.model.vo.DeptVo;
 import com.agoni.dgy.service.DeptService;
 import com.agoni.dgy.service.UserService;
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import com.baomidou.mybatisplus.core.toolkit.StringUtils;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import org.jetbrains.annotations.NotNull;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
 
 /**
  * @author gyd
@@ -20,6 +28,27 @@ public class DeptServiceImpl extends ServiceImpl<DeptMapper, Dept> implements De
     private UserService userService;
     
     /**
+     * 根据 dq 查询 list
+     *
+     * @param dq
+     *
+     * @return
+     */
+    @Override
+    public List<DeptVo> listByQuery(DeptQuery dq) {
+        List<Dept> list = list(getDeptQueryWrapper(dq));
+        return Binder.convertAndBindRelations(list, DeptVo.class);
+    }
+    
+    @NotNull
+    private QueryWrapper<Dept> getDeptQueryWrapper(DeptQuery dq) {
+        QueryWrapper<Dept> queryWrapper = new QueryWrapper<>();
+        queryWrapper.lambda().eq(StringUtils.isNotBlank(dq.getStatus()),Dept::getStatus, dq.getStatus())
+                .eq(StringUtils.isNotBlank(dq.getName()),Dept::getName,dq.getName()).orderByAsc(Dept::getSort);
+        return queryWrapper;
+    }
+    
+    /**
      * 保存更新部门
      *
      * @param dept
@@ -31,7 +60,7 @@ public class DeptServiceImpl extends ServiceImpl<DeptMapper, Dept> implements De
         // 上级部门信息
         Dept info = this.getById(dept.getParentId());
         // 如果父节点不为正常状态,则不允许新增子节点
-        if ("1".equals(info.getStatus())) {
+        if ("1".equals(info.getStatus().toString())) {
             throw new RuntimeException("部门停用，不允许新增");
         }
         dept.setAncestors(info.getAncestors() + "," + dept.getParentId());

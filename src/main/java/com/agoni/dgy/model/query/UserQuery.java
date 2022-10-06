@@ -1,10 +1,12 @@
-package com.agoni.dgy.model.bo;
+package com.agoni.dgy.model.query;
 
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import lombok.Builder;
 import lombok.Data;
 
 @Data
-public class UserSearchFrom extends Page {
+@Builder
+public class UserQuery extends Page {
 
     private String name;
     

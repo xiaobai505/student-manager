@@ -44,6 +44,19 @@ public class ResultServiceImpl extends ServiceImpl<ResultMapper, Result> impleme
     }
     
     /**
+     * 根据课程ID删除
+     * @param cId
+     *
+     * @return
+     */
+    @Override
+    public boolean delByCourseId(long cId) {
+        QueryWrapper<Result> queryWrapper = new QueryWrapper<>();
+        queryWrapper.lambda().eq(Result::getCourseId,cId);
+        return this.remove(queryWrapper);
+    }
+    
+    /**
      * @return
      */
     @Override

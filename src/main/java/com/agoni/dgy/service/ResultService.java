@@ -21,6 +21,8 @@ public interface ResultService extends IService<Result> {
     
     IPage<ResultVo> searchPage(ResultQuery from);
     
+    boolean delByCourseId(long cId);
+    
     CompletableFuture<String> test(int i);
     
     Menu test5();

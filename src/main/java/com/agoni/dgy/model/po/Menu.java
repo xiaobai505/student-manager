@@ -39,6 +39,9 @@ public class Menu extends AbstractEntity {
      */
     @TableField("path")
     private String path;
+    
+    @TableField("component")
+    private String component;
 
     /**
      * 重定向
