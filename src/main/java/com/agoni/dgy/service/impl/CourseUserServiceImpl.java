@@ -15,6 +15,7 @@ import com.agoni.dgy.service.ResultService;
 import com.agoni.system.utils.UserUtil;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -65,8 +66,9 @@ public class CourseUserServiceImpl extends ServiceImpl<CourseUserMapper, CourseU
         List<Long> ids = courses.stream().map(Course::getId).collect(Collectors.toList());
         // 根据 课程id 查找 选课信息
         QueryWrapper<CourseUser> query = new QueryWrapper<>();
-        query.lambda().in(CollectionUtils.isEmpty(ids), CourseUser::getCourseId, ids);
-        return Binder.convertAndBindRelations(page(from, query),CourseUserVo.class);
+        query.lambda().in(!CollectionUtils.isEmpty(ids), CourseUser::getCourseId, ids);
+        Page<CourseUser> page = page(from, query);
+        return Binder.convertAndBindRelations(page,CourseUserVo.class);
     }
     
     @Override

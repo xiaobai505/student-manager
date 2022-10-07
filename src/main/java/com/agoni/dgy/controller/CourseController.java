@@ -30,6 +30,7 @@ import java.util.stream.Collectors;
 @RequestMapping("/dgy/course")
 @Slf4j
 @Api(tags="课程")
+//@PreAuthorize("hasRole('ROLE_TEACHER')")
 public class CourseController {
 
     @Autowired
@@ -58,6 +59,7 @@ public class CourseController {
     
     @PutMapping
     @ApiOperation("更新")
+    //@PreAuthorize("hasAuthority('teacher')")
     public ResponseEntity<Boolean> updateBatchById(@RequestBody List<Course> courses) {
         boolean b = courseService.updateBatchById(courses);
         return new ResponseEntity<>(b, HttpStatus.OK);
