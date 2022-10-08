@@ -21,9 +21,9 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.CollectionUtils;
 
-import java.beans.Transient;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -72,7 +72,7 @@ public class CourseUserServiceImpl extends ServiceImpl<CourseUserMapper, CourseU
     }
     
     @Override
-    @Transient
+    @Transactional
     public boolean saveCourse(Long id) {
         // 校验座位数量
         Course c = courseService.checkStock(id);
@@ -89,7 +89,7 @@ public class CourseUserServiceImpl extends ServiceImpl<CourseUserMapper, CourseU
     }
     
     @Override
-    @Transient
+    @Transactional
     public boolean deleteById(CourseUser courseUser) {
         // 增加座位数量
         courseService.delStock(courseUser.getCourseId());
