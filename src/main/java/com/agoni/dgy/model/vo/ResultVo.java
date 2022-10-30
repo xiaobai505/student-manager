@@ -18,4 +18,9 @@ public class ResultVo extends Result {
     @ApiModelProperty("学生姓名")
     @BindField(entity= User.class, field="name", condition="this.user_id=id")
     private String studentName;
+    
+    
+    @ApiModelProperty("昵称")
+    @BindField(entity= User.class, field="nickName", condition="this.user_id=id")
+    private String nickName;
 }

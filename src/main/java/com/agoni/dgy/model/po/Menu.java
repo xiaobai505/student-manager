@@ -29,12 +29,6 @@ public class Menu extends AbstractEntity {
     private Long parentId;
 
     /**
-     * 类型 /systemRouter/permissionRouter/frameRouter/tabsRouter/
-     */
-    @TableField("menu_type")
-    private String menuType;
-    
-    /**
      * 路径
      */
     @TableField("path")
@@ -43,12 +37,6 @@ public class Menu extends AbstractEntity {
     @TableField("component")
     private String component;
 
-    /**
-     * 重定向
-     */
-    @TableField("redirect")
-    private String redirect;
-    
     /**
      * 页面name，作为一种规范
      */

@@ -37,8 +37,11 @@ public class ResultServiceImpl extends ServiceImpl<ResultMapper, Result> impleme
     
     @Override
     public IPage<ResultVo> searchPage(ResultQuery from) {
+        QueryWrapper<Object> objectQueryWrapper = new QueryWrapper<>();
+    
         QueryWrapper<Result> query = new QueryWrapper<>();
-        query.lambda().likeLeft(StringUtils.isNotEmpty(from.getCourseName()),Result::getCourseName,from.getCourseName()).orderByDesc(Result::getCreateTime);
+        query.lambda().likeLeft(StringUtils.isNotEmpty(from.getCourseName()),Result::getCourseName,from.getCourseName())
+             .orderByDesc(Result::getCreateTime);
         Page<Result> page = page(from, query);
         return Binder.convertAndBindRelations(page, ResultVo.class);
     }

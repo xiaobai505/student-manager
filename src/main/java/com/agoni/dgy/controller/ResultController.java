@@ -41,8 +41,8 @@ public class ResultController {
     @Autowired
     private ExecutorConfig executorConfig;
     
-    @GetMapping("/test")
-    @ApiOperation("列表")
+    //@GetMapping("/test")
+    @ApiOperation("测试")
     public ResponseEntity<Object> test() {
         long start = System.currentTimeMillis();
         //extracted3();
