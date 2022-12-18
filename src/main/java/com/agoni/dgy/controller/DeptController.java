@@ -4,11 +4,10 @@ import com.agoni.dgy.model.po.Dept;
 import com.agoni.dgy.model.query.DeptQuery;
 import com.agoni.dgy.model.vo.DeptVo;
 import com.agoni.dgy.service.DeptService;
+import com.agoni.system.response.ResponseEntity;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
@@ -29,21 +28,21 @@ public class DeptController {
     @ApiOperation("列表")
     public ResponseEntity<List> listByQuery(@Validated DeptQuery dq) {
         List<DeptVo> deptVos = deptService.listByQuery(dq);
-        return new ResponseEntity<>(deptVos, HttpStatus.OK);
+        return ResponseEntity.body(deptVos);
     }
     
     @PostMapping
     @ApiOperation("保存部门")
     public ResponseEntity<Boolean> save(@RequestBody Dept dept) {
         boolean save = deptService.saveDept(dept);
-        return new ResponseEntity<>(save, HttpStatus.OK);
+        return ResponseEntity.body(save);
     }
     
     @PutMapping
     @ApiOperation("更新部门")
     public ResponseEntity<Boolean> update(@RequestBody Dept dept) {
         boolean save = deptService.updateById(dept);
-        return new ResponseEntity<>(save, HttpStatus.OK);
+        return ResponseEntity.body(save);
     }
     
     
@@ -51,7 +50,7 @@ public class DeptController {
     @ApiOperation("删除")
     public ResponseEntity<Boolean> del(@PathVariable long id) {
         boolean res = deptService.removeById(id);
-        return new ResponseEntity<>(res, HttpStatus.OK);
+        return ResponseEntity.body(res);
     }
     
     

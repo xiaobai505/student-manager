@@ -11,9 +11,9 @@
 	<properties>
 		<java.version>1.8</java.version>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-		<spring.cloud.version>2021.0.1</spring.cloud.version>
-		<spring.cloud.alibaba.version>2021.0.1.0</spring.cloud.alibaba.version>
-		<spring.boot.version>2.6.3</spring.boot.version>
+		<spring.cloud.alibaba.version>2021.0.4.0</spring.cloud.alibaba.version>
+		<spring.cloud.version>2021.0.4</spring.cloud.version>
+		<spring.boot.version>2.6.11</spring.boot.version>
 	</properties>
 
 	<!--依赖版本定义-->
@@ -87,13 +87,13 @@
 		<dependency>
 			<groupId>com.alibaba</groupId>
 			<artifactId>druid</artifactId>
-			<version>1.2.8</version>
+			<version>1.2.15</version>
 		</dependency>
 
 		<dependency>
 			<groupId>com.alibaba</groupId>
 			<artifactId>druid-spring-boot-starter</artifactId>
-			<version>1.2.8</version>
+			<version>1.2.15</version>
 		</dependency>
 
 		<dependency>
@@ -107,7 +107,7 @@
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-security</artifactId>
-			<version>2.6.1</version>
+			<version>3.0.0</version>
 		</dependency>
 
 		<!--jwt加密-->
@@ -140,14 +140,14 @@
 		<dependency>
 			<groupId>com.alibaba.fastjson2</groupId>
 			<artifactId>fastjson2</artifactId>
-			<version>2.0.9</version>
+			<version>2.0.21</version>
 		</dependency>
 
 		<!--微信登录等-->
 		<dependency>
 			<groupId>com.github.binarywang</groupId>
 			<artifactId>weixin-java-mp</artifactId>
-			<version>4.3.0</version>
+			<version>4.4.6.B</version>
 		</dependency>
 
 		<!--Swagger-->
@@ -168,14 +168,14 @@
 		<dependency>
 			<groupId>com.diboot</groupId>
 			<artifactId>diboot-core</artifactId>
-			<version>2.7.0</version>
+			<version>2.7.1</version>
 		</dependency>
 
 		<!-- 阿里云短信服务-->
 		<dependency>
 			<groupId>com.aliyun</groupId>
 			<artifactId>dysmsapi20170525</artifactId>
-			<version>2.0.18</version>
+			<version>2.0.23</version>
 		</dependency>
 
 		<!--获取IP相关信息-->
@@ -184,15 +184,6 @@
 			<artifactId>UserAgentUtils</artifactId>
 			<version>1.21</version>
 		</dependency>
-
-		<!-- 获取系统信息 -->
-		<dependency>
-			<groupId>com.github.oshi</groupId>
-			<artifactId>oshi-core</artifactId>
-			<version>6.2.2</version>
-		</dependency>
-
-
 
 	</dependencies>
 
@@ -252,6 +243,11 @@
 			<snapshots>
 				<enabled>false</enabled>
 			</snapshots>
+		</repository>
+		<repository>
+			<id>maven_central</id>
+			<name>Maven Central</name>
+			<url>https://repo.maven.apache.org/maven2/</url>
 		</repository>
 	</repositories>
 

@@ -40,31 +40,25 @@ public class JwtTokenUtil implements Serializable {
                 .parseClaimsJws(token.replace(SecurityConstants.TOKEN_PREFIX, ""))
                 .getBody();
     }
-
-    public static String generateToken(String username) {
-        Map<String, Object> role = new HashMap<>(16);
-        role.put("username", username);
+    
+    public String generateToken(String username, String clientId) {
+        Map<String, Object> claims = new HashMap<>(16);
+        claims.put("username", username);
+        claims.put("clientId", clientId);
         final Date createdDate = clock.now();
         final Date expirationDate = calculateExpirationDate(createdDate);
         String tokenPrefix = Jwts.builder()
-                .setClaims(role)
+                .setClaims(claims)
                 .setSubject(username)
                 .setIssuedAt(createdDate)
                 .setExpiration(expirationDate)
                 .signWith(SignatureAlgorithm.HS512, SecurityConstants.SecurityKey)
                 .compact();
-        return SecurityConstants.TOKEN_PREFIX + tokenPrefix;
+        return tokenPrefix;
     }
-
+ 
     private static Date calculateExpirationDate(Date createdDate) {
         // 过期时间 分钟
         return new Date(createdDate.getTime() + 1000 * 60 * SecurityConstants.Minute);
-    }
-
-    public static void main(String[] args) {
-        String token = generateToken("admin");
-        log.info("token: " + token);
-        String userName = getUserName(token.replace(SecurityConstants.TOKEN_PREFIX, ""));
-        log.info("userName: " + userName);
     }
 }

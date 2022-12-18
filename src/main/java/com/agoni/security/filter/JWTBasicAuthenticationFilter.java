@@ -3,8 +3,8 @@ package com.agoni.security.filter;
 import com.agoni.security.constants.SecurityConstants;
 import com.agoni.security.service.AuthUserService;
 import com.agoni.security.utils.JwtTokenUtil;
-import com.agoni.system.exception.ExceptionEnum;
-import com.agoni.system.exception.ExceptionResponse;
+import com.agoni.system.response.ResponseCodeEnum;
+import com.agoni.system.response.ResponseEntity;
 import com.alibaba.fastjson2.JSON;
 import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
@@ -72,7 +72,7 @@ public class JWTBasicAuthenticationFilter extends OncePerRequestFilter {
         } catch (Exception e) {
             log.info("解析 token 失败了");
             this.exceptionResponse(HttpStatus.UNAUTHORIZED.value(), response,
-                    ExceptionResponse.body(ExceptionEnum.TOKEN_CHECK_FAIL));
+                    ResponseEntity.body(ResponseCodeEnum.TOKEN_CHECK_FAIL));
         }
         return userName;
     }
@@ -83,11 +83,11 @@ public class JWTBasicAuthenticationFilter extends OncePerRequestFilter {
      * @param response response
      */
     @SneakyThrows
-    public void exceptionResponse(int status, HttpServletResponse response, ExceptionResponse exceptionResponse) {
+    public void exceptionResponse(int status, HttpServletResponse response, ResponseEntity responseEntity) {
         response.setHeader("Access-Control-Allow-Origin", "*");
         response.setHeader("Cache-Control", "no-cache");
         response.setContentType("application/json;charset=utf-8");
         response.setStatus(status);
-        response.getWriter().write(JSON.toJSONString(exceptionResponse));
+        response.getWriter().write(JSON.toJSONString(responseEntity));
     }
 }

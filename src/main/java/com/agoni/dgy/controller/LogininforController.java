@@ -37,4 +37,11 @@ public class LogininforController {
         Page<Logininfor> page = logininforService.page(query, queryWrapper);
         return new ResponseEntity<>(page, HttpStatus.OK);
     }
+    
+    @GetMapping("/page1")
+    @ApiOperation("分页列表")
+    public ResponseEntity<Page> page() {
+        System.out.printf("ok");
+        return null;
+    }
 }

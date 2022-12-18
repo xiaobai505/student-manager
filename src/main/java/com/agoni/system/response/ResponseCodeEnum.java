@@ -1,6 +1,6 @@
-package com.agoni.system.exception;
+package com.agoni.system.response;
 
-public enum ExceptionEnum {
+public enum ResponseCodeEnum {
     
     INNER_ERROR(500, "系统内部错误"),
     UNAUTHORIZED(401, "未登录"),
@@ -21,7 +21,7 @@ public enum ExceptionEnum {
     private final String msg;
     
     
-    ExceptionEnum(Integer code, String msg) {
+    ResponseCodeEnum(Integer code, String msg) {
         this.code = code;
         this.msg = msg;
     }

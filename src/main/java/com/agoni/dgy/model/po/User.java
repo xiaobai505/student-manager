@@ -59,6 +59,10 @@ public class User extends AbstractEntity {
     @ApiModelProperty("部门ID")
     @TableField("dept_id")
     private String deptId;
+    
+    @ApiModelProperty("状态")
+    @TableField("status")
+    private Integer status;
 
     @ApiModelProperty("手机是否验证 （0否  1是）")
     @TableField("is_mobile_check")
