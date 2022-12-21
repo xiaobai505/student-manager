@@ -41,9 +41,9 @@ public class SampleController {
     @RequestMapping("/sendSms")
     public static void main(String[] args_) throws Exception {
         com.aliyun.dysmsapi20170525.Client client =
-                SampleController.createClient("LTAIQqSV6u6Y6qNE", "Kcn6QE5m0JmJOFOyP31w5gf1DEy8CQ");
+                SampleController.createClient("***", "****");
         SendSmsRequest sendSmsRequest = new SendSmsRequest()
-                .setPhoneNumbers("17611678927")
+                .setPhoneNumbers("176****8927")
                 .setSignName("GY董")
                 .setTemplateCode("SMS_170660489")
                 .setTemplateParam("{\"user\":\"1234\",\"pwd\":\"321aa\"}");
