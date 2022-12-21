@@ -13,8 +13,14 @@
             ) t2 ON t2.user_id = t1.id
         where
               t1.del_flag=0
-        <if test="userQuery.name != null and userQuery.name != ''">
-            AND t1.name like concat("%",#{userQuery.name},"%")
+        <if test="userQuery.username != null and userQuery.username != ''">
+            AND t1.username like concat("%",#{userQuery.username},"%")
+        </if>
+        <if test="userQuery.phone != null and userQuery.phone != ''">
+            AND t1.phone = #{userQuery.phone}
+        </if>
+        <if test="userQuery.status != null">
+            AND t1.status = #{userQuery.status}
         </if>
         <if test="userQuery.roles != null and userQuery.roles != ''">
             AND t2.roleIds like concat("%",#{userQuery.roles},"%")

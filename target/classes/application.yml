@@ -21,8 +21,10 @@ mybatis-plus:
 
 # jwt创建 超时时间 和 密钥
 JWT:
-  timeOut: 2
+  timeOut: 2000
   SecurityKey: dgy
+  #是否允许一个账号多个设备登录,如果为false,一个账号登录后会自动踢出已经登录的账号
+  multipleLogin: true
 
 # 微信登录
 weixin:

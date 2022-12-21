@@ -7,11 +7,30 @@ import lombok.Data;
 @Data
 @Builder
 public class UserQuery extends Page {
-
-    private String name;
     
+    /**
+     * 用户名
+     */
+    private String username;
+    
+    /**
+     * 手机号
+     */
+    private String phone;
+    
+    /**
+     * 状态
+     */
+    private Integer status;
+    
+    /**
+     * 角色
+     */
     private String roles;
     
+    /**
+     * 部门
+     */
     private Long deptId;
     
 }
