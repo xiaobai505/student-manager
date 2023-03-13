@@ -8,7 +8,7 @@ import org.springframework.stereotype.Service;
 
 /**
 * @author Admin
-* @description 针对表【tb_post(岗位信息表)】的数据库操作Service实现
+* @description 针对表【sys_post(岗位信息表)】的数据库操作Service实现
 * @createDate 2022-08-31 15:44:43
 */
 @Service

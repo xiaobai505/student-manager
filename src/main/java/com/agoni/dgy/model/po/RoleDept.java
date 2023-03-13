@@ -14,9 +14,9 @@ import java.io.Serializable;
 
 /**
  * 角色和部门关联表
- * @TableName tb_role_dept
+ * @TableName sys_role_dept
  */
-@TableName(value ="tb_role_dept")
+@TableName(value ="sys_role_dept")
 @Data
 @SuperBuilder
 @NoArgsConstructor

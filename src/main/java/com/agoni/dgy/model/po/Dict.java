@@ -10,15 +10,15 @@ import lombok.NoArgsConstructor;
 import lombok.experimental.SuperBuilder;
 
 /**
- * @TableName tb_dict
+ * @TableName sys_dict
  */
-@TableName(value = "tb_dict")
+@TableName(value = "sys_dict")
 @Data
 @SuperBuilder
 @NoArgsConstructor
 @AllArgsConstructor
 @ApiModel(value = "Dict对象", description = "字典表")
-public class Dict extends AbstractEntity {
+public class Dict extends AbstractEntity<Dict> {
     
     @ApiModelProperty("父id")
     @TableField("parentId")

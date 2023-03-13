@@ -21,13 +21,13 @@ import java.io.Serializable;
  * @author dgy
  * @since 2021-12-22
  */
-@TableName("tb_role")
+@TableName("sys_role")
 @Data
 @SuperBuilder
 @NoArgsConstructor
 @AllArgsConstructor
 @ApiModel(value = "Role对象", description = "角色表")
-public class Role extends AbstractEntity implements Serializable {
+public class Role extends AbstractEntity<AbstractEntity> implements Serializable {
 
     private static final long serialVersionUID = 1L;
 

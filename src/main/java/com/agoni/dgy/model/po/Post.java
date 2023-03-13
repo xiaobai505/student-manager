@@ -15,9 +15,9 @@ import java.time.LocalDateTime;
 
 /**
  * 岗位信息表
- * @TableName tb_post
+ * @TableName sys_post
  */
-@TableName(value ="tb_post")
+@TableName(value ="sys_post")
 @Data
 @SuperBuilder
 @NoArgsConstructor

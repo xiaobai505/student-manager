@@ -23,7 +23,7 @@ import lombok.experimental.SuperBuilder;
 @AllArgsConstructor
 @TableName("tb_result")
 @ApiModel(value = "Result对象", description = "成绩表", parent = AbstractEntity.class)
-public class Result extends AbstractEntity {
+public class Result extends AbstractEntity<AbstractEntity> {
 
     private static final long serialVersionUID = 1L;
     

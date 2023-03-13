@@ -42,7 +42,7 @@
             student_status_management.tb_meun_role t1
             on t1.meun_id = t.id
         left join
-            student_status_management.tb_role t2
+            student_status_management.sys_role t2
             on t2.del_flag=0 and t1.role_id = t2.id
         where t.del_flag=0
         <if test="from.code != null and from.code != ''">

@@ -6,7 +6,7 @@ import org.apache.ibatis.annotations.Mapper;
 
 /**
 * @author Admin
-* @description 针对表【tb_user_post(用户与岗位关联表)】的数据库操作Mapper
+* @description 针对表【sys_user_post(用户与岗位关联表)】的数据库操作Mapper
 * @createDate 2022-08-31 16:29:55
 * @Entity generator.domain.UserPost
 */

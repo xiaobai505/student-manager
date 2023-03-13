@@ -27,7 +27,7 @@ import java.io.Serializable;
 @SuperBuilder
 @NoArgsConstructor
 @AllArgsConstructor
-@TableName("tb_role_user")
+@TableName("sys_role_user")
 @ApiModel(value = "RoleUser对象", description = "用户角色关系表")
 public class RoleUser implements Serializable {
     

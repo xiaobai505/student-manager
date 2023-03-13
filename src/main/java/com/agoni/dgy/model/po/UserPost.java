@@ -14,9 +14,9 @@ import java.io.Serializable;
 
 /**
  * 用户与岗位关联表
- * @TableName tb_user_post
+ * @TableName sys_user_post
  */
-@TableName(value ="tb_user_post")
+@TableName(value ="sys_user_post")
 @Data
 @SuperBuilder
 @NoArgsConstructor

@@ -15,8 +15,7 @@ public class ServerController {
     
     @GetMapping
     //@PreAuthorize("hasAuthority('admin')")
-    public Object getInfo() throws Exception
-    {
+    public Object getInfo() {
         return null;
     }
     

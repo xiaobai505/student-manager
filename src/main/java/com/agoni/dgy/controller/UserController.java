@@ -10,6 +10,7 @@ import com.agoni.dgy.model.vo.UserVo;
 import com.agoni.dgy.service.UserService;
 import com.agoni.system.utils.UserUtil;
 import com.baomidou.mybatisplus.core.metadata.IPage;
+import com.baomidou.mybatisplus.extension.activerecord.Model;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import lombok.extern.slf4j.Slf4j;

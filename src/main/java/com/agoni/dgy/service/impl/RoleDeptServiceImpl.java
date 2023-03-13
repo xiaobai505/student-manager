@@ -8,7 +8,7 @@ import org.springframework.stereotype.Service;
 
 /**
 * @author Admin
-* @description 针对表【tb_role_dept(角色和部门关联表)】的数据库操作Service实现
+* @description 针对表【sys_role_dept(角色和部门关联表)】的数据库操作Service实现
 * @createDate 2022-08-31 16:31:15
 */
 @Service

@@ -14,15 +14,15 @@ import java.io.Serializable;
 /**
  * 分校部门表
  *
- * @TableName tb_dept
+ * @TableName sys_dept
  */
-@TableName(value = "tb_dept")
+@TableName(value = "sys_dept")
 @Data
 @SuperBuilder
 @NoArgsConstructor
 @AllArgsConstructor
 @ApiModel(value = "Dept对象", description = "部门表")
-public class Dept extends AbstractEntity implements Serializable {
+public class Dept extends AbstractEntity<AbstractEntity> implements Serializable {
     
     @ApiModelProperty("公司名字")
     private String name;

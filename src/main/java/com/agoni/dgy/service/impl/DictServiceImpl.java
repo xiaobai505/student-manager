@@ -24,7 +24,7 @@ import java.util.stream.Collectors;
 
 /**
 * @author Admin
-* @description 针对表【tb_dict】的数据库操作Service实现
+* @description 针对表【sys_dict】的数据库操作Service实现
 * @createDate 2022-06-30 17:19:03
 */
 @Service

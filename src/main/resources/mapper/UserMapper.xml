@@ -3,12 +3,12 @@
 <mapper namespace="com.agoni.dgy.mapper.UserMapper">
 
     <select id="selectUserAndRolepage" resultType="com.agoni.dgy.model.vo.UserAndRole">
-        SELECT t2.roles,t1.* FROM tb_user t1 LEFT JOIN
+        SELECT t2.roles,t1.* FROM sys_user t1 LEFT JOIN
             (
                 SELECT
                        user_id, GROUP_CONCAT( role_id ) AS roleIds, GROUP_CONCAT( role_name ) AS roles
                 FROM
-                     tb_role_user
+                     sys_role_user
                 GROUP BY user_id
             ) t2 ON t2.user_id = t1.id
         where
@@ -26,7 +26,7 @@
             AND t2.roleIds like concat("%",#{userQuery.roles},"%")
         </if>
         <if test="userQuery.deptId != null and userQuery.deptId != 0">
-            AND (t1.dept_id = #{userQuery.deptId} OR t1.dept_id IN ( SELECT t.id FROM tb_dept t WHERE find_in_set(#{userQuery.deptId}, ancestors) ))
+            AND (t1.dept_id = #{userQuery.deptId} OR t1.dept_id IN ( SELECT t.id FROM sys_dept t WHERE find_in_set(#{userQuery.deptId}, ancestors) ))
         </if>
     </select>
 </mapper>

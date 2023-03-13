@@ -7,6 +7,10 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
+/**
+ * 微信配置
+ * @author gyd
+ */
 @Configuration
 public class WeChatConfig {
 

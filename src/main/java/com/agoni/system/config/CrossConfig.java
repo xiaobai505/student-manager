@@ -6,6 +6,10 @@ import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 import org.springframework.web.filter.CorsFilter;
 
+/**
+ * 跨域处理
+ * @author gyd
+ */
 @Configuration
 public class CrossConfig {
     @Bean

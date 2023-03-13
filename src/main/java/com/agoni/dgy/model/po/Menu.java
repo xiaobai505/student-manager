@@ -19,7 +19,7 @@ import lombok.experimental.SuperBuilder;
 @SuperBuilder
 @NoArgsConstructor
 @AllArgsConstructor
-public class Menu extends AbstractEntity {
+public class Menu extends AbstractEntity<AbstractEntity> {
 
     /**
      * 父id

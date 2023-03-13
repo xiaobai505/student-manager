@@ -15,6 +15,10 @@ import springfox.documentation.spring.web.plugins.Docket;
 import java.util.Collections;
 import java.util.List;
 
+/**
+ * Swagger配置
+ * @author gyd
+ */
 @Configuration
 @EnableOpenApi
 @EnableKnife4j

@@ -36,11 +36,4 @@ public class RoutesController {
         List<MenuTreeVo> tree = menuService.getTree(build);
         return ResponseEntity.body(tree);
     }
-    
-    @GetMapping()
-    @ApiOperation("菜单列表")
-    public ResponseEntity<List> list() {
-        List<Menu> list = menuService.list();
-        return ResponseEntity.body(list);
-    }
 }

@@ -24,7 +24,7 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @TableName(value = "tb_history", autoResultMap = true)
 @ApiModel(value = "History对象", description = "历史记录表", parent = AbstractEntity.class)
-public class History extends AbstractEntity {
+public class History extends AbstractEntity<AbstractEntity> {
 
     private static final long serialVersionUID = 1L;
     

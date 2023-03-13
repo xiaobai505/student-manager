@@ -4,8 +4,8 @@ server:
 spring:
   datasource:
     username: root
-    password: root
-    url: jdbc:mysql://127.0.0.1/student_status_management?useUnicode=true&characterEncoding=utf-8&useSSL=false
+    password: dongGY1234
+    url: jdbc:mysql://rm-2ze7hrkqw885t3696mo.mysql.rds.aliyuncs.com/student_status_management?useUnicode=true&characterEncoding=utf-8&useSSL=false
     driver-class-name: com.mysql.cj.jdbc.Driver
     type: com.alibaba.druid.pool.DruidDataSource
     initialSize: 5
@@ -22,4 +22,12 @@ spring:
     maxPoolPreparedStatementPerConnectionSize: 20
     filters: stat,wall,slf4j
     connectionProperties: druid.stat.mergeSql=true;druid.stat.slowSqlMillis=5000
-    platform: mysql
+    sql:
+      init:
+        platform: mysql
+
+  redis:
+    host: 127.0.0.1
+    port: 6379
+    database: 2
+

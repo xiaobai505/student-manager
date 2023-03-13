@@ -13,6 +13,7 @@ import com.agoni.dgy.service.CourseService;
 import com.agoni.dgy.service.CourseUserService;
 import com.agoni.dgy.service.ResultService;
 import com.agoni.system.utils.UserUtil;
+import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
@@ -72,7 +73,7 @@ public class CourseUserServiceImpl extends ServiceImpl<CourseUserMapper, CourseU
     }
     
     @Override
-    @Transactional
+    @Transactional(rollbackFor = Exception.class)
     public boolean saveCourse(Long id) {
         // 校验座位数量
         Course c = courseService.checkStock(id);
@@ -89,7 +90,7 @@ public class CourseUserServiceImpl extends ServiceImpl<CourseUserMapper, CourseU
     }
     
     @Override
-    @Transactional
+    @Transactional(rollbackFor = Exception.class)
     public boolean deleteById(CourseUser courseUser) {
         // 增加座位数量
         courseService.delStock(courseUser.getCourseId());
@@ -99,3 +100,12 @@ public class CourseUserServiceImpl extends ServiceImpl<CourseUserMapper, CourseU
         return this.removeById(courseUser);
     }
 }
+
+
+
+
+
+
+
+
+

@@ -9,15 +9,15 @@ import lombok.experimental.SuperBuilder;
 
 /**
  * 字典详细表
- * @TableName tb_dict_config
+ * @TableName sys_dict_config
  */
-@TableName(value ="tb_dict_config")
+@TableName(value ="sys_dict_config")
 @Data
 @SuperBuilder
 @NoArgsConstructor
 @AllArgsConstructor
 @ApiModel(value = "DictConfig对象", description = "字典配置表")
-public class DictConfig extends AbstractEntity {
+public class DictConfig extends AbstractEntity<AbstractEntity> {
     /**
      * 数据字典目录Id
      */

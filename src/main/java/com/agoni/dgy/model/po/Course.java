@@ -19,7 +19,7 @@ import java.time.LocalDateTime;
 @NoArgsConstructor
 @AllArgsConstructor
 @ApiModel(value = "DictConfig对象", description = "字典配置表")
-public class Course extends AbstractEntity{
+public class Course extends AbstractEntity<AbstractEntity> {
 
     private static final long serialVersionUID = 1L;
     

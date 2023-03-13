@@ -9,10 +9,13 @@ import com.alibaba.fastjson2.JSON;
 import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
+import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.web.AuthenticationEntryPoint;
 import org.springframework.security.web.authentication.WebAuthenticationDetailsSource;
+import org.springframework.security.web.authentication.www.BasicAuthenticationFilter;
 import org.springframework.stereotype.Component;
 import org.springframework.web.filter.OncePerRequestFilter;
 
@@ -33,11 +36,12 @@ public class JWTBasicAuthenticationFilter extends OncePerRequestFilter {
 
     @Resource
     AuthUserService authUserService;
-
+    
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain chain) throws IOException, ServletException {
         // 1: 请求头没有token ，直接去下一个过滤器
         String header = request.getHeader(SecurityConstants.TOKEN_HEADER);
+        
         if (header == null || !header.startsWith(SecurityConstants.TOKEN_PREFIX)) {
             chain.doFilter(request, response);
             return;
@@ -52,27 +56,33 @@ public class JWTBasicAuthenticationFilter extends OncePerRequestFilter {
         
         // 3：SecurityContextHolder 没有用户，查询数据库，把权限放到 SecurityContextHolder
         if (SecurityContextHolder.getContext().getAuthentication() == null) {
-            UsernamePasswordAuthenticationToken authentication = getUsernamePasswordAuthenticationToken(request, userName);
+            UsernamePasswordAuthenticationToken authentication = getAuthenticationToken(userName);
             authentication.setDetails(new WebAuthenticationDetailsSource().buildDetails(request));
             SecurityContextHolder.getContext().setAuthentication(authentication);
         }
         chain.doFilter(request, response);
     }
-
-    private UsernamePasswordAuthenticationToken getUsernamePasswordAuthenticationToken(HttpServletRequest request, String userName) {
+    
+    private UsernamePasswordAuthenticationToken getAuthenticationToken(String userName) {
         // 根据用户名去查找用户的权限
         UserDetails userDetails = authUserService.loadUserByUsername(userName);
         return new UsernamePasswordAuthenticationToken(userDetails, null, userDetails.getAuthorities());
     }
-
-    private String getUserName(String header,HttpServletResponse response) {
+    
+    /**
+     * 解析token，返回用户名
+     * @param header
+     * @param response
+     *
+     * @return
+     */
+    private String getUserName(String header, HttpServletResponse response) {
         String userName = null;
         try {
             return JwtTokenUtil.getUserName(header.replace(SecurityConstants.TOKEN_PREFIX, ""));
         } catch (Exception e) {
             log.info("解析 token 失败了");
-            this.exceptionResponse(HttpStatus.UNAUTHORIZED.value(), response,
-                    ResponseEntity.body(ResponseCodeEnum.TOKEN_CHECK_FAIL));
+            this.exceptionResponse(response, ResponseEntity.body(ResponseCodeEnum.TOKEN_CHECK_FAIL));
         }
         return userName;
     }
@@ -83,11 +93,11 @@ public class JWTBasicAuthenticationFilter extends OncePerRequestFilter {
      * @param response response
      */
     @SneakyThrows
-    public void exceptionResponse(int status, HttpServletResponse response, ResponseEntity responseEntity) {
+    public void exceptionResponse(HttpServletResponse response, ResponseEntity responseEntity) {
         response.setHeader("Access-Control-Allow-Origin", "*");
         response.setHeader("Cache-Control", "no-cache");
         response.setContentType("application/json;charset=utf-8");
-        response.setStatus(status);
+        response.setStatus(HttpStatus.UNAUTHORIZED.value());
         response.getWriter().write(JSON.toJSONString(responseEntity));
     }
 }

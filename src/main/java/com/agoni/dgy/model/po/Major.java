@@ -29,7 +29,7 @@ import java.io.Serializable;
 @ApiModel(value = "Major对象", description = "班级表")
 @EqualsAndHashCode(callSuper = true)
 @Accessors(chain = true)
-public class Major extends AbstractEntity  implements Serializable {
+public class Major extends AbstractEntity<AbstractEntity> implements Serializable {
 
     private static final long serialVersionUID = 1L;
     
