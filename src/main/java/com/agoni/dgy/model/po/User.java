@@ -27,7 +27,7 @@ import java.time.LocalDateTime;
 @AllArgsConstructor
 @TableName("sys_user")
 @ApiModel(value = "User对象", description = "用户表", parent = AbstractEntity.class)
-public class User extends AbstractEntity<AbstractEntity> {
+public class User extends AbstractEntity {
 
     private static final long serialVersionUID = 1L;
 

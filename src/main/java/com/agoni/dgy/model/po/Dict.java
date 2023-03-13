@@ -18,7 +18,7 @@ import lombok.experimental.SuperBuilder;
 @NoArgsConstructor
 @AllArgsConstructor
 @ApiModel(value = "Dict对象", description = "字典表")
-public class Dict extends AbstractEntity<Dict> {
+public class Dict extends AbstractEntity {
     
     @ApiModelProperty("父id")
     @TableField("parentId")

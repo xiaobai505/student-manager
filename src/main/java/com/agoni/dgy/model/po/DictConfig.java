@@ -17,7 +17,7 @@ import lombok.experimental.SuperBuilder;
 @NoArgsConstructor
 @AllArgsConstructor
 @ApiModel(value = "DictConfig对象", description = "字典配置表")
-public class DictConfig extends AbstractEntity<AbstractEntity> {
+public class DictConfig extends AbstractEntity{
     /**
      * 数据字典目录Id
      */

@@ -27,7 +27,7 @@ import java.io.Serializable;
 @NoArgsConstructor
 @AllArgsConstructor
 @ApiModel(value = "Role对象", description = "角色表")
-public class Role extends AbstractEntity<AbstractEntity> implements Serializable {
+public class Role extends AbstractEntity {
 
     private static final long serialVersionUID = 1L;
 

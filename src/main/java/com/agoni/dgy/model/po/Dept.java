@@ -22,7 +22,7 @@ import java.io.Serializable;
 @NoArgsConstructor
 @AllArgsConstructor
 @ApiModel(value = "Dept对象", description = "部门表")
-public class Dept extends AbstractEntity<AbstractEntity> implements Serializable {
+public class Dept extends AbstractEntity {
     
     @ApiModelProperty("公司名字")
     private String name;
