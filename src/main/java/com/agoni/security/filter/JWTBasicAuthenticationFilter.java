@@ -8,6 +8,8 @@ import com.agoni.system.response.ResponseEntity;
 import com.alibaba.fastjson2.JSON;
 import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.commons.lang3.StringUtils;
+import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -18,7 +20,6 @@ import org.springframework.security.web.authentication.WebAuthenticationDetailsS
 import org.springframework.security.web.authentication.www.BasicAuthenticationFilter;
 import org.springframework.stereotype.Component;
 import org.springframework.web.filter.OncePerRequestFilter;
-
 import javax.annotation.Resource;
 import javax.servlet.FilterChain;
 import javax.servlet.ServletException;
@@ -36,6 +37,9 @@ public class JWTBasicAuthenticationFilter extends OncePerRequestFilter {
 
     @Resource
     AuthUserService authUserService;
+    
+    @Resource
+    private StringRedisTemplate stringRedisTemplate;
     
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain chain) throws IOException, ServletException {
@@ -71,20 +75,19 @@ public class JWTBasicAuthenticationFilter extends OncePerRequestFilter {
     
     /**
      * 解析token，返回用户名
-     * @param header
-     * @param response
+     * @param header 请求头
+     * @param response response
      *
      * @return
      */
     private String getUserName(String header, HttpServletResponse response) {
-        String userName = null;
         try {
             return JwtTokenUtil.getUserName(header.replace(SecurityConstants.TOKEN_PREFIX, ""));
         } catch (Exception e) {
             log.info("解析 token 失败了");
             this.exceptionResponse(response, ResponseEntity.body(ResponseCodeEnum.TOKEN_CHECK_FAIL));
         }
-        return userName;
+        return null;
     }
     
     /**

@@ -28,10 +28,10 @@ public class UserUtil {
         try {
             return (AuthUserVo) authentication.getPrincipal();
         } catch (Exception ignored) {
-
+            return null;
         }
-        return null;
     }
+    
     
     /**
      * 获得当前用户权限

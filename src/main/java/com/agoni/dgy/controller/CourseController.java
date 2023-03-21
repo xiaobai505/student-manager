@@ -10,6 +10,7 @@ import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
@@ -38,9 +39,10 @@ public class CourseController {
     
     @GetMapping("/list")
     @ApiOperation("列表")
-    public ResponseEntity<List<Course>> list() {
+    @Cacheable(value = "courselist", key = "#root.methodName")
+    public List<Course> list() {
         List<Course> list = courseService.list();
-        return new ResponseEntity<>(list, HttpStatus.OK);
+        return list;
     }
     
     @GetMapping

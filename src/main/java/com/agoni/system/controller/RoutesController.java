@@ -33,7 +33,7 @@ public class RoutesController {
     public ResponseEntity<List> get() {
         // todo 用户有多个角色，根据用户选择的一个角色查询列表
         MenuQuery build = MenuQuery.builder().code(UserUtil.getFirstRole()).build();
-        List<MenuTreeVo> tree = menuService.getTree(build);
+        List<MenuTreeVo> tree = menuService.getTree(MenuQuery.builder().build());
         return ResponseEntity.body(tree);
     }
 }
