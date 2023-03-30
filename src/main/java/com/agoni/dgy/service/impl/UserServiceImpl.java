@@ -13,11 +13,13 @@ import com.agoni.dgy.model.vo.UserAndRole;
 import com.agoni.dgy.service.UserService;
 import com.agoni.system.utils.UserUtil;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.core.toolkit.StringUtils;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 
 /**
@@ -34,30 +36,24 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
 
     @Autowired
     private UserMapper userMapper;
-    @Autowired
-    private RoleMapper roleMapper;
-    @Autowired
-    private MajorMapper majorMapper;
 
     @Override
     public IPage<UserAndRole> pageUser(UserQuery userQuery) {
         return userMapper.selectUserAndRolepage(userQuery, userQuery);
     }
 
+    /**
+     * 获取用户用户名
+     *
+     * @param username 用户名
+     *
+     * @return {@link User}
+     */
     @Override
-    public void saveUserAndRole(AddUserFrom userAndRole) {
-        // 1：插入用户
-        User user = userAndRole.getUser();
-        userMapper.insert(user);
-        // 2：插入权限
-        Role role = userAndRole.getRole();
-        if (role == null){return;}
-        roleMapper.insert(role);
-        log.info(user.getId()+"---"+role.getId());
-        // 3：插入班级
-        Major major = userAndRole.getMajor();
-        if (major==null){return;}
-        majorMapper.insert(major);
+    public User getUserByUserName(String username) {
+        QueryWrapper<User> queryWrapper = new QueryWrapper<>();
+        queryWrapper.lambda().eq(User::getUsername,username);
+        return getOne(queryWrapper);
     }
     
     /**

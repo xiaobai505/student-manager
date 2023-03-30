@@ -1,5 +1,6 @@
 package com.agoni.security.service.impl;
 
+import com.agoni.core.Binder;
 import com.agoni.dgy.model.po.User;
 import com.agoni.dgy.model.vo.AuthUserVo;
 import com.agoni.dgy.model.vo.RoleUserVo;
@@ -9,6 +10,7 @@ import com.agoni.security.service.AuthUserService;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
@@ -27,9 +29,6 @@ public class AuthUserServiceImpl implements AuthUserService {
 
     @Autowired
     private UserService userService;
-    @Autowired
-    private RoleUserService roleUserService;
-    
 
     /**
      * Locates the user based on the username. In the actual implementation, the search
@@ -47,23 +46,8 @@ public class AuthUserServiceImpl implements AuthUserService {
     public AuthUserVo loadUserByUsername(String username) throws UsernameNotFoundException {
         log.info("loadUserByUsername:  username: " + username);
         // 1: 根据用户名拿到用户信息
-        QueryWrapper<User> queryWrapper = new QueryWrapper<>();
-        queryWrapper.lambda().eq(User::getUsername,username);
-        User user = userService.getOne(queryWrapper);
+        User user = userService.getUserByUserName(username);
         // 2： 根据用户id查询权限
-        List<RoleUserVo> authlist = roleUserService.getRolebyUserId(user.getId());
-        List<String> codeList = authlist.stream().map(RoleUserVo::getRoleCode).collect(Collectors.toList());
-        Iterator<String> iterator = codeList.iterator();
-        List<SimpleGrantedAuthority> roles= new ArrayList<>();
-        while (iterator.hasNext()){
-            roles.add(new SimpleGrantedAuthority(iterator.next().toUpperCase()));
-        }
-        AuthUserVo authUserVo = AuthUserVo.create(user, roles);
-        
-        //设置权限和角色
-        // 1. commaSeparatedStringToAuthorityList放入角色时需要加前缀ROLE_，而在controller使用时不需要加ROLE_前缀
-        // 2. 放入的是权限时，不能加ROLE_前缀，hasAuthority与放入的权限名称对应即可
-        //AuthUserVo authUserVo = AuthUserVo.create(user, AuthorityUtils.commaSeparatedStringToAuthorityList("ROLE_ADMIN"+",r,w"));
-        return authUserVo;
+        return Binder.convertAndBindRelations(user, AuthUserVo.class);
     }
 }

@@ -6,13 +6,16 @@ import com.agoni.security.utils.JwtTokenUtil;
 import com.agoni.system.response.ResponseCodeEnum;
 import com.agoni.system.response.ResponseEntity;
 import com.alibaba.fastjson2.JSON;
+import com.alibaba.fastjson2.JSONObject;
 import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
+import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.web.AuthenticationEntryPoint;
@@ -33,13 +36,14 @@ import java.io.IOException;
 @Slf4j
 @Component
 public class JWTBasicAuthenticationFilter extends OncePerRequestFilter {
-
-
+    
     @Resource
     AuthUserService authUserService;
     
     @Resource
-    private StringRedisTemplate stringRedisTemplate;
+    private RedisTemplate redisTemplate;
+    
+    private static final String REDIS_KEY = "REDIS_KEY:";
     
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain chain) throws IOException, ServletException {
@@ -53,17 +57,11 @@ public class JWTBasicAuthenticationFilter extends OncePerRequestFilter {
         // 2: 如果获取不到用户名报错  如果过期，报错，返回登录页面
         String userName = getUserName(header,response);
         
-        // 当用户登录成功后,Spring Security 会将登录成功的用户信息保存到 SecurityContextHolder 中。
-        // SecurityContextHolder中的数据保存默认是通过ThreadLocal 来实现的，使用 ThreadLocal 创建的变量只能被当前线程访问，不能被其他线程访问和修改，也就是用户数据和请求线程绑定在一起。
-        // 当登录请求处理完毕后，Spring Security 会将 SecurityContextHolder 中的数据拿出来保存到 Session 中，同时将 SecurityContexHolder 中的数据清空。
-        // 每个请求都会查询用户权限，待优化。
-        
         // 3：SecurityContextHolder 没有用户，查询数据库，把权限放到 SecurityContextHolder
-        if (SecurityContextHolder.getContext().getAuthentication() == null) {
-            UsernamePasswordAuthenticationToken authentication = getAuthenticationToken(userName);
-            authentication.setDetails(new WebAuthenticationDetailsSource().buildDetails(request));
-            SecurityContextHolder.getContext().setAuthentication(authentication);
-        }
+        UsernamePasswordAuthenticationToken authentication = getAuthenticationToken(userName);
+        authentication.setDetails(new WebAuthenticationDetailsSource().buildDetails(request));
+        SecurityContextHolder.getContext().setAuthentication(authentication);
+        
         chain.doFilter(request, response);
     }
     
@@ -84,7 +82,7 @@ public class JWTBasicAuthenticationFilter extends OncePerRequestFilter {
         try {
             return JwtTokenUtil.getUserName(header.replace(SecurityConstants.TOKEN_PREFIX, ""));
         } catch (Exception e) {
-            log.info("解析 token 失败了");
+            log.error("解析 token 失败了");
             this.exceptionResponse(response, ResponseEntity.body(ResponseCodeEnum.TOKEN_CHECK_FAIL));
         }
         return null;
