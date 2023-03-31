@@ -4,9 +4,6 @@ import com.agoni.dgy.model.po.Logininfor;
 import com.alibaba.fastjson2.JSONObject;
 import com.baomidou.mybatisplus.core.toolkit.StringUtils;
 import com.diboot.core.config.Cons;
-import eu.bitwalker.useragentutils.Browser;
-import eu.bitwalker.useragentutils.OperatingSystem;
-import eu.bitwalker.useragentutils.UserAgent;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.http.HttpEntity;
 import org.apache.http.NameValuePair;
@@ -62,24 +59,66 @@ public class httpUitl {
         }
         return request.getRemoteAddr();
     }
-    
+
     public static String browser(HttpServletRequest request){
         String userAgent = request.getHeader("User-Agent");
-        UserAgent ua = UserAgent.parseUserAgentString(userAgent);
-        Browser browser = ua.getBrowser();
-        return browser.getName() + "-" + browser.getVersion(userAgent);
-    }
-    
-    
-    public static String os(HttpServletRequest request){
-        String userAgent = request.getHeader("User-Agent");
-        UserAgent ua = UserAgent.parseUserAgentString(userAgent);
-        OperatingSystem os = ua.getOperatingSystem();
-        return os.getName();
+        String browserVersion = "Unknown-null";
+
+        if (userAgent != null) {
+            // 将 User-Agent 头信息转换为小写字母，方便匹配
+            userAgent = userAgent.toLowerCase();
+
+            // 匹配各种浏览器的正则表达式
+            if (userAgent.contains("msie")) {  // IE 浏览器
+                int index = userAgent.indexOf("msie");
+                browserVersion = userAgent.substring(index + 5, index + 8);
+            } else if (userAgent.contains("firefox")) {  // Firefox 浏览器
+                int index = userAgent.indexOf("firefox");
+                browserVersion = userAgent.substring(index + 8, index + 14);
+            } else if (userAgent.contains("chrome")) {  // Chrome 浏览器
+                int index = userAgent.indexOf("chrome");
+                browserVersion = userAgent.substring(index + 7, index + 13);
+            } else if (userAgent.contains("safari")) {  // Safari 浏览器
+                int index = userAgent.indexOf("version");
+                browserVersion = userAgent.substring(index + 8, index + 12);
+            } else if (userAgent.contains("Postman")) {  // Opera 浏览器
+                return "PostMan";
+            }
+        }
+
+        return browserVersion;
     }
 
-    
-    
+
+    public static String os(HttpServletRequest request){
+        String userAgent = request.getHeader("User-Agent");
+        String systemVersion = "Unknown";
+
+        if (userAgent != null) {
+            // 将 User-Agent 头信息转换为小写字母，方便匹配
+            userAgent = userAgent.toLowerCase();
+
+            // 匹配各种操作系统的正则表达式
+            if (userAgent.contains("windows nt")) {  // Windows 操作系统
+                int index = userAgent.indexOf("windows nt");
+                systemVersion = userAgent.substring(index + 11, index + 14);
+            } else if (userAgent.contains("mac os x")) {  // macOS 操作系统
+                int index = userAgent.indexOf("mac os x");
+                systemVersion = userAgent.substring(index + 9, index + 13);
+            } else if (userAgent.contains("android")) {  // Android 操作系统
+                int index = userAgent.indexOf("android");
+                systemVersion = userAgent.substring(index + 8, index + 12);
+            } else if (userAgent.contains("iphone os")) {  // iOS 操作系统
+                int index = userAgent.indexOf("iphone os");
+                systemVersion = userAgent.substring(index + 10, index + 13);
+            }
+        }
+
+        return systemVersion;
+    }
+
+
+
     public static String getIpAddress(String ip){
         // 内网不查询
         if (IpUtils.internalIp(ip)) {
