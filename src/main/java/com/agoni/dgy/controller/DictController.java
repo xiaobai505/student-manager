@@ -9,6 +9,7 @@ import com.diboot.core.util.BeanUtils;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
@@ -36,6 +37,7 @@ public class DictController {
     
     @GetMapping
     @ApiOperation("列表")
+    @Cacheable(value = "dict", key = "#root.methodName")
     public ResponseEntity<List<Dict>> list() {
         List<Dict> list = dictService.list();
         return ResponseEntity.body(list);

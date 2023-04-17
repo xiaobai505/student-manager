@@ -12,9 +12,11 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.core.userdetails.UserCache;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
+import javax.annotation.Resource;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
@@ -29,6 +31,8 @@ public class AuthUserServiceImpl implements AuthUserService {
 
     @Autowired
     private UserService userService;
+    @Resource
+    private UserCache userCache;
 
     /**
      * Locates the user based on the username. In the actual implementation, the search
@@ -47,7 +51,10 @@ public class AuthUserServiceImpl implements AuthUserService {
         log.info("loadUserByUsername:  username: " + username);
         // 1: 根据用户名拿到用户信息
         User user = userService.getUserByUserName(username);
-        // 2： 根据用户id查询权限
-        return Binder.convertAndBindRelations(user, AuthUserVo.class);
+        // 2：根据用户id查询权限
+        AuthUserVo authUserVo = Binder.convertAndBindRelations(user, AuthUserVo.class);
+        // 3：把用户放入到缓存
+        userCache.putUserInCache(authUserVo);
+        return authUserVo;
     }
 }

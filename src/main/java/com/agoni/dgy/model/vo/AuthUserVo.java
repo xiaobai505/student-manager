@@ -6,6 +6,7 @@ import com.diboot.core.binding.annotation.BindField;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import lombok.ToString;
 import lombok.experimental.SuperBuilder;
 import org.springframework.beans.BeanUtils;
 import org.springframework.security.core.GrantedAuthority;
@@ -25,7 +26,7 @@ import java.util.stream.Collectors;
 @SuperBuilder
 @NoArgsConstructor
 @AllArgsConstructor
-public class AuthUserVo extends User implements UserDetails, Serializable {
+public class AuthUserVo extends User implements UserDetails {
     
     @BindField(entity = RoleUser.class, field = "roleName", condition = "this.id=user_id")
     private List<String> roles;

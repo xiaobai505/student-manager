@@ -10,6 +10,7 @@ import com.alibaba.fastjson2.JSONObject;
 import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.http.HttpStatus;
@@ -17,6 +18,7 @@ import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserCache;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.web.AuthenticationEntryPoint;
 import org.springframework.security.web.authentication.WebAuthenticationDetailsSource;
@@ -39,6 +41,9 @@ public class JWTBasicAuthenticationFilter extends OncePerRequestFilter {
     
     @Resource
     AuthUserService authUserService;
+
+    @Resource
+    private UserCache userCache;
     
     @Resource
     private RedisTemplate redisTemplate;
@@ -64,10 +69,14 @@ public class JWTBasicAuthenticationFilter extends OncePerRequestFilter {
         
         chain.doFilter(request, response);
     }
-    
-    private UsernamePasswordAuthenticationToken getAuthenticationToken(String userName) {
-        // 根据用户名去查找用户的权限
-        UserDetails userDetails = authUserService.loadUserByUsername(userName);
+
+    public UsernamePasswordAuthenticationToken getAuthenticationToken(String userName) {
+        // UserCache先从缓存里面找,没有的话,会自动调用loadUserByUsername
+        UserDetails userDetails = userCache.getUserFromCache(userName);
+        if (userDetails == null) {
+            // 根据用户名去查找用户的权限信息
+            userDetails = authUserService.loadUserByUsername(userName);
+        }
         return new UsernamePasswordAuthenticationToken(userDetails, null, userDetails.getAuthorities());
     }
     
