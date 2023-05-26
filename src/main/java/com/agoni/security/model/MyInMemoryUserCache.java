@@ -1,12 +1,9 @@
 package com.agoni.security.model;
 
-import cn.hutool.core.util.StrUtil;
 import cn.hutool.json.JSONUtil;
-import com.agoni.dgy.model.vo.AuthUserVo;
-import com.agoni.security.service.AuthUserService;
+import com.agoni.system.model.vo.AuthUserVo;
 import com.alibaba.fastjson2.JSONObject;
 import lombok.extern.slf4j.Slf4j;
-import org.apache.commons.lang3.StringUtils;
 import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.security.core.userdetails.UserCache;
 import org.springframework.security.core.userdetails.UserDetails;

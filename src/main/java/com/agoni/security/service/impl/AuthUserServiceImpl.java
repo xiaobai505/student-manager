@@ -1,26 +1,17 @@
 package com.agoni.security.service.impl;
 
-import com.agoni.core.Binder;
-import com.agoni.dgy.model.po.User;
-import com.agoni.dgy.model.vo.AuthUserVo;
-import com.agoni.dgy.model.vo.RoleUserVo;
-import com.agoni.dgy.service.RoleUserService;
-import com.agoni.dgy.service.UserService;
+import com.agoni.core.diboot.Binder;
 import com.agoni.security.service.AuthUserService;
-import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import com.agoni.system.model.po.User;
+import com.agoni.system.model.vo.AuthUserVo;
+import com.agoni.system.service.UserService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.cache.annotation.Cacheable;
-import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserCache;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
-import java.util.ArrayList;
-import java.util.Iterator;
-import java.util.List;
-import java.util.stream.Collectors;
 
 /**
  * @author Admin

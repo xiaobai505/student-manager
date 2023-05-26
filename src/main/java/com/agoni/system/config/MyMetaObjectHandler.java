@@ -54,8 +54,8 @@ public class MyMetaObjectHandler implements MetaObjectHandler {
         mybatisPlusInterceptor.addInnerInterceptor(new OptimisticLockerInnerInterceptor());
         // 分页插件
         mybatisPlusInterceptor.addInnerInterceptor(new PaginationInnerInterceptor(DbType.H2));
+        // 启用diboot数据权限拦截器，将拦截并修改需要控制数据权限的SQL
+        mybatisPlusInterceptor.addInnerInterceptor(new PaginationInnerInterceptor());
         return mybatisPlusInterceptor;
     }
-
-
 }

@@ -1,6 +1,6 @@
 package com.agoni.system.utils;
 
-import com.agoni.dgy.model.po.Logininfor;
+import com.agoni.system.model.po.Logininfor;
 import com.alibaba.fastjson2.JSONObject;
 import com.baomidou.mybatisplus.core.toolkit.StringUtils;
 import com.diboot.core.config.Cons;

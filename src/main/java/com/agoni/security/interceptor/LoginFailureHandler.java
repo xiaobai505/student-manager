@@ -1,8 +1,8 @@
 package com.agoni.security.interceptor;
 
-import com.agoni.dgy.service.LogininforService;
-import com.agoni.system.response.ResponseCodeEnum;
+import com.agoni.system.config.enums.ResponseCodeEnum;
 import com.agoni.system.response.ResponseEntity;
+import com.agoni.system.service.LogininforService;
 import com.alibaba.fastjson2.JSON;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;

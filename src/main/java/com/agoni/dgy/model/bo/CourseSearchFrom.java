@@ -7,7 +7,7 @@ import lombok.Data;
 @Data
 @Builder
 public class CourseSearchFrom extends Page {
-    
+
     private String courseName;
     
     private String teacher;

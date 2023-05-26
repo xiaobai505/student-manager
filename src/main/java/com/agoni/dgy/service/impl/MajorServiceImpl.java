@@ -29,9 +29,8 @@ public class MajorServiceImpl extends ServiceImpl<MajorMapper, Major> implements
     @Override
     public List<Major> getSchoolList() {
         List<Major> mjlist = this.list();
-        mjlist = mjlist.stream().collect(Collectors.collectingAndThen(Collectors.toCollection(() -> new TreeSet<>(Comparator.comparing(Major::getSchool))), ArrayList::new));
-
-        List<String> schoolList = mjlist.stream().map(Major::getSchool).distinct().collect(Collectors.toList());
+        mjlist = mjlist.stream().collect(Collectors.collectingAndThen(Collectors.toCollection(() ->
+                new TreeSet<>(Comparator.comparing(Major::getSchool))), ArrayList::new));
         return mjlist;
     }
     

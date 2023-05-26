@@ -1,6 +1,7 @@
 package com.agoni.dgy.service.impl;
 
-import com.agoni.core.Binder;
+import com.agoni.core.diboot.Binder;
+import com.agoni.core.omp.OmpDbUtil;
 import com.agoni.dgy.mapper.CourseMapper;
 import com.agoni.dgy.model.bo.CourseSearchFrom;
 import com.agoni.dgy.model.po.Course;
@@ -30,24 +31,26 @@ import java.util.List;
 @Slf4j
 public class CourseServiceImpl extends ServiceImpl<CourseMapper, Course> implements CourseService {
     
-    private static final SimpleGrantedAuthority admin = new SimpleGrantedAuthority("admin");
+    private static final SimpleGrantedAuthority ADMIN = new SimpleGrantedAuthority("admin");
     
     @Override
     public IPage<CourseVo> searchPage(CourseSearchFrom from) {
-        Page<Course> page = page(from, checkValid(from));
+        QueryWrapper<Course> queryWrapper = fillQueryWrapper(from);
+        Page<Course> page = page(from, queryWrapper);
         return Binder.convertAndBindRelations(page, CourseVo.class);
     }
-    
-    private QueryWrapper<Course> checkValid(CourseSearchFrom from) {
-        QueryWrapper<Course> query = new QueryWrapper<>();
-        query.lambda()
+
+    private QueryWrapper<Course> fillQueryWrapper(CourseSearchFrom from) {
+        QueryWrapper<Course> queryWrapper = new QueryWrapper<>();
+        queryWrapper.lambda()
                 .likeRight(StringUtils.isNotEmpty(from.getCourseName()), Course::getCourseName, from.getCourseName())
                 .likeRight(StringUtils.isNotEmpty(from.getTeacher()), Course::getCourseTeacher, from.getTeacher())
-                //.eq(!userVo.getAuthorities().contains(admin),Course::getIsMust,false)
                 .eq(ObjectUtils.isNotNull(from.getIsMust()),Course::getIsMust,from.getIsMust());
-        return query;
+        //自动组装查询条件，生成orderBy，组装条件的两种方式：1.基于注解 2.基于query对象中属性的后缀
+        OmpDbUtil.autoWrapper(from, queryWrapper, Course.class);
+        return queryWrapper;
     }
-    
+
     @Override
     public List<Course> listByCourseName(String courseName) {
         QueryWrapper<Course> query = new QueryWrapper<>();

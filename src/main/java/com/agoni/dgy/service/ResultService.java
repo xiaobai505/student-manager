@@ -1,9 +1,9 @@
 package com.agoni.dgy.service;
 
-import com.agoni.dgy.model.po.Menu;
 import com.agoni.dgy.model.po.Result;
 import com.agoni.dgy.model.query.ResultQuery;
 import com.agoni.dgy.model.vo.ResultVo;
+import com.agoni.system.model.po.Menu;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.service.IService;
 

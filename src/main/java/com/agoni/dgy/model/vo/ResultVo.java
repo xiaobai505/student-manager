@@ -1,7 +1,7 @@
 package com.agoni.dgy.model.vo;
 
 import com.agoni.dgy.model.po.Result;
-import com.agoni.dgy.model.po.User;
+import com.agoni.system.model.po.User;
 import com.diboot.core.binding.annotation.BindField;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.AllArgsConstructor;

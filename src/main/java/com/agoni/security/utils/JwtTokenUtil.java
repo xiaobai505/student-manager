@@ -1,6 +1,6 @@
 package com.agoni.security.utils;
 
-import com.agoni.security.constants.SecurityConstants;
+import com.agoni.security.config.constants.SecurityConstants;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Clock;
 import io.jsonwebtoken.Jwts;
@@ -21,7 +21,7 @@ import java.util.Map;
 @Slf4j
 public class JwtTokenUtil implements Serializable {
 
-    private static final Clock clock = DefaultClock.INSTANCE;
+    private static final Clock CLOCK = DefaultClock.INSTANCE;
     
     /**
      * 获取用户名
@@ -46,9 +46,11 @@ public class JwtTokenUtil implements Serializable {
     
     /**
      * 查看token过期时间
-     * @param token
      *
-     * @return
+     * @param token token值
+     * @return java.util.Date
+     * @author t-guoyu.dong@pcitc.com
+     * @date 2023-05-26
      */
     public static Date getTokenExpirationDate(String token) {
         return getTokenBody(token).getExpiration();
@@ -63,13 +65,15 @@ public class JwtTokenUtil implements Serializable {
     
     /**
      * 创建Token
+     *
      * @param username 用户名
      * @param clientId 客户端编号
-     *
-     * @return
+     * @return java.lang.String
+     * @author t-guoyu.dong@pcitc.com
+     * @date 2023-05-26
      */
     public String generateToken(String username, String clientId) {
-        final Date createdDate = clock.now();
+        final Date createdDate = CLOCK.now();
         final Date expirationDate = calculateExpirationDate(createdDate);
         Map<String, Object> claims = new HashMap<>(16);
         claims.put("clientId", clientId);
@@ -78,26 +82,28 @@ public class JwtTokenUtil implements Serializable {
                                  .setSubject(username)
                                  .setIssuedAt(createdDate)
                                  .setExpiration(expirationDate)
-                                 .signWith(SignatureAlgorithm.HS512, SecurityConstants.SecurityKey)
+                                 .signWith(SignatureAlgorithm.HS512, SecurityConstants.SECURITY_KEY)
                                  .compact();
         return tokenPrefix;
     }
     
     /**
      * 获取 token 实体
-     * @param token
      *
-     * @return
+     * @param token token值
+     * @return io.jsonwebtoken.Claims
+     * @author t-guoyu.dong@pcitc.com
+     * @date 2023-05-26
      */
     private static Claims getTokenBody(String token) {
         return Jwts.parser()
-                   .setSigningKey(SecurityConstants.SecurityKey)
+                   .setSigningKey(SecurityConstants.SECURITY_KEY)
                    .parseClaimsJws(token.replace(SecurityConstants.TOKEN_PREFIX, ""))
                    .getBody();
     }
     
     private static Date calculateExpirationDate(Date createdDate) {
         // 过期时间 分钟
-        return new Date(createdDate.getTime() + 1000 * 60 * SecurityConstants.Minute);
+        return new Date(createdDate.getTime() + 1000 * 60 * SecurityConstants.MINUTE);
     }
 }

@@ -1,7 +1,7 @@
 package com.agoni.dgy.model.vo;
 
-import com.agoni.dgy.model.po.Dept;
-import com.agoni.dgy.model.po.User;
+import com.agoni.system.model.po.Dept;
+import com.agoni.system.model.po.User;
 import com.diboot.core.binding.annotation.BindField;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;

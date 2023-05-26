@@ -1,5 +1,6 @@
 package com.agoni.system.response;
 
+import com.agoni.system.config.enums.ResponseCodeEnum;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;

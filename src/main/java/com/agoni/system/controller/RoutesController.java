@@ -1,10 +1,9 @@
 package com.agoni.system.controller;
 
-import com.agoni.dgy.model.po.Menu;
-import com.agoni.dgy.model.query.MenuQuery;
-import com.agoni.dgy.model.vo.MenuTreeVo;
-import com.agoni.dgy.service.MenuService;
+import com.agoni.system.model.query.MenuQuery;
+import com.agoni.system.model.vo.MenuTreeVo;
 import com.agoni.system.response.ResponseEntity;
+import com.agoni.system.service.MenuService;
 import com.agoni.system.utils.UserUtil;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;

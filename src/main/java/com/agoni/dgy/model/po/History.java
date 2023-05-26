@@ -1,9 +1,11 @@
 package com.agoni.dgy.model.po;
 
 import com.agoni.system.Interceptor.Fastjson2TypeHandler;
+import com.agoni.system.model.po.AbstractEntity;
 import com.alibaba.fastjson2.JSON;
 import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableName;
+import com.diboot.core.data.access.DataAccessCheckpoint;
 import io.swagger.annotations.ApiModel;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -35,6 +37,7 @@ public class History extends AbstractEntity {
     private String logType;
 
     @TableField("course_id")
+    @DataAccessCheckpoint
     private Integer courseId;
 
 }

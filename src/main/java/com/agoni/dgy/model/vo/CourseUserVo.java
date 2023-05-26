@@ -2,7 +2,7 @@ package com.agoni.dgy.model.vo;
 
 import com.agoni.dgy.model.po.Course;
 import com.agoni.dgy.model.po.CourseUser;
-import com.agoni.dgy.model.po.User;
+import com.agoni.system.model.po.User;
 import com.diboot.core.binding.annotation.BindField;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;

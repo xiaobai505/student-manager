@@ -1,30 +1,22 @@
 package com.agoni.security.filter;
 
-import com.agoni.security.constants.SecurityConstants;
+import com.agoni.security.config.constants.SecurityConstants;
 import com.agoni.security.service.AuthUserService;
 import com.agoni.security.utils.JwtTokenUtil;
-import com.agoni.system.response.ResponseCodeEnum;
+import com.agoni.system.config.enums.ResponseCodeEnum;
 import com.agoni.system.response.ResponseEntity;
 import com.alibaba.fastjson2.JSON;
-import com.alibaba.fastjson2.JSONObject;
 import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
-import org.apache.commons.lang3.StringUtils;
-import org.springframework.cache.annotation.Cacheable;
-import org.springframework.data.redis.core.RedisTemplate;
-import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.http.HttpStatus;
-import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
-import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserCache;
 import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.security.web.AuthenticationEntryPoint;
 import org.springframework.security.web.authentication.WebAuthenticationDetailsSource;
-import org.springframework.security.web.authentication.www.BasicAuthenticationFilter;
 import org.springframework.stereotype.Component;
 import org.springframework.web.filter.OncePerRequestFilter;
+
 import javax.annotation.Resource;
 import javax.servlet.FilterChain;
 import javax.servlet.ServletException;
@@ -41,15 +33,9 @@ public class JWTBasicAuthenticationFilter extends OncePerRequestFilter {
     
     @Resource
     AuthUserService authUserService;
-
     @Resource
     private UserCache userCache;
-    
-    @Resource
-    private RedisTemplate redisTemplate;
-    
-    private static final String REDIS_KEY = "REDIS_KEY:";
-    
+
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain chain) throws IOException, ServletException {
         // 1: 请求头没有token ，直接去下一个过滤器

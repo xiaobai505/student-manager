@@ -1,12 +1,12 @@
 package com.agoni.dgy.service.impl;
 
-import com.agoni.core.Binder;
+import com.agoni.core.diboot.Binder;
 import com.agoni.dgy.mapper.ResultMapper;
-import com.agoni.dgy.model.po.Menu;
 import com.agoni.dgy.model.po.Result;
 import com.agoni.dgy.model.query.ResultQuery;
 import com.agoni.dgy.model.vo.ResultVo;
 import com.agoni.dgy.service.ResultService;
+import com.agoni.system.model.po.Menu;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.core.toolkit.StringUtils;

@@ -1,0 +1,40 @@
+package com.agoni.security.config.constants;
+
+public final class SecurityConstants {
+    
+    /**
+     * SecurityKey
+     */
+    public static final String SECURITY_KEY = "dongyyds";
+    /**
+     * 分钟
+     */
+    public static final long MINUTE = 60;
+    /**
+     * rememberMe 为 true 的时候过期时间是7天
+     */
+    public static final long EXPIRATION_REMEMBER = 60 * 60 * 24 * 7L;
+    /**
+     *  JWT token defaults
+     */
+    public static final String TOKEN_HEADER = "Authorization";
+    /**
+     * Bearer 开头的token
+     */
+    public static final String TOKEN_PREFIX = "Bearer ";
+    /**
+     * 过期时间
+     */
+    public static final String EXPIRES ="expires";
+    /**
+     * 存放访问token的key前缀
+     */
+    public static final String ACCESS_TOKEN = "accessToken";
+    /**
+     * 存放刷新token的key前缀
+     */
+    public static final String REFRESH_TOKEN = "refreshToken";
+    // 不校验的 URL
+    public static final String[] SYSTEM_WHITELIST = {"/auth/**", "/wechat/**","/routes/**",
+            "/swagger**/**", "/webjars/**", "/v3/**", "/doc.html","/dgy/result/**"};
+}

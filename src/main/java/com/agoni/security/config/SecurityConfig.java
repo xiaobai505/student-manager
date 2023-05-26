@@ -1,24 +1,20 @@
 package com.agoni.security.config;
 
-import com.agoni.security.constants.SecurityConstants;
+import com.agoni.security.config.constants.SecurityConstants;
 import com.agoni.security.filter.JWTBasicAuthenticationFilter;
 import com.agoni.security.interceptor.LoginFailureHandler;
 import com.agoni.security.interceptor.LoginSuccessHandler;
-import com.agoni.security.model.MyInMemoryUserCache;
 import com.agoni.security.service.AuthUserService;
 import com.agoni.system.response.RestAuthenticationEntryPoint;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
-import org.springframework.security.config.annotation.ObjectPostProcessor;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.config.http.SessionCreationPolicy;
-import org.springframework.security.core.userdetails.UserCache;
 import org.springframework.security.crypto.password.NoOpPasswordEncoder;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
@@ -42,8 +38,6 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     AuthUserService authUserService;
     @Resource
     JWTBasicAuthenticationFilter jwtBasicAuthenticationFilter;
-//    @Autowired
-//    private MyInMemoryUserCache userCache;
 
     @Override
     protected void configure(AuthenticationManagerBuilder auth) throws Exception {

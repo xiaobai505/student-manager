@@ -1,19 +1,18 @@
 package com.agoni.dgy.service.impl;
 
-import com.agoni.core.Binder;
+import com.agoni.core.diboot.Binder;
 import com.agoni.dgy.mapper.CourseUserMapper;
 import com.agoni.dgy.model.po.Course;
 import com.agoni.dgy.model.po.CourseUser;
 import com.agoni.dgy.model.po.Result;
-import com.agoni.dgy.model.po.User;
 import com.agoni.dgy.model.query.CourseUserQuery;
-import com.agoni.dgy.model.vo.AuthUserVo;
 import com.agoni.dgy.model.vo.CourseUserVo;
 import com.agoni.dgy.service.CourseService;
 import com.agoni.dgy.service.CourseUserService;
 import com.agoni.dgy.service.ResultService;
+import com.agoni.system.model.po.User;
+import com.agoni.system.model.vo.AuthUserVo;
 import com.agoni.system.utils.UserUtil;
-import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;

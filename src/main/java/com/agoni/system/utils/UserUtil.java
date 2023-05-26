@@ -1,7 +1,7 @@
 package com.agoni.system.utils;
 
-import com.agoni.dgy.model.po.User;
-import com.agoni.dgy.model.vo.AuthUserVo;
+import com.agoni.system.model.po.User;
+import com.agoni.system.model.vo.AuthUserVo;
 import com.baomidou.mybatisplus.core.toolkit.CollectionUtils;
 import com.baomidou.mybatisplus.core.toolkit.ObjectUtils;
 import com.baomidou.mybatisplus.core.toolkit.StringUtils;
