@@ -4,6 +4,9 @@ import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import lombok.Builder;
 import lombok.Data;
 
+/**
+ * @author gyd
+ */
 @Data
 @Builder
 public class CourseSearchFrom extends Page {

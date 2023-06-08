@@ -1,14 +1,16 @@
 package com.agoni.core.diboot;
 
+
 import com.diboot.core.binding.helper.DeepRelationsBinder;
 import com.diboot.core.binding.parser.BindAnnotationGroup;
 import com.diboot.core.binding.parser.FieldAnnotation;
 import com.diboot.core.binding.parser.ParserCache;
 import com.diboot.core.util.BeanUtils;
-import com.diboot.core.util.ContextHelper;
+import com.diboot.core.util.ContextHolder;
 import com.diboot.core.util.V;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.context.i18n.LocaleContextHolder;
 import org.springframework.web.context.request.RequestContextHolder;
 
 import java.util.ArrayList;
@@ -26,7 +28,7 @@ import java.util.concurrent.CompletableFuture;
 @SuppressWarnings("JavaDoc")
 public class RelationsBinder {
     private static final Logger log = LoggerFactory.getLogger(com.diboot.core.binding.RelationsBinder.class);
-    
+
     /**
      * 自动转换和绑定单个VO中的注解关联（禁止循环调用，多个对象请调用convertAndBind(voList, voClass)）
      * @param voClass 需要转换的VO class
@@ -41,7 +43,7 @@ public class RelationsBinder {
         bind(vo);
         return vo;
     }
-    
+
     /**
      * 自动转换和绑定多个VO中的注解关联
      * @param entityList 需要转换的VO list
@@ -57,7 +59,7 @@ public class RelationsBinder {
         bind(voList);
         return voList;
     }
-    
+
     /**
      * 自动绑定单个VO的关联对象（禁止循环调用，多个对象请调用bind(voList)）
      * @param vo 需要注解绑定的对象
@@ -67,7 +69,7 @@ public class RelationsBinder {
     public static <VO> void bind(VO vo){
         bind(Collections.singletonList(vo));
     }
-    
+
     /**
      * 自动绑定多个VO集合的关联对象
      * @param voList 需要注解绑定的对象集合
@@ -77,7 +79,7 @@ public class RelationsBinder {
     public static <VO> void bind(List<VO> voList){
         bind(voList, true);
     }
-    
+
     /**
      * 自动绑定多个VO集合的关联对象
      * @param voList 需要注解绑定的对象集合
@@ -96,7 +98,8 @@ public class RelationsBinder {
             return;
         }
         RequestContextHolder.setRequestAttributes(RequestContextHolder.getRequestAttributes(), true);
-        ParallelBindingManagerPlus parallelBindingManager = ContextHelper.getBean(ParallelBindingManagerPlus.class);
+        LocaleContextHolder.setLocaleContext(LocaleContextHolder.getLocaleContext(),true);
+        ParallelBindingManagerPlus parallelBindingManager = ContextHolder.getBean(ParallelBindingManagerPlus.class);
         // 不可能出现的错误，但是编译器需要
         assert parallelBindingManager != null;
         List<CompletableFuture<Boolean>> binderFutures = new ArrayList<>();
@@ -104,7 +107,6 @@ public class RelationsBinder {
         Map<String, List<FieldAnnotation>> bindFieldGroupMap = bindAnnotationGroup.getBindFieldGroupMap();
         if(bindFieldGroupMap != null){
             for(Map.Entry<String, List<FieldAnnotation>> entry : bindFieldGroupMap.entrySet()){
-                parallelBindingManager.doBindingField(voList, entry.getValue()).join();
                 CompletableFuture<Boolean> bindFieldFuture = parallelBindingManager.doBindingField(voList, entry.getValue());
                 binderFutures.add(bindFieldFuture);
             }
@@ -122,7 +124,7 @@ public class RelationsBinder {
         }
         // 绑定Entity实体
         List<FieldAnnotation> entityAnnoList = bindAnnotationGroup.getBindEntityAnnotations();
-        
+
         if(entityAnnoList != null){
             for(FieldAnnotation anno : entityAnnoList){
                 // 绑定关联对象entity
@@ -157,6 +159,15 @@ public class RelationsBinder {
                 binderFutures.add(bindCountFuture);
             }
         }
+        // 绑定国际化翻译
+        List<FieldAnnotation> i18nAnnoList = bindAnnotationGroup.getBindI18nAnnotations();
+        if(i18nAnnoList != null){
+            for(FieldAnnotation anno : i18nAnnoList){
+                // 绑定关联对象count计数
+                CompletableFuture<Boolean> bindCountFuture = parallelBindingManager.doBindingI18n(voList, anno);
+                binderFutures.add(bindCountFuture);
+            }
+        }
         // 执行绑定
         CompletableFuture.allOf(binderFutures.toArray(new CompletableFuture[0])).join();
         // 深度绑定
@@ -164,6 +175,16 @@ public class RelationsBinder {
             List<FieldAnnotation> deepBindEntityAnnoList = bindAnnotationGroup.getDeepBindEntityAnnotations();
             List<FieldAnnotation> deepBindEntitiesAnnoList = bindAnnotationGroup.getDeepBindEntityListAnnotations();
             if(deepBindEntityAnnoList != null || deepBindEntitiesAnnoList != null){
+                if(V.notEmpty(deepBindEntityAnnoList)){
+                    FieldAnnotation firstAnnotation = deepBindEntityAnnoList.get(0);
+                    log.debug("执行深度绑定: {}({}) for field {}", firstAnnotation.getAnnotation().annotationType().getSimpleName(),
+                            firstAnnotation.getFieldClass().getSimpleName(), firstAnnotation.getFieldName());
+                }
+                if(deepBindEntitiesAnnoList != null) {
+                    FieldAnnotation firstAnnotation = deepBindEntitiesAnnoList.get(0);
+                    log.debug("执行深度绑定: {}({}) for field {}", firstAnnotation.getAnnotation().annotationType().getSimpleName(),
+                            firstAnnotation.getFieldClass().getSimpleName(), firstAnnotation.getFieldName());
+                }
                 DeepRelationsBinder.deepBind(voList, deepBindEntityAnnoList, deepBindEntitiesAnnoList);
             }
         }

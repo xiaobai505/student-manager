@@ -1,8 +1,8 @@
 package com.agoni.system.controller;
 
-import com.agoni.dgy.model.query.DeptQuery;
-import com.agoni.dgy.model.vo.DeptVo;
 import com.agoni.system.model.po.Dept;
+import com.agoni.system.model.query.DeptQuery;
+import com.agoni.system.model.vo.DeptVo;
 import com.agoni.system.response.ResponseEntity;
 import com.agoni.system.service.DeptService;
 import io.swagger.annotations.Api;

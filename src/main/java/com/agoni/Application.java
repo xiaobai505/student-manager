@@ -9,8 +9,8 @@ import org.springframework.scheduling.annotation.EnableAsync;
 @EnableAsync
 @SpringBootApplication
 @MapperScan(basePackages = {"com.agoni.*.mapper.**"})
-public class StudentManagerApplication {
+public class Application {
 	public static void main(String[] args) {
-		SpringApplication.run(StudentManagerApplication.class, args);
+		SpringApplication.run(Application.class, args);
 	}
 }

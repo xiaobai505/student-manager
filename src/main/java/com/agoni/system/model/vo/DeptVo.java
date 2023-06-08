@@ -1,4 +1,4 @@
-package com.agoni.dgy.model.vo;
+package com.agoni.system.model.vo;
 
 import com.agoni.system.model.po.Dept;
 import com.agoni.system.model.po.User;

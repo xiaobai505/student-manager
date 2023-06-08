@@ -1,10 +1,10 @@
 package com.agoni.system.service.impl;
 
 import com.agoni.core.diboot.Binder;
-import com.agoni.dgy.model.query.DeptQuery;
-import com.agoni.dgy.model.vo.DeptVo;
 import com.agoni.system.mapper.DeptMapper;
 import com.agoni.system.model.po.Dept;
+import com.agoni.system.model.query.DeptQuery;
+import com.agoni.system.model.vo.DeptVo;
 import com.agoni.system.service.DeptService;
 import com.agoni.system.service.UserService;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;

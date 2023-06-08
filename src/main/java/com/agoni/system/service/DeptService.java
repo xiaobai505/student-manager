@@ -1,8 +1,8 @@
 package com.agoni.system.service;
 
-import com.agoni.dgy.model.query.DeptQuery;
-import com.agoni.dgy.model.vo.DeptVo;
 import com.agoni.system.model.po.Dept;
+import com.agoni.system.model.query.DeptQuery;
+import com.agoni.system.model.vo.DeptVo;
 import com.baomidou.mybatisplus.extension.service.IService;
 
 import java.util.List;

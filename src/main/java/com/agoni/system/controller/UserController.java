@@ -31,7 +31,7 @@ import java.util.stream.Collectors;
  * @since 2021-12-22
  */
 @RestController
-@RequestMapping("/dgy/user")
+@RequestMapping("/sys/user")
 @Slf4j
 @Api(tags="用户")
 public class UserController {
