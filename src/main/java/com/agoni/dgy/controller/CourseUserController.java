@@ -1,12 +1,16 @@
 package com.agoni.dgy.controller;
 
 
+import com.agoni.core.diboot.Binder;
 import com.agoni.dgy.model.po.Course;
 import com.agoni.dgy.model.po.CourseUser;
+import com.agoni.dgy.model.query.CourseDto;
 import com.agoni.dgy.model.query.CourseUserQuery;
 import com.agoni.dgy.model.vo.CourseUserVo;
 import com.agoni.dgy.service.CourseUserService;
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
+import com.diboot.core.binding.QueryBuilder;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import lombok.extern.slf4j.Slf4j;
@@ -30,11 +34,22 @@ import java.util.List;
 @RequestMapping("/dgy/courseUser")
 @Slf4j
 @Api(tags="课程与用户关系")
-public class CourseUserController {
+public class CourseUserController{
 
     @Autowired
     private CourseUserService courseUserService;
-    
+
+
+    @GetMapping("/test")
+    @ApiOperation("列表")
+    public List<CourseUser> test() throws Exception {
+        CourseDto build = CourseDto.builder().userName("yier").build();
+        QueryWrapper queryWrapper = QueryBuilder.toQueryWrapper(build);
+        // 报错
+        List list = Binder.joinQueryList(queryWrapper, CourseUser.class);
+        return null;
+    }
+
     @GetMapping
     @ApiOperation("列表")
     public ResponseEntity<IPage> searchPage(@Validated CourseUserQuery cq) {

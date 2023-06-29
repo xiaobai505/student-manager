@@ -10,10 +10,10 @@ import com.agoni.system.service.UserService;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.toolkit.StringUtils;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
-import org.jetbrains.annotations.NotNull;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import javax.validation.constraints.NotNull;
 import java.util.List;
 
 /**
@@ -39,7 +39,7 @@ public class DeptServiceImpl extends ServiceImpl<DeptMapper, Dept> implements De
         List<Dept> list = list(getDeptQueryWrapper(dq));
         return Binder.convertAndBindRelations(list, DeptVo.class);
     }
-    
+
     @NotNull
     private QueryWrapper<Dept> getDeptQueryWrapper(DeptQuery dq) {
         QueryWrapper<Dept> queryWrapper = new QueryWrapper<>();
