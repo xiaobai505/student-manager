@@ -30,7 +30,7 @@ public class ompAspect {
      * @author t-guoyu.dong@pcitc.com
      * @date 2023-06-06
      */
-    @Pointcut("execution(* com.agoni.dgy.service.impl.*.*(..) )")
+    @Pointcut("execution(* com.agoni.dgy.service.impl.*.searchPage(..) )")
     public void pintCutWithin() {}
 
     /**
@@ -43,15 +43,10 @@ public class ompAspect {
      * argNames：用于获取被拦截方法参数名列表；
      * pointcut：指定一个切入点，该参数也可以使用 value 来替代。
      */
-    //@AfterReturning(value = "pintCutWithin()")
+//    @Before(value = "pintCutWithin()")
     public void doAfterReturning(JoinPoint pjp) {
-        //ServletRequestAttributes attributes = (ServletRequestAttributes) RequestContextHolder.getRequestAttributes();
-        //HttpServletRequest request = attributes.getRequest();
-        //log.info("用户名:" + UserUtil.getUsername());
-        //log.info("URL:" + request.getRequestURL().toString());
-        //log.info("IP:" + request.getRemoteAddr());
-        //log.info("请求参数:" + JSON.toJSONString(pjp.getArgs()));
-        //log.info("请求方法:" + pjp.getSignature().getName());
+        log.info("请求参数:" + JSON.toJSONString(pjp.getArgs()));
+        Object[] args = pjp.getArgs();
     }
 
     @Around(value = "pintCutWithin())")

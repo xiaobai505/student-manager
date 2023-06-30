@@ -12,6 +12,9 @@ import org.springframework.stereotype.Component;
 import javax.annotation.Resource;
 import java.util.concurrent.TimeUnit;
 
+/**
+ * @author gyd
+ */
 @Component
 @Slf4j
 public class MyInMemoryUserCache implements UserCache {
@@ -22,8 +25,6 @@ public class MyInMemoryUserCache implements UserCache {
     @Override
     public UserDetails getUserFromCache(String username) {
         String jsonStr = stringRedisTemplate.opsForValue().get("user::" + username);
-        // JSONUtil.toBean 转换报错，狗日的卡了两天
-        // JSONUtil.toBean(jsonStr, AuthUserVo.class);
         return JSONObject.parseObject(jsonStr, AuthUserVo.class);
     }
 

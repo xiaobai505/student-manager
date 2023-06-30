@@ -28,7 +28,7 @@ public class TimeInterceptor implements HandlerInterceptor {
 	public void postHandle(HttpServletRequest request, HttpServletResponse response, Object handler, ModelAndView modelAndView){
 		log.info("2：postHandle");
 		Long start = (Long) request.getAttribute("startTime");
-		String requestIp = httpUitl.getRequestIp(request);
+		String requestIp = httpUitl.getRequestIp();
 		log.info("%s, time interceptor 耗时: %s ", requestIp, (System.currentTimeMillis() - start));
 	}
 

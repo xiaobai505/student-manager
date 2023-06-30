@@ -8,7 +8,6 @@ import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
-import javax.servlet.http.HttpServletRequest;
 import java.time.LocalDateTime;
 
 /**
@@ -28,9 +27,9 @@ public class LogininforServiceImpl extends ServiceImpl<LogininforMapper, Loginin
      * @param message
      */
     @Override
-    public void asyncLogininfor(String username, String status, String message, HttpServletRequest request) {
+    public void asyncLogininfor(String username, String status, String message) {
         // 插入数据
-        Logininfor logininfor = httpUitl.getLogininfor(request);
+        Logininfor logininfor = httpUitl.getLogininfor();
         logininfor.setUserName(username);
         logininfor.setStatus(status);
         logininfor.setMsg(message);

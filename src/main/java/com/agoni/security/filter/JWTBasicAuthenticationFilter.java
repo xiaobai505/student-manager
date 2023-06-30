@@ -8,6 +8,7 @@ import com.agoni.system.response.ResponseEntity;
 import com.alibaba.fastjson2.JSON;
 import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -40,13 +41,19 @@ public class JWTBasicAuthenticationFilter extends OncePerRequestFilter {
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain chain) throws IOException, ServletException {
         // 1: 请求头没有token ，直接去下一个过滤器
         String header = request.getHeader(SecurityConstants.TOKEN_HEADER);
-        
+
         if (header == null || !header.startsWith(SecurityConstants.TOKEN_PREFIX)) {
             chain.doFilter(request, response);
             return;
         }
         // 2: 如果获取不到用户名报错  如果过期，报错，返回登录页面
         String userName = getUserName(header,response);
+        // 如果用户为空 代表解析失败
+        if (StringUtils.isBlank(userName)) {
+            log.error("token解析失败");
+            chain.doFilter(request, response);
+            return;
+        }
         
         // 3：SecurityContextHolder 没有用户，查询数据库，把权限放到 SecurityContextHolder
         UsernamePasswordAuthenticationToken authentication = getAuthenticationToken(userName);

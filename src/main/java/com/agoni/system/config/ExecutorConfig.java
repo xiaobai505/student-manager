@@ -9,6 +9,7 @@ import java.util.concurrent.ThreadPoolExecutor;
 
 /**
  * 线程池
+ * @author gyd
  */
 @Configuration
 @EnableAsync

@@ -9,7 +9,6 @@ import com.agoni.dgy.model.vo.CourseVo;
 import com.agoni.dgy.service.CourseService;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
-import com.baomidou.mybatisplus.core.toolkit.ObjectUtils;
 import com.baomidou.mybatisplus.core.toolkit.StringUtils;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
@@ -35,20 +34,16 @@ public class CourseServiceImpl extends ServiceImpl<CourseMapper, Course> impleme
     
     @Override
     public IPage<CourseVo> searchPage(CourseSearchFrom from) {
-        QueryWrapper<Course> queryWrapper = fillQueryWrapper(from);
-        Page<Course> page = page(from, queryWrapper);
-        return Binder.convertAndBindRelations(page, CourseVo.class);
+        QueryWrapper<Course> queryWrapper = new QueryWrapper<>();
+        fillQueryWrapper(queryWrapper, from);
+        Page<Course> page = Page.of(1, 10);
+        Page<Course> records = page(page, queryWrapper);
+        return Binder.convertAndBindRelations(records, CourseVo.class);
     }
 
-    private QueryWrapper<Course> fillQueryWrapper(CourseSearchFrom from) {
-        QueryWrapper<Course> queryWrapper = new QueryWrapper<>();
-        queryWrapper.lambda()
-                .likeRight(StringUtils.isNotEmpty(from.getCourseName()), Course::getCourseName, from.getCourseName())
-                .likeRight(StringUtils.isNotEmpty(from.getTeacher()), Course::getCourseTeacher, from.getTeacher())
-                .eq(ObjectUtils.isNotNull(from.getIsMust()),Course::getIsMust,from.getIsMust());
+    private void fillQueryWrapper(QueryWrapper<Course> queryWrapper,CourseSearchFrom from) {
         //自动组装查询条件，生成orderBy，组装条件的两种方式：1.基于注解 2.基于query对象中属性的后缀
         OmpDbUtil.autoWrapper(from, queryWrapper, Course.class);
-        return queryWrapper;
     }
 
     @Override

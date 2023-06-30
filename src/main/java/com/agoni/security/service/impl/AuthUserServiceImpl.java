@@ -6,7 +6,6 @@ import com.agoni.system.model.po.User;
 import com.agoni.system.model.vo.AuthUserVo;
 import com.agoni.system.service.UserService;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserCache;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
@@ -20,7 +19,7 @@ import javax.annotation.Resource;
 @Service
 public class AuthUserServiceImpl implements AuthUserService {
 
-    @Autowired
+    @Resource
     private UserService userService;
     @Resource
     private UserCache userCache;

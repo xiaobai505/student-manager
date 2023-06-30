@@ -1,20 +1,17 @@
 package com.agoni.dgy.model.bo;
 
-import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
-import lombok.Builder;
+import com.agoni.system.model.bo.PageBaseQuery;
 import lombok.Data;
 
 /**
  * @author gyd
  */
 @Data
-@Builder
-public class CourseSearchFrom extends Page {
+public class CourseSearchFrom extends PageBaseQuery {
 
-    private String courseName;
-    
-    private String teacher;
-    
-    private Boolean isMust;
-    
+    private String courseNameLike;
+
+    private String teacherLike;
+
+    private Boolean isMustEq;
 }

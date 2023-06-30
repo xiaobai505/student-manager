@@ -19,5 +19,5 @@ public class CourseVo extends Course {
     @ApiModelProperty("是否必修")
     @BindDict(type = "isMust",field = "isMust")
     private String isMustDisplay;
-    
+
 }

@@ -14,6 +14,8 @@ import org.apache.http.impl.client.CloseableHttpClient;
 import org.apache.http.impl.client.HttpClients;
 import org.apache.http.message.BasicNameValuePair;
 import org.apache.http.util.EntityUtils;
+import org.springframework.web.context.request.RequestContextHolder;
+import org.springframework.web.context.request.ServletRequestAttributes;
 
 import javax.servlet.http.HttpServletRequest;
 import java.util.ArrayList;
@@ -29,25 +31,36 @@ public class httpUitl {
     private static final String[] HEADER_IP_KEYWORDS = {"X-Forwarded-For", "Proxy-Client-IP",
             "WL-Proxy-Client-IP", "HTTP_CLIENT_IP", "X-Real-IP"};
 
-    public static Logininfor getLogininfor(HttpServletRequest request) {
+    public static Logininfor getLogininfor() {
         // IP
-        String requestIp = httpUitl.getRequestIp(request);
+        String requestIp = getRequestIp();
         // IP所属地
-        String ipAddress = httpUitl.getIpAddress(requestIp);
+        String ipAddress = getIpAddress(requestIp);
         // 浏览器
-        String browser = httpUitl.browser(request);
+        String browser = getBrowser();
         // 操作系统
-        String os = httpUitl.os(request);
+        String os = getOs();
         return Logininfor.builder().os(os).browser(browser).ipaddr(requestIp).loginLocation(ipAddress).build();
+    }
+
+    public static HttpServletRequest getRequest() {
+        ServletRequestAttributes servletRequestAttributes = (ServletRequestAttributes)
+                RequestContextHolder.getRequestAttributes();
+        HttpServletRequest request = null;
+        if (servletRequestAttributes != null) {
+            request = servletRequestAttributes.getRequest();
+        }
+        return request;
     }
     
     /**
      * 获取客户ip地址
-     * @param request
      *
-     * @return
+     * @return ip
      */
-    public static String getRequestIp(HttpServletRequest request) {
+    public static String getRequestIp() {
+        // 获取request
+        HttpServletRequest request = getRequest();
         for(String header : HEADER_IP_KEYWORDS){
             String ipAddresses = request.getHeader(header);
             if (ipAddresses == null || ipAddresses.length() == 0 || "unknown".equalsIgnoreCase(ipAddresses)) {
@@ -60,7 +73,9 @@ public class httpUitl {
         return request.getRemoteAddr();
     }
 
-    public static String browser(HttpServletRequest request){
+    public static String getBrowser(){
+        // 获取request
+        HttpServletRequest request = getRequest();
         String userAgent = request.getHeader("User-Agent");
         String browserVersion = "Unknown-null";
 
@@ -90,7 +105,9 @@ public class httpUitl {
     }
 
 
-    public static String os(HttpServletRequest request){
+    public static String getOs(){
+        // 获取request
+        HttpServletRequest request = getRequest();
         String userAgent = request.getHeader("User-Agent");
         String systemVersion = "Unknown";
 
@@ -143,7 +160,7 @@ public class httpUitl {
     }
     
     private static String post(String url, Map<String, String> mapParameter) {
-        log.debug("开始请求: url = {}, mapParameter = {}, charset = {}", url, mapParameter);
+        log.debug("开始请求: url = {}, mapParameter = {}", url, mapParameter);
         // 创建httpClient的默认实例
         try (CloseableHttpClient httpClient = HttpClients.createDefault()) {
             // 创建POST请求
@@ -170,11 +187,9 @@ public class httpUitl {
                     }
                 }
             } catch (Exception e) {
-                log.error("请求异常: e = {}", e);
                 e.printStackTrace();
             }
         } catch (Exception e) {
-            log.error("请求异常: e = {}", e);
             e.printStackTrace();
         }
         return null;

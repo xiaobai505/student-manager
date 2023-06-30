@@ -21,7 +21,9 @@ public class MyDataAccessPermissionImpl implements DataAccessInterface {
      */
     @Override
     public List<? extends Serializable> getAccessibleIds(Class<?> entityClass, String fieldName) {
+        // @DataAccessCheckpoint 在po上才会执行
         log.error("执行了数据权限过滤！");
+
         return null;
     }
 }

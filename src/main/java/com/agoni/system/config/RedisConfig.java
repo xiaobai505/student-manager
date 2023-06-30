@@ -10,6 +10,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
 import com.fasterxml.jackson.databind.jsontype.DefaultBaseTypeLimitingValidator;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.cache.CacheManager;
 import org.springframework.cache.annotation.CachingConfigurerSupport;
 import org.springframework.cache.annotation.EnableCaching;
@@ -31,6 +32,7 @@ import org.springframework.data.redis.serializer.StringRedisSerializer;
  */
 @Configuration
 @EnableCaching
+@ConditionalOnProperty(value = "spring.cache.type", havingValue = "redis", matchIfMissing = true)
 public class RedisConfig extends CachingConfigurerSupport {
     @Bean
     public CacheManager cacheManager(@Qualifier("redisConnectionFactory") RedisConnectionFactory factory) {

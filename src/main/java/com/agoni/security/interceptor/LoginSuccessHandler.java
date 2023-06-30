@@ -9,7 +9,6 @@ import com.baomidou.mybatisplus.core.toolkit.IdWorker;
 import io.jsonwebtoken.Clock;
 import io.jsonwebtoken.impl.DefaultClock;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.http.HttpStatus;
@@ -54,16 +53,16 @@ public class LoginSuccessHandler implements AuthenticationSuccessHandler {
     @Value("${JWT.refreshExpireTime}")
     private Integer refreshExpireTime;
     
-    public static final String loginSuccess = "登录成功";
-    @Autowired
+    public static final String LOGIN_SUCCESS = "登录成功";
+    @Resource
     private LogininforService logininforService;
     @Resource
     private JwtTokenUtil jwtTokenUtil;
     @Resource
     private StringRedisTemplate stringRedisTemplate;
     
-    private static final Clock clock = DefaultClock.INSTANCE;
-    
+    private static final Clock CLOCK = DefaultClock.INSTANCE;
+
     /**
      * Called when a user has been successfully authenticated.
      *
@@ -87,14 +86,14 @@ public class LoginSuccessHandler implements AuthenticationSuccessHandler {
         response.setStatus(HttpStatus.OK.value());
         response.getWriter().write(JSON.toJSONString(ResponseEntity.body(tokenMap)));
         // 登录成功记录
-        logininforService.asyncLogininfor(principal.getUsername(), "0", loginSuccess,request);
+        logininforService.asyncLogininfor(principal.getUsername(), "0", LOGIN_SUCCESS);
     }
     
     /**
      * @param username 用户名
      * @param clientId 新的clientId
      *
-     * @return
+     * @return HashMap<String, Object>
      */
     HashMap<String, Object> getTokenMap(String username,String clientId){
         HashMap<String, Object> map = new HashMap<>(8);
@@ -113,7 +112,7 @@ public class LoginSuccessHandler implements AuthenticationSuccessHandler {
         map.put(SecurityConstants.REFRESH_TOKEN, refreshToken);
     
         // 过期时间
-        final Date createdDate = clock.now();
+        final Date createdDate = CLOCK.now();
         Date expires = new Date(createdDate.getTime() + expireTime * 1000);
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy/MM/dd/ HH:mm:ss");
         map.put(SecurityConstants.EXPIRES, sdf.format(expires));
