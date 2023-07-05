@@ -1,10 +1,11 @@
 package com.agoni.system.service.impl;
 
+import com.agoni.core.diboot.Binder;
 import com.agoni.dgy.model.query.PwdQuery;
 import com.agoni.system.mapper.UserMapper;
 import com.agoni.system.model.po.User;
 import com.agoni.system.model.query.UserQuery;
-import com.agoni.system.model.vo.UserAndRole;
+import com.agoni.system.model.vo.UserVo;
 import com.agoni.system.service.UserService;
 import com.agoni.system.utils.UserUtil;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
@@ -32,8 +33,9 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
     private UserMapper userMapper;
 
     @Override
-    public IPage<UserAndRole> pageUser(UserQuery userQuery) {
-        return userMapper.selectUserAndRolepage(userQuery, userQuery);
+    public IPage<UserVo> pageUser(UserQuery userQuery) {
+        IPage<UserVo> iPage = userMapper.selectUserAndRolepage(userQuery, userQuery);
+        return Binder.bindRelations(iPage);
     }
 
     /**

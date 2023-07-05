@@ -18,7 +18,7 @@ import java.util.List;
  * @author gyd
  */
 @RestController
-@RequestMapping("/dgy/dict")
+@RequestMapping("/sys/dict")
 @Api(tags = "字典")
 public class DictController {
     

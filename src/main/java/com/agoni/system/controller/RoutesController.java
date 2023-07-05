@@ -31,8 +31,9 @@ public class RoutesController {
     @ApiOperation("当前用户菜单")
     public ResponseEntity<List> get() {
         // todo 用户有多个角色，根据用户选择的一个角色查询列表
-        MenuQuery build = MenuQuery.builder().code(UserUtil.getFirstRole()).build();
-        List<MenuTreeVo> tree = menuService.getTree(MenuQuery.builder().build());
+        String firstRole = UserUtil.getFirstRole();
+        MenuQuery build = MenuQuery.builder().code(firstRole).build();
+        List<MenuTreeVo> tree = menuService.getTree(build);
         return ResponseEntity.body(tree);
     }
 }

@@ -63,7 +63,7 @@ public class RoleUserServiceImpl extends ServiceImpl<RoleUserMapper, RoleUser> i
         List<Role> roles = roleService.listByIds(ids);
         // 新增权限
         List<RoleUser> infos= new ArrayList<>();
-        roles.forEach(role -> infos.add(RoleUser.builder().roleId(role.getId()).userId(userId).roleName(role.getRoleName()).build()));
+        roles.forEach(role -> infos.add(RoleUser.builder().roleId(role.getId()).userId(userId).build()));
         boolean b2 = this.saveOrUpdateBatch(infos);
         return b1 && b2;
     }

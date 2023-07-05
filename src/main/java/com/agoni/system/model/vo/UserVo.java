@@ -1,9 +1,10 @@
 package com.agoni.system.model.vo;
 
 import com.agoni.system.model.po.Dept;
-import com.agoni.system.model.po.RoleUser;
+import com.agoni.system.model.po.Role;
 import com.agoni.system.model.po.User;
 import com.diboot.core.binding.annotation.BindField;
+import com.diboot.core.binding.annotation.BindFieldList;
 import io.swagger.annotations.ApiModel;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -21,8 +22,8 @@ public class UserVo extends User {
     
     @BindField(entity = Dept.class,field = "name",condition = "this.dept_id=id")
     private String deptName;
-    
-    
-    @BindField(entity = RoleUser.class, field = "roleName", condition = "this.id=user_id")
+
+
+    @BindFieldList(entity = Role.class, field = "roleName", condition = "this.id=sys_role_user.user_id AND sys_role_user.role_id=id")
     private List<String> roles;
 }

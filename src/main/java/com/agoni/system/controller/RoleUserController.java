@@ -25,7 +25,7 @@ import java.util.stream.Collectors;
  * @since 2021-12-22
  */
 @RestController
-@RequestMapping("/dgy/roleUser")
+@RequestMapping("/sys/roleUser")
 @Slf4j
 @Api(tags="角色权限关联")
 public class RoleUserController {

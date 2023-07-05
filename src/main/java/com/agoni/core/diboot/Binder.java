@@ -16,6 +16,7 @@ package com.agoni.core.diboot;
  */
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.diboot.core.binding.JoinsBinder;
 import com.diboot.core.vo.Pagination;
@@ -101,6 +102,13 @@ public class Binder {
      */
     public static <VO> void bindRelations(VO vo){
         RelationsBinder.bind(vo);
+    }
+
+    public static <VO> IPage<VO> bindRelations(IPage<VO> page){
+        List<VO> voList = page.getRecords();
+        RelationsBinder.bind(voList);
+        page.setRecords(voList);
+        return page;
     }
     
     /**

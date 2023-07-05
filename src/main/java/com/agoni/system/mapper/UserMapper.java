@@ -3,7 +3,7 @@ package com.agoni.system.mapper;
 
 import com.agoni.system.model.po.User;
 import com.agoni.system.model.query.UserQuery;
-import com.agoni.system.model.vo.UserAndRole;
+import com.agoni.system.model.vo.UserVo;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
@@ -28,6 +28,6 @@ public interface UserMapper extends BaseMapper<User> {
      * @param userQuery 模糊查询对象
      * @return 分页的用户信息
      */
-    IPage<UserAndRole> selectUserAndRolepage(Page<UserAndRole> page, @Param("userQuery") UserQuery userQuery);
+    IPage<UserVo> selectUserAndRolepage(Page<UserVo> page, @Param("userQuery") UserQuery userQuery);
 
 }

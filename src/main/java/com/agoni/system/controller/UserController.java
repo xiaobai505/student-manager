@@ -5,7 +5,6 @@ import com.agoni.core.diboot.Binder;
 import com.agoni.dgy.model.query.PwdQuery;
 import com.agoni.system.model.po.User;
 import com.agoni.system.model.query.UserQuery;
-import com.agoni.system.model.vo.UserAndRole;
 import com.agoni.system.model.vo.UserVo;
 import com.agoni.system.service.UserService;
 import com.agoni.system.utils.UserUtil;
@@ -50,7 +49,7 @@ public class UserController {
     @GetMapping("/page")
     @ApiOperation("列表")
     public ResponseEntity<IPage> page(@Validated UserQuery userQuery){
-        IPage<UserAndRole> res = userService.pageUser(userQuery);
+        IPage<UserVo> res = userService.pageUser(userQuery);
         return new ResponseEntity<>(res, HttpStatus.OK);
     }
 

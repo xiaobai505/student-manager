@@ -15,7 +15,7 @@ import org.springframework.web.bind.annotation.RestController;
 import java.util.List;
 
 @RestController
-@RequestMapping("/dgy/meunRole")
+@RequestMapping("/sys/meunRole")
 @Api(tags="菜单角色关联")
 public class MeunRoleContreller {
     

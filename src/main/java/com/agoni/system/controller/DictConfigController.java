@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("/dgy/dictConfig")
+@RequestMapping("/sys/dictConfig")
 @Api(tags = "字典")
 public class DictConfigController {
     

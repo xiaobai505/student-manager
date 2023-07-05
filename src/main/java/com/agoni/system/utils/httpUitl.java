@@ -1,9 +1,8 @@
 package com.agoni.system.utils;
 
+import cn.hutool.extra.servlet.ServletUtil;
 import com.agoni.system.model.po.Logininfor;
 import com.alibaba.fastjson2.JSONObject;
-import com.baomidou.mybatisplus.core.toolkit.StringUtils;
-import com.diboot.core.config.Cons;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.http.HttpEntity;
 import org.apache.http.NameValuePair;
@@ -33,7 +32,7 @@ public class httpUitl {
 
     public static Logininfor getLogininfor() {
         // IP
-        String requestIp = getRequestIp();
+        String requestIp = ServletUtil.getClientIP(getRequest());
         // IP所属地
         String ipAddress = getIpAddress(requestIp);
         // 浏览器
@@ -51,26 +50,6 @@ public class httpUitl {
             request = servletRequestAttributes.getRequest();
         }
         return request;
-    }
-    
-    /**
-     * 获取客户ip地址
-     *
-     * @return ip
-     */
-    public static String getRequestIp() {
-        // 获取request
-        HttpServletRequest request = getRequest();
-        for(String header : HEADER_IP_KEYWORDS){
-            String ipAddresses = request.getHeader(header);
-            if (ipAddresses == null || ipAddresses.length() == 0 || "unknown".equalsIgnoreCase(ipAddresses)) {
-                continue;
-            }
-            if (StringUtils.isNotEmpty(ipAddresses)) {
-                return ipAddresses.split(Cons.SEPARATOR_COMMA)[0];
-            }
-        }
-        return request.getRemoteAddr();
     }
 
     public static String getBrowser(){

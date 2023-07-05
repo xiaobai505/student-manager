@@ -29,11 +29,8 @@ public class RoleUserVo extends RoleUser {
     
     @ApiModelProperty("角色List")
     @BindField(entity= Role.class, field="roleName", condition="this.role_id=id")
-    private List<String> roleList;
-    
-    @ApiModelProperty("角色名称")
-    private String roleName;
-    
+    private List<String> roleNames;
+
     @ApiModelProperty("角色编码")
     @BindField(entity= Role.class, field="roleCode", condition="this.role_id=id")
     private String roleCode;

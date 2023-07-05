@@ -1,8 +1,8 @@
 package com.agoni.system.model.vo;
 
-import com.agoni.system.model.po.RoleUser;
+import com.agoni.system.model.po.Role;
 import com.agoni.system.model.po.User;
-import com.diboot.core.binding.annotation.BindField;
+import com.diboot.core.binding.annotation.BindFieldList;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -24,8 +24,8 @@ import java.util.stream.Collectors;
 @NoArgsConstructor
 @AllArgsConstructor
 public class AuthUserVo extends User implements UserDetails {
-    
-    @BindField(entity = RoleUser.class, field = "roleName", condition = "this.id=user_id")
+
+    @BindFieldList(entity = Role.class, field = "roleCode", condition = "this.id=sys_role_user.user_id AND sys_role_user.role_id=id")
     private List<String> roles;
     
     /**

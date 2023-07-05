@@ -3,7 +3,7 @@ package com.agoni.system.service;
 import com.agoni.dgy.model.query.PwdQuery;
 import com.agoni.system.model.po.User;
 import com.agoni.system.model.query.UserQuery;
-import com.agoni.system.model.vo.UserAndRole;
+import com.agoni.system.model.vo.UserVo;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.service.IService;
 
@@ -27,7 +27,7 @@ public interface UserService extends IService<User> {
      *
      * @return IPage<UserAndRole>
      */
-    IPage<UserAndRole> pageUser(UserQuery userQuery);
+    IPage<UserVo> pageUser(UserQuery userQuery);
     
     /**
      * 获取用户用户名

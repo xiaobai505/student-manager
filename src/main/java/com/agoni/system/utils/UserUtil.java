@@ -1,5 +1,6 @@
 package com.agoni.system.utils;
 
+import com.agoni.core.diboot.Binder;
 import com.agoni.system.model.po.User;
 import com.agoni.system.model.vo.AuthUserVo;
 import com.baomidou.mybatisplus.core.toolkit.CollectionUtils;
@@ -37,7 +38,7 @@ public class UserUtil {
      * 获得当前用户权限
      */
     public static List<String> getRoles() {
-        AuthUserVo authUserVo = getUserPrincipal();
+        AuthUserVo authUserVo = Binder.convertAndBindRelations(getUser(), AuthUserVo.class);
         List<String> roles = new ArrayList<>();
         for (GrantedAuthority ga : authUserVo.getAuthorities()) {
             roles.add(ga.getAuthority());
@@ -78,8 +79,7 @@ public class UserUtil {
      * @return
      */
     public static User getUser() {
-        User user = getUserPrincipal();
-        return user;
+        return getUserPrincipal();
     }
     
     /**

@@ -17,7 +17,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-@RequestMapping("/dgy/logininfor")
+@RequestMapping("/sys/logininfor")
 @Slf4j
 @Api(tags="课程")
 public class LogininforController {
