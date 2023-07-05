@@ -11,8 +11,6 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.experimental.SuperBuilder;
 
-import java.util.List;
-
 @Data
 @SuperBuilder
 @NoArgsConstructor
@@ -23,7 +21,7 @@ public class UserVo extends User {
     @BindField(entity = Dept.class,field = "name",condition = "this.dept_id=id")
     private String deptName;
 
-
-    @BindFieldList(entity = Role.class, field = "roleName", condition = "this.id=sys_role_user.user_id AND sys_role_user.role_id=id")
-    private List<String> roles;
+    @BindFieldList(entity = Role.class, field = "roleName",
+            condition = "this.id=sys_role_user.user_id AND sys_role_user.role_id=id", splitBy = ",")
+    private String roles;
 }
