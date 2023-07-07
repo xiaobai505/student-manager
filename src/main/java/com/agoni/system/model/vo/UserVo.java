@@ -21,7 +21,6 @@ public class UserVo extends User {
     @BindField(entity = Dept.class,field = "name",condition = "this.dept_id=id")
     private String deptName;
 
-    @BindFieldList(entity = Role.class, field = "roleName",
-            condition = "this.id=sys_role_user.user_id AND sys_role_user.role_id=id", splitBy = ",")
+    @BindFieldList(entity = Role.class, field = "roleName", condition = "this.id=sys_role_user.user_id AND sys_role_user.role_id=id")
     private String roles;
 }

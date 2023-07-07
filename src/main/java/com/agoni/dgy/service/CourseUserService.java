@@ -38,7 +38,7 @@ public interface CourseUserService extends IService<CourseUser> {
     
     /**
      * 放弃 用户选课信息
-     * @param id
+     * @param courseUser
      *
      * @return
      */
