@@ -6,12 +6,14 @@ import com.agoni.system.model.po.Menu;
 import com.agoni.system.model.query.MenuQuery;
 import com.agoni.system.model.vo.MenuTreeVo;
 import com.agoni.system.service.MenuService;
+import com.agoni.system.service.MeunRoleService;
 import com.agoni.system.utils.UserUtil;
 import com.alibaba.fastjson2.JSONObject;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.diboot.core.util.BeanUtils;
 import org.springframework.stereotype.Service;
 
+import javax.annotation.Resource;
 import java.util.List;
 
 /**
@@ -21,7 +23,10 @@ import java.util.List;
  */
 @Service
 public class MenuServiceImpl extends ServiceImpl<MenuMapper, Menu> implements MenuService {
-    
+
+    @Resource
+    private MeunRoleService meunRoleService;
+
     /**
      * 根据 权限cede 查找
      *

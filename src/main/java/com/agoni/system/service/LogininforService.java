@@ -1,6 +1,8 @@
 package com.agoni.system.service;
 
 import com.agoni.system.model.po.Logininfor;
+import com.agoni.system.model.query.LogininforQuery;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.IService;
 
 /**
@@ -18,4 +20,14 @@ public interface LogininforService extends IService<Logininfor> {
      * @param message 消息
      */
     void asyncLogininfor(String username, String status, String message);
+
+    /**
+     * 分页查询
+     *
+     * @param query
+     * @return com.baomidou.mybatisplus.extension.plugins.pagination.Page<com.agoni.system.model.po.Logininfor>
+     * @author t-guoyu.dong@pcitc.com
+     * @date 2023-07-10
+     */
+    Page<Logininfor> selectPage(LogininforQuery query);
 }

@@ -1,6 +1,6 @@
 package com.agoni.dgy.model.bo;
 
-import com.agoni.system.model.bo.PageBaseQuery;
+import com.agoni.system.model.query.PageBaseQuery;
 import lombok.Data;
 
 /**

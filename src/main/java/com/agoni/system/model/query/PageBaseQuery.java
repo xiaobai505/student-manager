@@ -6,24 +6,25 @@ import lombok.*;
 import lombok.experimental.SuperBuilder;
 
 /**
- * baseQuery
+ * 分页查询基础类
  *
  * @author t-guoyu.dong@pcitc.com
- * @since 2023/6/9
+ * @since 2023/6/30
  */
 @Data
 @SuperBuilder
 @ToString
 @NoArgsConstructor
 @AllArgsConstructor
-public class baseQuery {
+@Schema(name = "PageQuery", description = "分页查询")
+public class PageBaseQuery {
 
     /**
      * 页码
      */
     @Schema(description = "页码")
     @Builder.Default
-    private Integer page = 1;
+    private Integer current = 1;
 
     /**
      * 每页显示条数

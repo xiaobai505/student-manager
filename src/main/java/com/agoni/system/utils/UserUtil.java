@@ -5,14 +5,11 @@ import com.agoni.system.model.po.User;
 import com.agoni.system.model.vo.AuthUserVo;
 import com.baomidou.mybatisplus.core.toolkit.CollectionUtils;
 import com.baomidou.mybatisplus.core.toolkit.ObjectUtils;
-import com.baomidou.mybatisplus.core.toolkit.StringUtils;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.core.Authentication;
-import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.context.SecurityContext;
 import org.springframework.security.core.context.SecurityContextHolder;
 
-import java.util.ArrayList;
 import java.util.List;
 
 @Slf4j
@@ -27,8 +24,12 @@ public class UserUtil {
         SecurityContext securityContext = SecurityContextHolder.getContext();
         Authentication authentication = securityContext.getAuthentication();
         try {
-            return (AuthUserVo) authentication.getPrincipal();
-        } catch (Exception ignored) {
+            AuthUserVo authUserVo = (AuthUserVo) authentication.getPrincipal();
+            Binder.bindRelations(authUserVo);
+            return authUserVo;
+        } catch (Exception e) {
+            log.error("UserPrincipal error: {}", e.getMessage());
+            log.warn("只有定时任务时,UserPrincipal为空才正常");
             return null;
         }
     }
@@ -38,12 +39,8 @@ public class UserUtil {
      * 获得当前用户权限
      */
     public static List<String> getRoles() {
-        AuthUserVo authUserVo = Binder.convertAndBindRelations(getUser(), AuthUserVo.class);
-        List<String> roles = new ArrayList<>();
-        for (GrantedAuthority ga : authUserVo.getAuthorities()) {
-            roles.add(ga.getAuthority());
-        }
-        return roles;
+        AuthUserVo authUserVo = getUserPrincipal();
+        return authUserVo.getRoleCodes();
     }
     
     /**
@@ -65,11 +62,9 @@ public class UserUtil {
      * @return
      */
     public static boolean hasRole(String role){
-        AuthUserVo userPrincipal = getUserPrincipal();
-        for (GrantedAuthority authority : userPrincipal.getAuthorities()) {
-            if (StringUtils.equals(authority.getAuthority(),role)){
-                return true;
-            }
+        List<String> roles = getRoles();
+        if (roles.contains(role)){
+            return true;
         }
         return false;
     }

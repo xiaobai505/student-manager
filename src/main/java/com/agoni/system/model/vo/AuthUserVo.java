@@ -26,7 +26,10 @@ import java.util.stream.Collectors;
 public class AuthUserVo extends User implements UserDetails {
 
     @BindFieldList(entity = Role.class, field = "roleCode", condition = "this.id=sys_role_user.user_id AND sys_role_user.role_id=id")
-    private List<String> roles;
+    private List<String> roleCodes;
+
+    @BindFieldList(entity = Role.class, field = "id", condition = "this.id=sys_role_user.user_id AND sys_role_user.role_id=id")
+    private List<String> roleIds;
     
     /**
      * 用户权限列表
@@ -45,7 +48,7 @@ public class AuthUserVo extends User implements UserDetails {
         // 1. commaSeparatedStringToAuthorityList放入角色时需要加前缀ROLE_，而在controller使用时不需要加ROLE_前缀
         // 2. 放入的是权限时，不能加ROLE_前缀，hasAuthority与放入的权限名称对应即可
         //AuthUserVo authUserVo = AuthUserVo.create(user, AuthorityUtils.commaSeparatedStringToAuthorityList("ROLE_ADMIN"+",r,w"));
-        return roles.stream().map(role -> new SimpleGrantedAuthority(role)).collect(Collectors.toList());
+        return roleCodes.stream().map(role -> new SimpleGrantedAuthority(role)).collect(Collectors.toList());
     }
 
     @Override
