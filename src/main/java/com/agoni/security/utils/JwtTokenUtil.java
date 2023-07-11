@@ -8,15 +8,12 @@ import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
 import io.jsonwebtoken.impl.DefaultClock;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
 import java.io.Serializable;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
-
-import static com.agoni.security.config.constants.SecurityConstants.MINUTE;
 
 /**
  * @author gyd
@@ -25,9 +22,9 @@ import static com.agoni.security.config.constants.SecurityConstants.MINUTE;
 @Slf4j
 public class JwtTokenUtil implements Serializable {
 
-    @Value("${jwt.securityKey}")
-    private static String securityKey;
+    private static final String SECURITY_KEY = "dongyyds";
     private static final Clock CLOCK = DefaultClock.INSTANCE;
+    private static final String CLIENT_ID = "clientId";
 
     private final JwtConfiguration jwtConfiguration;
 
@@ -45,15 +42,16 @@ public class JwtTokenUtil implements Serializable {
         return getTokenBody(token).getSubject();
     }
     
+
     /**
      * 获取 ClientId
      * @param token token值
      *
      * @return ClientId
      */
-    public static String getClientId(String token) {
+    public String getClientId(String token) {
         final Claims claims = getTokenBody(token);
-        return (String) claims.get("clientId");
+        return (String) claims.get(CLIENT_ID);
     }
     
     /**
@@ -84,16 +82,16 @@ public class JwtTokenUtil implements Serializable {
      * @author t-guoyu.dong@pcitc.com
      * @date 2023-05-26
      */
-    public String generateToken(String username, String clientId) {
+    public  String generateToken(String username, String clientId) {
         final Date expirationDate = calculateExpirationDate(CLOCK.now());
         Map<String, Object> claims = new HashMap<>(16);
-        claims.put("clientId", clientId);
+        claims.put(CLIENT_ID, clientId);
         String tokenPrefix = Jwts.builder()
                                  .setClaims(claims)
                                  .setSubject(username)
                                  .setIssuedAt(CLOCK.now())
                                  .setExpiration(expirationDate)
-                                 .signWith(SignatureAlgorithm.HS512, securityKey)
+                                 .signWith(SignatureAlgorithm.HS512, SECURITY_KEY)
                                  .compact();
         return tokenPrefix;
     }
@@ -108,13 +106,13 @@ public class JwtTokenUtil implements Serializable {
      */
     private static Claims getTokenBody(String token) {
         return Jwts.parser()
-                   .setSigningKey(securityKey)
+                   .setSigningKey(SECURITY_KEY)
                    .parseClaimsJws(token.replace(SecurityConstants.TOKEN_PREFIX, ""))
                    .getBody();
     }
 
     private Date calculateExpirationDate(Date createdDate) {
-        // return new Date(createdDate.getTime() + jwtConfiguration.getExpiration() * 1000);
-        return new Date(createdDate.getTime() + 1 * MINUTE);
+        return new Date(createdDate.getTime() + jwtConfiguration.getAccessExpireTime() * 1000);
+        // return new Date(createdDate.getTime() + 5 * MINUTE);
     }
 }

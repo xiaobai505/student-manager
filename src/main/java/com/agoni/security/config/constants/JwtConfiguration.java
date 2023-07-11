@@ -32,14 +32,9 @@ public class JwtConfiguration {
     private String decrypt;
 
     /**
-     * 失效时间-秒
+     * accessToken存储在redis的有效时间
      */
-    private Integer expiration;
-
-    /**
-     * token存储在redis的有效时间
-     */
-    private Integer expireTime;
+    private Integer AccessExpireTime;
 
     /**
      * refreshToken存储在redis的存在时间

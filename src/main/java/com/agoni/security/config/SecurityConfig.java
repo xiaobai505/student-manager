@@ -63,8 +63,10 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         http.addFilterBefore(jwtBasicAuthenticationFilter, UsernamePasswordAuthenticationFilter.class);
         // 登录解析
         http.formLogin().loginProcessingUrl("/auth/login").successHandler(loginSuccessHandler).failureHandler(loginFailureHandler);
-        //定义logout不需要验证
+        // 定义logout不需要验证
         http.logout().permitAll();
+        // 退出的Handler
+//        http.logout().addLogoutHandler().logoutSuccessHandler().logoutUrl("/auth/logout");
     }
 
 

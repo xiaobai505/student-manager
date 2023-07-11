@@ -27,7 +27,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
-import static org.springframework.http.MediaType.APPLICATION_JSON_UTF8_VALUE;
+import static org.springframework.http.MediaType.APPLICATION_JSON_VALUE;
 
 /**
  * @author gyd
@@ -89,7 +89,7 @@ public class JWTBasicAuthenticationFilter extends OncePerRequestFilter {
      * @param header 请求头
      * @param response response
      *
-     * @return
+     * @return string
      */
     private String getUserName(String header, HttpServletResponse response) {
         try {
@@ -107,7 +107,7 @@ public class JWTBasicAuthenticationFilter extends OncePerRequestFilter {
      */
     @SneakyThrows
     public void exceptionResponse(HttpServletResponse response, ResponseEntity responseEntity) {
-        response.setContentType(APPLICATION_JSON_UTF8_VALUE);
+        response.setContentType(APPLICATION_JSON_VALUE);
         response.setStatus(HttpStatus.UNAUTHORIZED.value());
         response.getWriter().write(JSON.toJSONString(responseEntity));
     }

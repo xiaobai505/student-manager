@@ -11,7 +11,6 @@ import com.diboot.core.util.D;
 import io.jsonwebtoken.Clock;
 import io.jsonwebtoken.impl.DefaultClock;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -27,7 +26,7 @@ import java.util.Date;
 import java.util.HashMap;
 
 import static com.agoni.security.config.constants.SecurityConstants.*;
-import static org.springframework.http.MediaType.APPLICATION_JSON_UTF8_VALUE;
+import static org.springframework.http.MediaType.APPLICATION_JSON_VALUE;
 
 
 /**
@@ -44,9 +43,6 @@ public class LoginSuccessHandler implements AuthenticationSuccessHandler {
     private LogininforService logininforService;
     @Resource
     private JwtTokenUtil jwtTokenUtil;
-    @Resource
-    private StringRedisTemplate stringRedisTemplate;
-
     @Resource
     private TokenCacheManger tokenCacheManger;
     
@@ -70,7 +66,7 @@ public class LoginSuccessHandler implements AuthenticationSuccessHandler {
         String clientId = jwtConfiguration.getMultipleLogin() ? IdWorker.getIdStr() : "0";
         HashMap<String, Object> tokenMap = getTokenMap(username, clientId);
         
-        response.setContentType(APPLICATION_JSON_UTF8_VALUE);
+        response.setContentType(APPLICATION_JSON_VALUE);
         response.setStatus(HttpStatus.OK.value());
         response.getWriter().write(JSON.toJSONString(ResponseEntity.body(tokenMap)));
         // 登录成功记录
@@ -93,13 +89,14 @@ public class LoginSuccessHandler implements AuthenticationSuccessHandler {
         String refreshKey = REFRESH_TOKEN + "::" + username + "::" + clientId;
         tokenCacheManger.putRefreshToken(refreshKey, refreshToken);
 
-
         HashMap<String, Object> map = new HashMap<>(8);
         map.put("username",username);
         map.put(ACCESS_TOKEN, accessToken);
         map.put(REFRESH_TOKEN, refreshToken);
-        // 过期时间
-        Date expires = new Date(CLOCK.now().getTime() + 5 * MINUTE);
+        // 过期时间 redis存放时间为300秒，当前时间加300秒
+        // 60 * 1000L = 一分钟
+        // jwtConfiguration.getAccessExpireTime() == 300
+        Date expires = new Date(CLOCK.now().getTime() + 1000 * jwtConfiguration.getAccessExpireTime());
         map.put(EXPIRES, D.convert2DateTimeString(expires));
         // 权限
         map.put("roles",Arrays.asList("admin","test"));
