@@ -27,6 +27,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
+import static org.springframework.http.MediaType.APPLICATION_JSON_UTF8_VALUE;
+
 /**
  * @author gyd
  */
@@ -40,7 +42,6 @@ public class JWTBasicAuthenticationFilter extends OncePerRequestFilter {
     private UserCache userCache;
     @Resource
     private JwtConfiguration jwtConfiguration;
-
     @Resource
     private TokenCacheManger tokenCacheManger;
 
@@ -61,25 +62,28 @@ public class JWTBasicAuthenticationFilter extends OncePerRequestFilter {
             chain.doFilter(request, response);
             return;
         }
-        
-        // 3：SecurityContextHolder 没有用户，查询数据库，把权限放到 SecurityContextHolder
-        UsernamePasswordAuthenticationToken authentication = getAuthenticationToken(userName);
-        authentication.setDetails(new WebAuthenticationDetailsSource().buildDetails(request));
-        SecurityContextHolder.getContext().setAuthentication(authentication);
-        
+        // 4.如果没有过期 且当前上下文中没有用户信息 通过token 获取到user信息 放入到 securitycontext 进入下一个过滤器。
+        if (SecurityContextHolder.getContext().getAuthentication() == null) {
+            log.warn(" SecurityContextHolder 没有 ！！！");
+        }
+        setAuthentication(userName,request);
+
         chain.doFilter(request, response);
     }
 
-    public UsernamePasswordAuthenticationToken getAuthenticationToken(String userName) {
+    private void setAuthentication(String userName, HttpServletRequest request) {
         // UserCache先从缓存里面找,没有的话,会自动调用loadUserByUsername
         UserDetails userDetails = userCache.getUserFromCache(userName);
         if (userDetails == null) {
             // 根据用户名去查找用户的权限信息
             userDetails = authUserService.loadUserByUsername(userName);
         }
-        return new UsernamePasswordAuthenticationToken(userDetails, null, userDetails.getAuthorities());
+        UsernamePasswordAuthenticationToken authentication =
+                new UsernamePasswordAuthenticationToken(userDetails, null, userDetails.getAuthorities());
+        authentication.setDetails(new WebAuthenticationDetailsSource().buildDetails(request));
+        SecurityContextHolder.getContext().setAuthentication(authentication);
     }
-    
+
     /**
      * 解析token，返回用户名
      * @param header 请求头
@@ -91,7 +95,6 @@ public class JWTBasicAuthenticationFilter extends OncePerRequestFilter {
         try {
             return JwtTokenUtil.getUserName(header.replace(SecurityConstants.TOKEN_PREFIX, ""));
         } catch (Exception e) {
-            log.error("解析 token 失败了");
             this.exceptionResponse(response, ResponseEntity.body(ResponseCodeEnum.TOKEN_CHECK_FAIL));
         }
         return null;
@@ -104,9 +107,7 @@ public class JWTBasicAuthenticationFilter extends OncePerRequestFilter {
      */
     @SneakyThrows
     public void exceptionResponse(HttpServletResponse response, ResponseEntity responseEntity) {
-        response.setHeader("Access-Control-Allow-Origin", "*");
-        response.setHeader("Cache-Control", "no-cache");
-        response.setContentType("application/json;charset=utf-8");
+        response.setContentType(APPLICATION_JSON_UTF8_VALUE);
         response.setStatus(HttpStatus.UNAUTHORIZED.value());
         response.getWriter().write(JSON.toJSONString(responseEntity));
     }

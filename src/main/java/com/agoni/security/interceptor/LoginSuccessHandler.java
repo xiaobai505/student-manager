@@ -1,12 +1,13 @@
 package com.agoni.security.interceptor;
 
+import com.agoni.core.cache.TokenCacheManger;
 import com.agoni.security.config.constants.JwtConfiguration;
-import com.agoni.security.config.constants.SecurityConstants;
 import com.agoni.security.utils.JwtTokenUtil;
 import com.agoni.system.response.ResponseEntity;
 import com.agoni.system.service.LogininforService;
 import com.alibaba.fastjson2.JSON;
 import com.baomidou.mybatisplus.core.toolkit.IdWorker;
+import com.diboot.core.util.D;
 import io.jsonwebtoken.Clock;
 import io.jsonwebtoken.impl.DefaultClock;
 import lombok.extern.slf4j.Slf4j;
@@ -21,13 +22,12 @@ import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
-import java.text.SimpleDateFormat;
 import java.util.Arrays;
 import java.util.Date;
 import java.util.HashMap;
-import java.util.concurrent.TimeUnit;
 
 import static com.agoni.security.config.constants.SecurityConstants.*;
+import static org.springframework.http.MediaType.APPLICATION_JSON_UTF8_VALUE;
 
 
 /**
@@ -46,6 +46,9 @@ public class LoginSuccessHandler implements AuthenticationSuccessHandler {
     private JwtTokenUtil jwtTokenUtil;
     @Resource
     private StringRedisTemplate stringRedisTemplate;
+
+    @Resource
+    private TokenCacheManger tokenCacheManger;
     
     private static final Clock CLOCK = DefaultClock.INSTANCE;
 
@@ -64,12 +67,10 @@ public class LoginSuccessHandler implements AuthenticationSuccessHandler {
         UserDetails principal = (UserDetails) authentication.getPrincipal();
         String username = principal.getUsername();
         // multipleLogin为true时,每次登录成功后产生一个新的clientId,如果为false,则clientId都为0
-        HashMap<String, Object> tokenMap = getTokenMap(username, jwtConfiguration.getMultipleLogin()
-                ? IdWorker.getIdStr() : "0");
+        String clientId = jwtConfiguration.getMultipleLogin() ? IdWorker.getIdStr() : "0";
+        HashMap<String, Object> tokenMap = getTokenMap(username, clientId);
         
-        response.setHeader("Access-Control-Allow-Origin", "*");
-        response.setHeader("Cache-Control", "no-cache");
-        response.setContentType("application/json;charset=utf-8");
+        response.setContentType(APPLICATION_JSON_UTF8_VALUE);
         response.setStatus(HttpStatus.OK.value());
         response.getWriter().write(JSON.toJSONString(ResponseEntity.body(tokenMap)));
         // 登录成功记录
@@ -82,27 +83,24 @@ public class LoginSuccessHandler implements AuthenticationSuccessHandler {
      *
      * @return HashMap<String, Object>
      */
-    HashMap<String, Object> getTokenMap(String username,String clientId){
-        HashMap<String, Object> map = new HashMap<>(8);
-        // username
-        map.put("username",username);
+    HashMap<String, Object> getTokenMap(String username, String clientId) {
         // accessToken
-        String accessToken = jwtTokenUtil.generateToken(username,clientId);
-        stringRedisTemplate.opsForValue().set(SecurityConstants.ACCESS_TOKEN + "::" + username + "::" + clientId,
-                accessToken, jwtConfiguration.getExpireTime(), TimeUnit.SECONDS);
-        map.put(ACCESS_TOKEN, accessToken);
-        
+        String accessToken = jwtTokenUtil.generateToken(username, clientId);
+        String accessKey = ACCESS_TOKEN + "::" + username + "::" + clientId;
+        tokenCacheManger.putAccessToken(accessKey, accessToken);
         // refreshToken
         String refreshToken = jwtTokenUtil.generateToken(REFRESH_TOKEN + ":" + username, clientId);
-        stringRedisTemplate.opsForValue().set(REFRESH_TOKEN + "::" + username + "::" + clientId,
-                refreshToken, jwtConfiguration.getRefreshExpireTime(), TimeUnit.SECONDS);
+        String refreshKey = REFRESH_TOKEN + "::" + username + "::" + clientId;
+        tokenCacheManger.putRefreshToken(refreshKey, refreshToken);
+
+
+        HashMap<String, Object> map = new HashMap<>(8);
+        map.put("username",username);
+        map.put(ACCESS_TOKEN, accessToken);
         map.put(REFRESH_TOKEN, refreshToken);
-    
         // 过期时间
         Date expires = new Date(CLOCK.now().getTime() + 5 * MINUTE);
-        SimpleDateFormat sdf = new SimpleDateFormat("yyyy/MM/dd/ HH:mm:ss");
-        map.put(EXPIRES, sdf.format(expires));
-
+        map.put(EXPIRES, D.convert2DateTimeString(expires));
         // 权限
         map.put("roles",Arrays.asList("admin","test"));
         return map;

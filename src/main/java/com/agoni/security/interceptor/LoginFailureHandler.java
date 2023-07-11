@@ -14,6 +14,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
+import static org.springframework.http.MediaType.APPLICATION_JSON_UTF8_VALUE;
+
 /**
  * 登录失败
  * @author Admin
@@ -34,9 +36,7 @@ public class LoginFailureHandler implements AuthenticationFailureHandler {
      */
     @Override
     public void onAuthenticationFailure(HttpServletRequest request, HttpServletResponse response, AuthenticationException exception) throws IOException {
-        response.setHeader("Access-Control-Allow-Origin", "*");
-        response.setHeader("Cache-Control","no-cache");
-        response.setContentType("application/json;charset=utf-8");
+        response.setContentType(APPLICATION_JSON_UTF8_VALUE);
         response.setStatus(HttpStatus.BAD_REQUEST.value());
         response.getWriter().write(JSON.toJSONString(ResponseEntity.body(ResponseCodeEnum.LOGIN_FAILURE)));
         logininforService.asyncLogininfor("***", "1", LOGIN_FAILURE);
