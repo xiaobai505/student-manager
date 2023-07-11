@@ -1,4 +1,4 @@
-package com.agoni.system.config;
+package com.agoni.core.mybatisplus;
 
 import com.agoni.system.utils.UserUtil;
 import com.baomidou.mybatisplus.annotation.DbType;

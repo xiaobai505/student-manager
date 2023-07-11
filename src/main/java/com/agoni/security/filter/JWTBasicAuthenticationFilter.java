@@ -1,5 +1,7 @@
 package com.agoni.security.filter;
 
+import com.agoni.core.cache.TokenCacheManger;
+import com.agoni.security.config.constants.JwtConfiguration;
 import com.agoni.security.config.constants.SecurityConstants;
 import com.agoni.security.service.AuthUserService;
 import com.agoni.security.utils.JwtTokenUtil;
@@ -31,16 +33,21 @@ import java.io.IOException;
 @Slf4j
 @Component
 public class JWTBasicAuthenticationFilter extends OncePerRequestFilter {
-    
+
     @Resource
     AuthUserService authUserService;
     @Resource
     private UserCache userCache;
+    @Resource
+    private JwtConfiguration jwtConfiguration;
+
+    @Resource
+    private TokenCacheManger tokenCacheManger;
 
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain chain) throws IOException, ServletException {
         // 1: 请求头没有token ，直接去下一个过滤器
-        String header = request.getHeader(SecurityConstants.TOKEN_HEADER);
+        String header = request.getHeader(jwtConfiguration.getHeader());
 
         if (header == null || !header.startsWith(SecurityConstants.TOKEN_PREFIX)) {
             chain.doFilter(request, response);

@@ -1,11 +1,11 @@
 package com.agoni.dgy.controller;
 
 
+import com.agoni.core.thread.ExecutorConfig;
 import com.agoni.dgy.model.po.Result;
 import com.agoni.dgy.model.query.ResultQuery;
 import com.agoni.dgy.model.vo.ResultVo;
 import com.agoni.dgy.service.ResultService;
-import com.agoni.system.config.ExecutorConfig;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;

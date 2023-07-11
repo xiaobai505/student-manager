@@ -25,12 +25,19 @@ mybatis-plus:
     log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
 
 # jwt创建 超时时间 和 密钥
-JWT:
-  SecurityKey: dgy
+jwt:
+  securityKey: dongyyds
+  #jwt token的头
+  header: Authorization
+  #失效时间-秒（可以设置成一个周，但没有什么用,真正整个登录的过期控制交给redis的失效时间）,设置规则(必须):expiration > refreshExpireTime > expireTime
+  expiration: 604800
   #token存储在redis的有效时间,登录失效时间-秒,多长时间不操作token,需要用刷新token来重新生成登录token秒.值设置的越小，统计在线人数就越精确，但是调用刷新token的请求也会越频繁
-  expireTime: 100
+  expireTime: 300
   #refreshToken存储在redis的存在时间,刷新token过期时间-秒，这个时间是真正的多长时间不操作就重新登录的时间
   refreshExpireTime: 86400
+  #是否检查token过期,设置false后会忽略redis的过期时间（expireTime），直接使用token的失效时间（expiration）
+  #建议测试环境设置为false，做接口测试更方便，但是生产环境一定要设置成true
+  checkExpired: false
   #是否允许一个账号多个设备登录,如果为false,一个账号登录后会自动踢出已经登录的账号
   multipleLogin: true
 

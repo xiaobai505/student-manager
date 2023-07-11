@@ -1,4 +1,4 @@
-package com.agoni.system.config;
+package com.agoni.core.cache;
 
 import com.fasterxml.jackson.annotation.JsonAutoDetect;
 import com.fasterxml.jackson.annotation.JsonInclude;

@@ -1,4 +1,4 @@
-package com.agoni.system.config;
+package com.agoni.core.swagger;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;

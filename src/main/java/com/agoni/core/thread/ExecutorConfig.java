@@ -1,4 +1,4 @@
-package com.agoni.system.config;
+package com.agoni.core.thread;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;

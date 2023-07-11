@@ -1,5 +1,6 @@
 package com.agoni.security.interceptor;
 
+import com.agoni.security.config.constants.JwtConfiguration;
 import com.agoni.security.config.constants.SecurityConstants;
 import com.agoni.security.utils.JwtTokenUtil;
 import com.agoni.system.response.ResponseEntity;
@@ -9,7 +10,6 @@ import com.baomidou.mybatisplus.core.toolkit.IdWorker;
 import io.jsonwebtoken.Clock;
 import io.jsonwebtoken.impl.DefaultClock;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.core.Authentication;
@@ -27,6 +27,8 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.concurrent.TimeUnit;
 
+import static com.agoni.security.config.constants.SecurityConstants.*;
+
 
 /**
  * @author gyd
@@ -34,24 +36,8 @@ import java.util.concurrent.TimeUnit;
 @Component
 @Slf4j
 public class LoginSuccessHandler implements AuthenticationSuccessHandler {
-    
-    /**
-     * 是否允许一个账号多个设备登录
-     */
-    @Value("${JWT.multipleLogin}")
-    private boolean multipleLogin;
-    
-    /**
-     * 登录失效时间（多长时间不操作重新登录）
-     */
-    @Value("${JWT.expireTime}")
-    private Integer expireTime;
-    
-    /**
-     * 刷新失效时间（多长时间不操作重新登录）
-     */
-    @Value("${JWT.refreshExpireTime}")
-    private Integer refreshExpireTime;
+    @Resource
+    private JwtConfiguration jwtConfiguration;
     
     public static final String LOGIN_SUCCESS = "登录成功";
     @Resource
@@ -78,7 +64,8 @@ public class LoginSuccessHandler implements AuthenticationSuccessHandler {
         UserDetails principal = (UserDetails) authentication.getPrincipal();
         String username = principal.getUsername();
         // multipleLogin为true时,每次登录成功后产生一个新的clientId,如果为false,则clientId都为0
-        HashMap<String, Object> tokenMap = getTokenMap(username, multipleLogin ? IdWorker.getIdStr() : "0");
+        HashMap<String, Object> tokenMap = getTokenMap(username, jwtConfiguration.getMultipleLogin()
+                ? IdWorker.getIdStr() : "0");
         
         response.setHeader("Access-Control-Allow-Origin", "*");
         response.setHeader("Cache-Control", "no-cache");
@@ -102,21 +89,20 @@ public class LoginSuccessHandler implements AuthenticationSuccessHandler {
         // accessToken
         String accessToken = jwtTokenUtil.generateToken(username,clientId);
         stringRedisTemplate.opsForValue().set(SecurityConstants.ACCESS_TOKEN + "::" + username + "::" + clientId,
-                accessToken, expireTime, TimeUnit.SECONDS);
-        map.put(SecurityConstants.ACCESS_TOKEN, accessToken);
+                accessToken, jwtConfiguration.getExpireTime(), TimeUnit.SECONDS);
+        map.put(ACCESS_TOKEN, accessToken);
         
         // refreshToken
-        String refreshToken = jwtTokenUtil.generateToken(SecurityConstants.REFRESH_TOKEN + ":" + username, clientId);
-        stringRedisTemplate.opsForValue().set(SecurityConstants.REFRESH_TOKEN + "::" + username + "::" + clientId,
-                refreshToken, refreshExpireTime, TimeUnit.SECONDS);
-        map.put(SecurityConstants.REFRESH_TOKEN, refreshToken);
+        String refreshToken = jwtTokenUtil.generateToken(REFRESH_TOKEN + ":" + username, clientId);
+        stringRedisTemplate.opsForValue().set(REFRESH_TOKEN + "::" + username + "::" + clientId,
+                refreshToken, jwtConfiguration.getRefreshExpireTime(), TimeUnit.SECONDS);
+        map.put(REFRESH_TOKEN, refreshToken);
     
         // 过期时间
-        final Date createdDate = CLOCK.now();
-        Date expires = new Date(createdDate.getTime() + expireTime * 1000);
+        Date expires = new Date(CLOCK.now().getTime() + 5 * MINUTE);
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy/MM/dd/ HH:mm:ss");
-        map.put(SecurityConstants.EXPIRES, sdf.format(expires));
-        
+        map.put(EXPIRES, sdf.format(expires));
+
         // 权限
         map.put("roles",Arrays.asList("admin","test"));
         return map;
