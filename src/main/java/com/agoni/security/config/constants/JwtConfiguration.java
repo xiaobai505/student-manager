@@ -24,12 +24,7 @@ public class JwtConfiguration {
     /**
      * jwt加密秘钥
      */
-    private String secret;
-
-    /**
-     * jwt解密秘钥
-     */
-    private String decrypt;
+    private String securityKey;
 
     /**
      * accessToken存储在redis的有效时间
@@ -40,11 +35,6 @@ public class JwtConfiguration {
      * refreshToken存储在redis的存在时间
      */
     private Integer refreshExpireTime;
-
-    /**
-     * 是否检查token过期
-     */
-    private Boolean checkExpired;
 
     /**
      * 是否允许一个账号多个设备登录

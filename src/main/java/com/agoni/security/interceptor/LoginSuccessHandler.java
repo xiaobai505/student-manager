@@ -1,13 +1,15 @@
 package com.agoni.security.interceptor;
 
+import cn.hutool.core.date.DateTime;
+import cn.hutool.core.date.DateUtil;
 import com.agoni.core.cache.TokenCacheManger;
 import com.agoni.security.config.constants.JwtConfiguration;
+import com.agoni.security.model.TokenVo;
 import com.agoni.security.utils.JwtTokenUtil;
 import com.agoni.system.response.ResponseEntity;
 import com.agoni.system.service.LogininforService;
 import com.alibaba.fastjson2.JSON;
 import com.baomidou.mybatisplus.core.toolkit.IdWorker;
-import com.diboot.core.util.D;
 import io.jsonwebtoken.Clock;
 import io.jsonwebtoken.impl.DefaultClock;
 import lombok.extern.slf4j.Slf4j;
@@ -21,11 +23,9 @@ import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
-import java.util.Arrays;
-import java.util.Date;
-import java.util.HashMap;
 
-import static com.agoni.security.config.constants.SecurityConstants.*;
+import static com.agoni.security.config.constants.SecurityConstants.ACCESS_TOKEN;
+import static com.agoni.security.config.constants.SecurityConstants.REFRESH_TOKEN;
 import static org.springframework.http.MediaType.APPLICATION_JSON_VALUE;
 
 
@@ -64,11 +64,11 @@ public class LoginSuccessHandler implements AuthenticationSuccessHandler {
         String username = principal.getUsername();
         // multipleLogin为true时,每次登录成功后产生一个新的clientId,如果为false,则clientId都为0
         String clientId = jwtConfiguration.getMultipleLogin() ? IdWorker.getIdStr() : "0";
-        HashMap<String, Object> tokenMap = getTokenMap(username, clientId);
-        
+        TokenVo tokenVo = getTokenMap(username, clientId);
+
         response.setContentType(APPLICATION_JSON_VALUE);
         response.setStatus(HttpStatus.OK.value());
-        response.getWriter().write(JSON.toJSONString(ResponseEntity.body(tokenMap)));
+        response.getWriter().write(JSON.toJSONString(ResponseEntity.body(tokenVo)));
         // 登录成功记录
         logininforService.asyncLogininfor(principal.getUsername(), "0", LOGIN_SUCCESS);
     }
@@ -79,27 +79,26 @@ public class LoginSuccessHandler implements AuthenticationSuccessHandler {
      *
      * @return HashMap<String, Object>
      */
-    HashMap<String, Object> getTokenMap(String username, String clientId) {
-        // accessToken
+    private TokenVo getTokenMap(String username, String clientId) {
+        // accessToken 和 refreshToken
         String accessToken = jwtTokenUtil.generateToken(username, clientId);
+        DateTime expirationDate = DateUtil.offsetMillisecond(DateUtil.date(), jwtConfiguration.getRefreshExpireTime());
+        String refreshToken = jwtTokenUtil.generateToken(REFRESH_TOKEN + ":" + username, clientId, expirationDate);
+        // 保存到redis
         String accessKey = ACCESS_TOKEN + "::" + username + "::" + clientId;
-        tokenCacheManger.putAccessToken(accessKey, accessToken);
-        // refreshToken
-        String refreshToken = jwtTokenUtil.generateToken(REFRESH_TOKEN + ":" + username, clientId);
         String refreshKey = REFRESH_TOKEN + "::" + username + "::" + clientId;
+        tokenCacheManger.putAccessToken(accessKey, accessToken);
         tokenCacheManger.putRefreshToken(refreshKey, refreshToken);
 
-        HashMap<String, Object> map = new HashMap<>(8);
-        map.put("username",username);
-        map.put(ACCESS_TOKEN, accessToken);
-        map.put(REFRESH_TOKEN, refreshToken);
-        // 过期时间 redis存放时间为300秒，当前时间加300秒
-        // 60 * 1000L = 一分钟
-        // jwtConfiguration.getAccessExpireTime() == 300
-        Date expires = new Date(CLOCK.now().getTime() + 1000 * jwtConfiguration.getAccessExpireTime());
-        map.put(EXPIRES, D.convert2DateTimeString(expires));
-        // 权限
-        map.put("roles",Arrays.asList("admin","test"));
-        return map;
+        // 当前时间偏移 jwtConfiguration.getAccessExpireTime() 后为过期时间
+        DateTime expires = DateUtil.offsetMillisecond(DateUtil.date(), jwtConfiguration.getAccessExpireTime());
+        TokenVo build = TokenVo
+                .builder()
+                .username(username)
+                .accessToken(accessToken)
+                .refreshToken(refreshToken)
+                .expires(expires)
+                .build();
+        return build;
     }
 }

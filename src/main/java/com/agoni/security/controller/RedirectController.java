@@ -1,28 +1,27 @@
 package com.agoni.security.controller;
 
+import cn.hutool.core.date.DateTime;
+import cn.hutool.core.date.DateUtil;
 import cn.hutool.core.util.StrUtil;
 import com.agoni.core.cache.TokenCacheManger;
+import com.agoni.security.config.constants.JwtConfiguration;
+import com.agoni.security.model.TokenFrom;
+import com.agoni.security.model.TokenVo;
 import com.agoni.security.utils.JwtTokenUtil;
+import com.agoni.system.response.ResponseEntity;
 import com.agoni.system.utils.UserUtil;
-import io.jsonwebtoken.Clock;
-import io.jsonwebtoken.impl.DefaultClock;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.validation.annotation.Validated;
+import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
-import java.text.SimpleDateFormat;
-import java.util.Date;
-import java.util.HashMap;
 
-import static com.agoni.security.config.constants.SecurityConstants.*;
+import static com.agoni.security.config.constants.SecurityConstants.REFRESH_TOKEN;
 
+@Slf4j
+@CrossOrigin
 @RestController
 @RequestMapping("/auth")
-@CrossOrigin
-@Slf4j
 public class RedirectController {
 
     @Resource
@@ -30,25 +29,29 @@ public class RedirectController {
     @Resource
     private TokenCacheManger tokenCacheManger;
 
-    private static final Clock CLOCK = DefaultClock.INSTANCE;
-    @PostMapping("/refreshToken")
-    public HashMap checkToken(String refreshToken){
-        // 校验 refreshToken
-        checkRefreshToken(refreshToken);
-        // 生成新的 token
-        String clientId = jwtTokenUtil.getClientId(refreshToken);
-        String accessToken = jwtTokenUtil.generateToken(UserUtil.getUserName(), clientId);
-        // 更新token过期时间，一般是不会过期的(还是更新一下)
-        tokenCacheManger.refreshRefreshToken(REFRESH_TOKEN + ":" + UserUtil.getUserName());
+    @Resource
+    private JwtConfiguration jwtConfiguration;
 
-        HashMap<String, Object> map = new HashMap<>(8);
-        map.put(ACCESS_TOKEN, accessToken);
-        map.put(REFRESH_TOKEN, refreshToken);
-        // 过期时间
-        Date expires = new Date(CLOCK.now().getTime() + 5 * MINUTE);
-        SimpleDateFormat sdf = new SimpleDateFormat("yyyy/MM/dd/ HH:mm:ss");
-        map.put(EXPIRES, sdf.format(expires));
-        return map;
+    @PostMapping("/refreshToken")
+    public ResponseEntity<TokenVo> checkToken(@Validated @RequestBody TokenFrom tokenFrom) {
+        // 校验 refreshToken
+        checkRefreshToken(tokenFrom.getRefreshToken());
+        // 获取 clientId
+        String clientId = JwtTokenUtil.getClientId(tokenFrom.getRefreshToken());
+        String userName = JwtTokenUtil.getUserName(tokenFrom.getRefreshToken());
+        // 生成新的 token
+        String accessToken = jwtTokenUtil.generateToken(userName, clientId);
+        // 没必要在更新 refreshToken，过期就没办法解析了。
+
+        // 当前时间偏移 jwtConfiguration.getAccessExpireTime() 后为过期时间
+        DateTime expires = DateUtil.offsetMillisecond(DateUtil.date(), jwtConfiguration.getAccessExpireTime());
+        TokenVo build = TokenVo
+                .builder()
+                .accessToken(accessToken)
+                .refreshToken(tokenFrom.getRefreshToken())
+                .expires(expires)
+                .build();
+        return ResponseEntity.body(build);
     }
 
     private void checkRefreshToken(String refreshToken) {
@@ -62,6 +65,11 @@ public class RedirectController {
         if (!StrUtil.equals(refreshTokenStr, refreshToken)) {
             log.error("拿一个很久以前的refreshToken来,但redis里面是新生成的");
         }
+    }
+
+    @PostMapping("/test")
+    public String checkToken2(String refreshToken){
+        return "ok";
     }
 
 }

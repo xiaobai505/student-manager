@@ -17,7 +17,7 @@ import java.util.List;
  * @author gyd
  */
 @RestController
-@RequestMapping("/dgy/dept")
+@RequestMapping("/sys/dept")
 @Api(tags = "部门")
 public class DeptController {
     

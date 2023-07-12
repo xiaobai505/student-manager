@@ -3,17 +3,9 @@ package com.agoni.security.config.constants;
 public final class SecurityConstants {
     
     /**
-     * 分钟
-     */
-    public static final long MINUTE = 60 * 1000L;
-    /**
      * Bearer 开头的token
      */
     public static final String TOKEN_PREFIX = "Bearer ";
-    /**
-     * 过期时间
-     */
-    public static final String EXPIRES ="expires";
     /**
      * 存放访问token的key前缀
      */

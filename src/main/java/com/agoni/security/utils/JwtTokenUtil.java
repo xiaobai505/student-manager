@@ -1,12 +1,12 @@
 package com.agoni.security.utils;
 
+import cn.hutool.core.date.DateTime;
+import cn.hutool.core.date.DateUtil;
 import com.agoni.security.config.constants.JwtConfiguration;
 import com.agoni.security.config.constants.SecurityConstants;
 import io.jsonwebtoken.Claims;
-import io.jsonwebtoken.Clock;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
-import io.jsonwebtoken.impl.DefaultClock;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
 
@@ -23,9 +23,9 @@ import java.util.Map;
 public class JwtTokenUtil implements Serializable {
 
     private static final String SECURITY_KEY = "dongyyds";
-    private static final Clock CLOCK = DefaultClock.INSTANCE;
     private static final String CLIENT_ID = "clientId";
-
+    private static final String USER_NAME = "userName";
+    private static final String REFRESH_TOKEN = "refreshToken:";
     private final JwtConfiguration jwtConfiguration;
 
     public JwtTokenUtil(JwtConfiguration configuration) {
@@ -42,18 +42,17 @@ public class JwtTokenUtil implements Serializable {
         return getTokenBody(token).getSubject();
     }
     
-
     /**
      * 获取 ClientId
      * @param token token值
      *
      * @return ClientId
      */
-    public String getClientId(String token) {
+    public static String getClientId(String token) {
         final Claims claims = getTokenBody(token);
         return (String) claims.get(CLIENT_ID);
     }
-    
+
     /**
      * 查看token过期时间
      *
@@ -70,7 +69,7 @@ public class JwtTokenUtil implements Serializable {
      * Token是否过期
      */
     public static boolean isExpiration(String token) {
-        return getTokenExpirationDate(token).before(new Date());
+        return getTokenExpirationDate(token).before(DateUtil.date());
     }
     
     /**
@@ -82,17 +81,33 @@ public class JwtTokenUtil implements Serializable {
      * @author t-guoyu.dong@pcitc.com
      * @date 2023-05-26
      */
-    public  String generateToken(String username, String clientId) {
-        final Date expirationDate = calculateExpirationDate(CLOCK.now());
+    public String generateToken(String username, String clientId) {
+        final Date expirationDate = calculateExpirationDate(DateUtil.date());
+        return generateToken(username, clientId, expirationDate);
+    }
+
+    /**
+     * 创建Token
+     *
+     * @param username 用户名
+     * @param clientId 客户端编号
+     * @param expirationDate 过期时间
+     * @return java.lang.String
+     * @author t-guoyu.dong@pcitc.com
+     * @date 2023-05-26
+     */
+    public String generateToken(String userName, String clientId, Date expirationDate) {
         Map<String, Object> claims = new HashMap<>(16);
         claims.put(CLIENT_ID, clientId);
+        userName = userName.replace(REFRESH_TOKEN, "");
+        claims.put(USER_NAME, userName);
         String tokenPrefix = Jwts.builder()
-                                 .setClaims(claims)
-                                 .setSubject(username)
-                                 .setIssuedAt(CLOCK.now())
-                                 .setExpiration(expirationDate)
-                                 .signWith(SignatureAlgorithm.HS512, SECURITY_KEY)
-                                 .compact();
+                .setClaims(claims)
+                .setSubject(userName)
+                .setIssuedAt(DateUtil.date())
+                .setExpiration(expirationDate)
+                .signWith(SignatureAlgorithm.HS512, SECURITY_KEY)
+                .compact();
         return tokenPrefix;
     }
     
@@ -111,8 +126,8 @@ public class JwtTokenUtil implements Serializable {
                    .getBody();
     }
 
-    private Date calculateExpirationDate(Date createdDate) {
-        return new Date(createdDate.getTime() + jwtConfiguration.getAccessExpireTime() * 1000);
-        // return new Date(createdDate.getTime() + 5 * MINUTE);
+    private DateTime calculateExpirationDate(DateTime createdDate) {
+        // DateUtil
+        return DateUtil.offsetMillisecond(createdDate, jwtConfiguration.getAccessExpireTime());
     }
 }
