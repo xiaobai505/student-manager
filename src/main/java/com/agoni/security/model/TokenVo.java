@@ -6,6 +6,8 @@ import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 import lombok.experimental.SuperBuilder;
 
+import java.util.List;
+
 /**
  * 返回前端的token对象
  *
@@ -29,4 +31,7 @@ public class TokenVo {
 
     @ApiModelProperty("过期时间")
     private DateTime expires;
+
+    @ApiModelProperty("对应用户角色")
+    private List<String> roles;
 }

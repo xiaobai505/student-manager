@@ -1,7 +1,14 @@
 package com.agoni.security.service.impl;
 
+import cn.hutool.core.date.DateTime;
+import cn.hutool.core.date.DateUtil;
+import cn.hutool.core.util.StrUtil;
+import com.agoni.core.cache.TokenCacheManger;
 import com.agoni.core.diboot.Binder;
+import com.agoni.security.config.constants.JwtConfiguration;
+import com.agoni.security.model.TokenVo;
 import com.agoni.security.service.AuthUserService;
+import com.agoni.security.utils.JwtTokenUtil;
 import com.agoni.system.model.po.User;
 import com.agoni.system.model.vo.AuthUserVo;
 import com.agoni.system.service.UserService;
@@ -11,6 +18,11 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
+import java.util.Arrays;
+import java.util.List;
+
+import static com.agoni.security.config.constants.SecurityConstants.ACCESS_TOKEN;
+import static com.agoni.security.config.constants.SecurityConstants.REFRESH_TOKEN;
 
 /**
  * @author Admin
@@ -23,6 +35,12 @@ public class AuthUserServiceImpl implements AuthUserService {
     private UserService userService;
     @Resource
     private UserCache userCache;
+    @Resource
+    private JwtTokenUtil jwtTokenUtil;
+    @Resource
+    private JwtConfiguration jwtConfiguration;
+    @Resource
+    private TokenCacheManger tokenCacheManger;
 
     /**
      * Locates the user based on the username. In the actual implementation, the search
@@ -46,5 +64,54 @@ public class AuthUserServiceImpl implements AuthUserService {
         // 3：把用户放入到缓存
         userCache.putUserInCache(authUserVo);
         return authUserVo;
+    }
+
+    @Override
+    public TokenVo refreshToken(String refreshToken) {
+        String userName = getUserName(refreshToken);
+        String clientId = JwtTokenUtil.getClientId(refreshToken);
+        return getTokenVo(userName, clientId);
+    }
+
+    /**
+     * 校验 refreshToken 在JWT中是否过期
+     * @param refreshToken
+     * @return userName
+     */
+    private String getUserName(String refreshToken) {
+        try {
+            String userName = JwtTokenUtil.getUserName(refreshToken);
+            // 看下redis里面有没有这个refreshToken
+            String refreshTokenStr = tokenCacheManger.getRefreshToken(REFRESH_TOKEN + ":" + userName);
+            if (StrUtil.isBlank(refreshTokenStr)) {
+                log.error(" <refreshToken>过期了,redis也删除了!");
+            }
+            if (!StrUtil.equals(refreshTokenStr, refreshToken)) {
+                log.error(" <refreshToken>过期了, 但redis里面是新生成的");
+            }
+            return userName;
+        }catch (Exception e){
+            log.error("<refreshToken> 校验失败，需要重新登录！");
+        }
+        return null;
+    }
+
+    @Override
+    public TokenVo getTokenVo(String userName, String clientId) {
+        // accessToken 和 refreshToken
+        String accessToken = jwtTokenUtil.generateToken(userName, clientId);
+        DateTime expirationDate = DateUtil.offsetSecond(DateUtil.date(), jwtConfiguration.getRefreshExpireTime() * 2);
+        String refreshToken = jwtTokenUtil.generateToken(REFRESH_TOKEN + ":" + userName, clientId, expirationDate);
+        // 保存到redis
+        String accessKey = ACCESS_TOKEN + "::" + userName + "::" + clientId;
+        String refreshKey = REFRESH_TOKEN + "::" + userName + "::" + clientId;
+        tokenCacheManger.putAccessToken(accessKey, accessToken);
+        tokenCacheManger.putRefreshToken(refreshKey, refreshToken);
+
+        // 当前时间偏移 jwtConfiguration.getAccessExpireTime() 后为过期时间
+        DateTime expires = DateUtil.offsetSecond(DateUtil.date(), jwtConfiguration.getAccessExpireTime());
+        List<String> roles = Arrays.asList("admin");
+        return TokenVo.builder().username(userName).accessToken(accessToken)
+                .refreshToken(refreshToken).expires(expires).roles(roles).build();
     }
 }

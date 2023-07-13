@@ -40,32 +40,12 @@ public interface TokenCacheManger {
     void putRefreshToken(String key, String value);
 
     /**
-     * 排除AccessToken
+     * 排除Token
      *
      * @param key key
      */
-    void evictAccessToken(String key);
+    void evictToken(Set<String> key);
 
-    /**
-     * 排除RefreshToken
-     *
-     * @param key key
-     */
-    void evictRefreshToken(String key);
-
-    /**
-     * 刷新token
-     *
-     * @param key key
-     */
-    void refreshAccessToken(String key);
-
-    /**
-     * 刷新token
-     *
-     * @param key key
-     */
-    void refreshRefreshToken(String key);
 
     /**
      * 获取 accessTokenKeys

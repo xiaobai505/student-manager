@@ -89,7 +89,7 @@ public class JwtTokenUtil implements Serializable {
     /**
      * 创建Token
      *
-     * @param username 用户名
+     * @param userName 用户名
      * @param clientId 客户端编号
      * @param expirationDate 过期时间
      * @return java.lang.String
@@ -101,14 +101,13 @@ public class JwtTokenUtil implements Serializable {
         claims.put(CLIENT_ID, clientId);
         userName = userName.replace(REFRESH_TOKEN, "");
         claims.put(USER_NAME, userName);
-        String tokenPrefix = Jwts.builder()
+        return Jwts.builder()
                 .setClaims(claims)
                 .setSubject(userName)
                 .setIssuedAt(DateUtil.date())
                 .setExpiration(expirationDate)
                 .signWith(SignatureAlgorithm.HS512, SECURITY_KEY)
                 .compact();
-        return tokenPrefix;
     }
     
     /**
@@ -128,6 +127,6 @@ public class JwtTokenUtil implements Serializable {
 
     private DateTime calculateExpirationDate(DateTime createdDate) {
         // DateUtil
-        return DateUtil.offsetMillisecond(createdDate, jwtConfiguration.getAccessExpireTime());
+        return DateUtil.offsetSecond(createdDate, jwtConfiguration.getAccessExpireTime());
     }
 }

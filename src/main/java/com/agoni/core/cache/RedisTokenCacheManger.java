@@ -44,29 +44,13 @@ public class RedisTokenCacheManger implements TokenCacheManger {
     }
 
     @Override
-    public void evictAccessToken(String key) {
-//        Set<String> keys = stringRedisTemplate.keys(ACCESS_TOKEN + "::" + UserUtil.getName() + "::*");
-        stringRedisTemplate.delete(key);
-    }
-
-    @Override
-    public void evictRefreshToken(String key) {
-        stringRedisTemplate.delete(key);
-    }
-
-
-    @Override
-    public void refreshAccessToken(String key) {
-        stringRedisTemplate.expire(key, jwtConfiguration.getAccessExpireTime(), TimeUnit.SECONDS);
-    }
-
-    @Override
-    public void refreshRefreshToken(String key) {
-        stringRedisTemplate.expire(key, jwtConfiguration.getRefreshExpireTime(), TimeUnit.SECONDS);
+    public void evictToken(Set<String> keys) {
+        stringRedisTemplate.delete(keys);
     }
 
     @Override
     public Set<String> accessTokenKeys(String key) {
         return stringRedisTemplate.keys(key);
     }
+
 }

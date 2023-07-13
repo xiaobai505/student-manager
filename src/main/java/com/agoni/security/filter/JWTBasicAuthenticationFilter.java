@@ -1,6 +1,5 @@
 package com.agoni.security.filter;
 
-import com.agoni.core.cache.TokenCacheManger;
 import com.agoni.security.config.constants.JwtConfiguration;
 import com.agoni.security.config.constants.SecurityConstants;
 import com.agoni.security.service.AuthUserService;
@@ -42,8 +41,6 @@ public class JWTBasicAuthenticationFilter extends OncePerRequestFilter {
     private UserCache userCache;
     @Resource
     private JwtConfiguration jwtConfiguration;
-    @Resource
-    private TokenCacheManger tokenCacheManger;
 
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain chain) throws IOException, ServletException {
@@ -75,7 +72,7 @@ public class JWTBasicAuthenticationFilter extends OncePerRequestFilter {
         // UserCache先从缓存里面找,没有的话,会自动调用loadUserByUsername
         UserDetails userDetails = userCache.getUserFromCache(userName);
         if (userDetails == null) {
-            // 根据用户名去查找用户的权限信息
+            // 根据用户名去查找用户的权限信息 ，保存缓冲
             userDetails = authUserService.loadUserByUsername(userName);
         }
         UsernamePasswordAuthenticationToken authentication =
