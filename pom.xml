@@ -14,6 +14,18 @@
 		<spring.cloud.alibaba.version>2021.0.4.0</spring.cloud.alibaba.version>
 		<spring.cloud.version>2021.0.4</spring.cloud.version>
 		<spring.boot.version>2.6.11</spring.boot.version>
+		<log4j.version>1.2.17</log4j.version>
+		<mybatis-plus-boot-starter.version>3.5.3.1</mybatis-plus-boot-starter.version>
+		<druid.version>1.2.16</druid.version>
+		<druid-spring-boot-starter.version>1.2.16</druid-spring-boot-starter.version>
+		<weixin-java-mp.version>4.4.9.B</weixin-java-mp.version>
+		<spring-boot-starter-security.version>3.0.4</spring-boot-starter-security.version>
+		<jjwt.version>0.9.1</jjwt.version>
+		<diboot-core.version>3.0.0</diboot-core.version>
+		<dysmsapi20170525.version>2.0.23</dysmsapi20170525.version>
+		<hutool-all.version>5.8.18</hutool-all.version>
+		<springfox-boot-starter.version>3.0.0</springfox-boot-starter.version>
+		<fastjson2.version>2.0.25</fastjson2.version>
 	</properties>
 
 	<!--依赖版本定义-->
@@ -73,7 +85,7 @@
 		<dependency>
 			<groupId>log4j</groupId>
 			<artifactId>log4j</artifactId>
-			<version>1.2.17</version>
+			<version>${log4j.version}</version>
 		</dependency>
 
 		<!-- mysql -->
@@ -87,13 +99,13 @@
 		<dependency>
 			<groupId>com.alibaba</groupId>
 			<artifactId>druid</artifactId>
-			<version>1.2.16</version>
+			<version>${druid.version}</version>
 		</dependency>
 
 		<dependency>
 			<groupId>com.alibaba</groupId>
 			<artifactId>druid-spring-boot-starter</artifactId>
-			<version>1.2.16</version>
+			<version>${druid-spring-boot-starter.version}</version>
 		</dependency>
 
 		<dependency>
@@ -107,14 +119,14 @@
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-security</artifactId>
-			<version>3.0.4</version>
+			<version>${spring-boot-starter-security.version}</version>
 		</dependency>
 
 		<!--jwt加密-->
 		<dependency>
 			<groupId>io.jsonwebtoken</groupId>
 			<artifactId>jjwt</artifactId>
-			<version>0.9.1</version>
+			<version>${jjwt.version}</version>
 		</dependency>
 
 		<!--lombok-->
@@ -127,7 +139,7 @@
 		<dependency>
 			<groupId>com.baomidou</groupId>
 			<artifactId>mybatis-plus-boot-starter</artifactId>
-			<version>3.5.3.1</version>
+			<version>${mybatis-plus-boot-starter.version}</version>
 		</dependency>
 
 		<!--freemarker模板-->
@@ -140,35 +152,35 @@
 		<dependency>
 			<groupId>com.alibaba.fastjson2</groupId>
 			<artifactId>fastjson2</artifactId>
-			<version>2.0.25</version>
+			<version>${fastjson2.version}</version>
 		</dependency>
 
 		<!--微信登录等-->
 		<dependency>
 			<groupId>com.github.binarywang</groupId>
 			<artifactId>weixin-java-mp</artifactId>
-			<version>4.4.9.B</version>
+			<version>${weixin-java-mp.version}</version>
 		</dependency>
 
 		<!--Swagger-->
 		<dependency>
 			<groupId>io.springfox</groupId>
 			<artifactId>springfox-boot-starter</artifactId>
-			<version>3.0.0</version>
+			<version>${springfox-boot-starter.version}</version>
 		</dependency>
 
 		<!-- 字典绑定转换功能 -->
 		<dependency>
 			<groupId>com.diboot</groupId>
 			<artifactId>diboot-core</artifactId>
-			<version>3.0.0</version>
+			<version>${diboot-core.version}</version>
 		</dependency>
 
 		<!-- 阿里云短信服务-->
 		<dependency>
 			<groupId>com.aliyun</groupId>
 			<artifactId>dysmsapi20170525</artifactId>
-			<version>2.0.23</version>
+			<version>${dysmsapi20170525.version}</version>
 		</dependency>
 
 		<!-- redis -->
@@ -186,7 +198,7 @@
 		<dependency>
 			<groupId>cn.hutool</groupId>
 			<artifactId>hutool-all</artifactId>
-			<version>5.8.18</version>
+			<version>${hutool-all.version}</version>
 		</dependency>
 
 		<!--配置注释处理器-->
@@ -196,14 +208,18 @@
 			<optional>true</optional>
 		</dependency>
 
+		<!--AOP切面-->
 		<dependency>
 			<groupId>org.aspectj</groupId>
 			<artifactId>aspectjweaver</artifactId>
 		</dependency>
 
+		<!--websocket-->
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-websocket</artifactId>
+		</dependency>
 	</dependencies>
-
-
 
 	<build>
 		<plugins>
@@ -243,7 +259,6 @@
 			</resource>
 		</resources>
 	</build>
-
 
 	<repositories>
 		<repository>
