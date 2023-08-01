@@ -1,5 +1,12 @@
 package com.agoni.core.omp.config.enums;
 
+import lombok.Getter;
+
+/**
+ * @author gyd
+ */
+
+@Getter
 public enum Operator {
     EQ("Eq"),
     NE("Ne"),
@@ -18,11 +25,7 @@ public enum Operator {
 
     private final String value;
 
-    private Operator(final String value) {
+    Operator(final String value) {
         this.value = value;
-    }
-
-    public String getValue() {
-        return this.value;
     }
 }

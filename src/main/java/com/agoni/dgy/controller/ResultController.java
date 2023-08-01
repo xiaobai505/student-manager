@@ -1,7 +1,7 @@
 package com.agoni.dgy.controller;
 
 
-import com.agoni.core.thread.ExecutorConfig;
+import com.agoni.core.threadExecutor.ExecutorConfig;
 import com.agoni.dgy.model.po.Result;
 import com.agoni.dgy.model.query.ResultQuery;
 import com.agoni.dgy.model.vo.ResultVo;

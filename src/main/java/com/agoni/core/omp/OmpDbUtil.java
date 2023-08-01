@@ -128,7 +128,15 @@ public class OmpDbUtil {
 
     public static <T> void autoWrapper(Object query, QueryWrapper<T> queryWrapper, Class<T> poClass) {
         autoCondition(query, queryWrapper, poClass);
+        autoSelect(query, queryWrapper);
         fillOrderBy(query, queryWrapper);
+    }
+
+    private static <T> void autoSelect(Object query, QueryWrapper<T> queryWrapper) {
+        Object columns = ReflectUtil.getFieldValue(query, "columns");
+        if (ObjectUtil.isNotEmpty(columns)) {
+            queryWrapper.select(columns.toString());
+        }
     }
 
     public static <T> void autoWrapper(Object query, QueryWrapper<T> queryWrapper) {

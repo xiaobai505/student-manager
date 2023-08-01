@@ -2,12 +2,17 @@ package com.agoni.core.omp;
 
 import cn.hutool.core.bean.BeanUtil;
 import cn.hutool.core.collection.CollUtil;
+import cn.hutool.core.util.ObjectUtil;
+import cn.hutool.core.util.ReflectUtil;
 import com.baomidou.mybatisplus.core.conditions.Wrapper;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
+import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.core.metadata.TableInfo;
 import com.baomidou.mybatisplus.core.metadata.TableInfoHelper;
+import com.baomidou.mybatisplus.core.toolkit.Wrappers;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.IService;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.baomidou.mybatisplus.extension.toolkit.SqlHelper;
@@ -78,4 +83,23 @@ public class OmpServiceImpl<M extends BaseMapper<T>, T> extends ServiceImpl<M, T
         log.warn("请注意,尽量使用QueryWrapper和LambdaQueryWrapper来进行remove操作!");
         return wrapper;
     }
+
+    public IPage<T> getPage(Object query) {
+        Integer current = (Integer) ReflectUtil.getFieldValue(query, "page");
+        Integer limit = (Integer) ReflectUtil.getFieldValue(query, "limit");
+        if (ObjectUtil.isEmpty(current) || ObjectUtil.isEmpty(limit)) {
+            log.error("分页查询参数错误");
+        }
+        Page<T> page = Page.of(current, limit);
+        QueryWrapper<T> queryWrapper = Wrappers.query();
+        OmpDbUtil.autoWrapper(query, queryWrapper, getEntityClass());
+        return page(page, queryWrapper);
+    }
+
+    public List<T> getList(Object query) {
+        QueryWrapper<T> queryWrapper = Wrappers.query();
+        OmpDbUtil.autoWrapper(query, queryWrapper, getEntityClass());
+        return this.list();
+    }
+
 }
