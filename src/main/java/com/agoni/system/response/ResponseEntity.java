@@ -22,6 +22,7 @@ public class ResponseEntity<T> implements Serializable {
     private Integer code;
     private String msg;
     private T data;
+    private boolean success = true;
 
 
     private ResponseEntity(Integer code, String msg) {
@@ -30,7 +31,7 @@ public class ResponseEntity<T> implements Serializable {
     }
 
     public static <T> ResponseEntity<T> body(T data) {
-        return new ResponseEntity(HttpStatus.OK.value(), HttpStatus.OK.getReasonPhrase(), data);
+        return new ResponseEntity(HttpStatus.OK.value(), HttpStatus.OK.getReasonPhrase(), data,true);
     }
 
     public static <T> ResponseEntity<T> body(ResponseCodeEnum responseCodeEnum) {
@@ -38,7 +39,7 @@ public class ResponseEntity<T> implements Serializable {
     }
 
     public static <T> ResponseEntity<T> body(ResponseCodeEnum responseCodeEnum, T data) {
-        return new ResponseEntity(responseCodeEnum.getCode(), responseCodeEnum.getmsg(), data);
+        return new ResponseEntity(responseCodeEnum.getCode(), responseCodeEnum.getmsg(), data,true);
     }
 
 }

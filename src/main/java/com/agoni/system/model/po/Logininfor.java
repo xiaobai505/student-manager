@@ -1,6 +1,8 @@
 package com.agoni.system.model.po;
 
 import com.baomidou.mybatisplus.annotation.*;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+import com.fasterxml.jackson.databind.ser.std.ToStringSerializer;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.AllArgsConstructor;
@@ -13,6 +15,7 @@ import java.time.LocalDateTime;
 
 /**
  * 系统访问记录
+ * @author gyd
  * @TableName sys_logininfor
  */
 @TableName(value ="sys_logininfor")
@@ -25,8 +28,9 @@ public class Logininfor implements Serializable {
     /**
      * 访问ID
      */
-    @TableId(type = IdType.ASSIGN_UUID)
-    private String id;
+    @TableId(value = "id", type = IdType.AUTO)
+    @JsonSerialize(using= ToStringSerializer.class)
+    private Long id;
 
     /**
      * 用户账号
