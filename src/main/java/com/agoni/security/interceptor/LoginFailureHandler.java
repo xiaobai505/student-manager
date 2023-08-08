@@ -1,10 +1,6 @@
 package com.agoni.security.interceptor;
 
-import com.agoni.system.config.enums.ResponseCodeEnum;
-import com.agoni.system.response.ResponseEntity;
 import com.agoni.system.service.LogininforService;
-import com.alibaba.fastjson2.JSON;
-import org.springframework.http.HttpStatus;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.web.authentication.AuthenticationFailureHandler;
 import org.springframework.stereotype.Component;
@@ -14,7 +10,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
-import static org.springframework.http.MediaType.APPLICATION_JSON_VALUE;
+import static com.agoni.core.exception.ResponseCodeEnum.LOGIN_FAILURE;
 
 /**
  * 登录失败
@@ -23,7 +19,6 @@ import static org.springframework.http.MediaType.APPLICATION_JSON_VALUE;
 @Component
 public class LoginFailureHandler implements AuthenticationFailureHandler {
     
-    public static final String LOGIN_FAILURE = "登录失败";
     @Resource
     private LogininforService logininforService;
     
@@ -35,10 +30,10 @@ public class LoginFailureHandler implements AuthenticationFailureHandler {
      * @param exception the exception which was thrown to reject the authentication
      */
     @Override
-    public void onAuthenticationFailure(HttpServletRequest request, HttpServletResponse response, AuthenticationException exception) throws IOException {
-        response.setContentType(APPLICATION_JSON_VALUE);
-        response.setStatus(HttpStatus.BAD_REQUEST.value());
-        response.getWriter().write(JSON.toJSONString(ResponseEntity.fail(ResponseCodeEnum.LOGIN_FAILURE)));
-        logininforService.asyncLogininfor("***", "1", LOGIN_FAILURE);
+    public void onAuthenticationFailure(HttpServletRequest request,
+                                        HttpServletResponse response,
+                                        AuthenticationException exception) throws IOException {
+        LOGIN_FAILURE.sendFailure(response);
+        logininforService.asyncLogininfor("****", LOGIN_FAILURE);
     }
 }

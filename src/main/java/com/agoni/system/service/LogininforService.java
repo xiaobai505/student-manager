@@ -1,5 +1,6 @@
 package com.agoni.system.service;
 
+import com.agoni.core.exception.ResponseCodeEnum;
 import com.agoni.system.model.po.Logininfor;
 import com.agoni.system.model.query.LogininforQuery;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
@@ -12,14 +13,14 @@ import com.baomidou.mybatisplus.extension.service.IService;
  * @since  2022-08-31 16:29:20
  */
 public interface LogininforService extends IService<Logininfor> {
-    
+
     /**
      * 异步插入日志，async ，不能保证事物
+     *
      * @param username 用户名
-     * @param status 状态
-     * @param message 消息
+     * @param e Enum对象
      */
-    void asyncLogininfor(String username, String status, String message);
+    void asyncLogininfor(String username, ResponseCodeEnum e);
 
     /**
      * 分页查询

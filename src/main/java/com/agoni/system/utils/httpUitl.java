@@ -27,8 +27,6 @@ import java.util.Map;
  */
 @Slf4j
 public class httpUitl {
-    private static final String[] HEADER_IP_KEYWORDS = {"X-Forwarded-For", "Proxy-Client-IP",
-            "WL-Proxy-Client-IP", "HTTP_CLIENT_IP", "X-Real-IP"};
 
     public static Logininfor getLogininfor() {
         // IP

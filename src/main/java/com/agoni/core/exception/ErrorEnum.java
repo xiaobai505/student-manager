@@ -5,7 +5,7 @@ package com.agoni.core.exception;
  */
 public interface ErrorEnum {
 
-    Integer getErrorCode();
+    Integer getCode();
 
-    String getErrorMsg();
+    String getMsg();
 }

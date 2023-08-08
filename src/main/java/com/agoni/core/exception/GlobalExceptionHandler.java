@@ -8,7 +8,7 @@ import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 
-import static com.agoni.system.config.enums.ResponseCodeEnum.INNER_ERROR;
+import static com.agoni.core.exception.ResponseCodeEnum.INNER_ERROR;
 
 
 /**

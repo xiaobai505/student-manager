@@ -16,7 +16,7 @@ import java.time.LocalDateTime;
 /**
  * 系统访问记录
  * @author gyd
- * @TableName sys_logininfor
+ * &#064;TableName  sys_logininfor
  */
 @TableName(value ="sys_logininfor")
 @Data
@@ -60,7 +60,7 @@ public class Logininfor implements Serializable {
     /**
      * 登录状态（0成功 1失败）
      */
-    private String status;
+    private Integer status;
 
     /**
      * 提示消息

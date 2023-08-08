@@ -1,6 +1,6 @@
 package com.agoni.system.response;
 
-import com.agoni.system.config.enums.ResponseCodeEnum;
+import com.agoni.core.exception.ResponseCodeEnum;
 import com.alibaba.fastjson2.JSON;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.core.AuthenticationException;
@@ -11,6 +11,9 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
+/**
+ * @author gyd
+ */
 @Component
 public class RestAuthenticationEntryPoint implements AuthenticationEntryPoint {
 

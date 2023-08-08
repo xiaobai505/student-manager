@@ -1,11 +1,7 @@
 package com.agoni.core.exception;
 
 import lombok.AllArgsConstructor;
-
-import java.util.Arrays;
-import java.util.Map;
-import java.util.function.Function;
-import java.util.stream.Collectors;
+import lombok.Getter;
 
 /**
  * 业务校验异常码
@@ -15,6 +11,7 @@ import java.util.stream.Collectors;
  */
 
 @AllArgsConstructor
+@Getter
 public enum BusinessErrorEnum implements ErrorEnum{
     BUSINESS_ERROR(1001, "{0}"),
     SYSTEM_ERROR(1001, "系统出小差了，请稍后再试哦~~"),
@@ -23,23 +20,13 @@ public enum BusinessErrorEnum implements ErrorEnum{
     private final Integer code;
     private final String msg;
 
-    private static final Map<Integer, BusinessErrorEnum> cache;
-
-    static {
-        cache = Arrays.stream(BusinessErrorEnum.values()).collect(Collectors.toMap(BusinessErrorEnum::getErrorCode, Function.identity()));
-    }
-
-    public static BusinessErrorEnum of(Integer type) {
-        return cache.get(type);
-    }
-
     @Override
-    public Integer getErrorCode() {
+    public Integer getCode() {
         return code;
     }
 
     @Override
-    public String getErrorMsg() {
+    public String getMsg() {
         return msg;
     }
 }

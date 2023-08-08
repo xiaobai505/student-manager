@@ -4,13 +4,8 @@ import com.agoni.security.config.constants.JwtConfiguration;
 import com.agoni.security.config.constants.SecurityConstants;
 import com.agoni.security.service.AuthUserService;
 import com.agoni.security.utils.JwtTokenUtil;
-import com.agoni.system.config.enums.ResponseCodeEnum;
-import com.agoni.system.response.ResponseEntity;
-import com.alibaba.fastjson2.JSON;
-import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
-import org.springframework.http.HttpStatus;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserCache;
@@ -26,7 +21,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
-import static org.springframework.http.MediaType.APPLICATION_JSON_VALUE;
+import static com.agoni.core.exception.ResponseCodeEnum.TOKEN_CHECK_FAIL;
 
 /**
  * @author gyd
@@ -43,7 +38,10 @@ public class JWTBasicAuthenticationFilter extends OncePerRequestFilter {
     private JwtConfiguration jwtConfiguration;
 
     @Override
-    protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain chain) throws IOException, ServletException {
+    protected void doFilterInternal(HttpServletRequest request,
+                                    HttpServletResponse response,
+                                    FilterChain chain) throws IOException, ServletException {
+
         // 1: 请求头没有token ，直接去下一个过滤器
         String header = request.getHeader(jwtConfiguration.getHeader());
 
@@ -88,24 +86,12 @@ public class JWTBasicAuthenticationFilter extends OncePerRequestFilter {
      *
      * @return string
      */
-    private String getUserName(String header, HttpServletResponse response) {
+    private String getUserName(String header, HttpServletResponse response) throws IOException {
         try {
             return JwtTokenUtil.getUserName(header.replace(SecurityConstants.TOKEN_PREFIX, ""));
         } catch (Exception e) {
-            this.exceptionResponse(response, ResponseEntity.body(ResponseCodeEnum.TOKEN_CHECK_FAIL));
+            TOKEN_CHECK_FAIL.sendFailure(response);
         }
         return null;
-    }
-    
-    /**
-     * 非法的响应
-     *
-     * @param response response
-     */
-    @SneakyThrows
-    public void exceptionResponse(HttpServletResponse response, ResponseEntity responseEntity) {
-        response.setContentType(APPLICATION_JSON_VALUE);
-        response.setStatus(HttpStatus.UNAUTHORIZED.value());
-        response.getWriter().write(JSON.toJSONString(responseEntity));
     }
 }

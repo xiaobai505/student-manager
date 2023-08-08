@@ -1,6 +1,6 @@
 package com.agoni.system.response;
 
-import com.agoni.system.config.enums.ResponseCodeEnum;
+import com.agoni.core.exception.ResponseCodeEnum;
 import lombok.Data;
 
 import java.io.Serializable;
@@ -27,7 +27,7 @@ public class ResponseEntity<T> implements Serializable {
     public static <T> ResponseEntity<T> body(ResponseCodeEnum codeEnum) {
         ResponseEntity<T> result = new ResponseEntity<>();
         result.setCode(codeEnum.getCode());
-        result.setMsg(codeEnum.getmsg());
+        result.setMsg(codeEnum.getMsg());
         result.setSuccess(Boolean.TRUE);
         return result;
     }
@@ -35,7 +35,7 @@ public class ResponseEntity<T> implements Serializable {
     public static <T> ResponseEntity<T> fail(ResponseCodeEnum codeEnum) {
         ResponseEntity<T> result = new ResponseEntity<>();
         result.setCode(codeEnum.getCode());
-        result.setMsg(codeEnum.getmsg());
+        result.setMsg(codeEnum.getMsg());
         result.setSuccess(Boolean.FALSE);
         return result;
     }

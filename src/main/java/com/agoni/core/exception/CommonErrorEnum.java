@@ -19,12 +19,12 @@ public enum CommonErrorEnum implements ErrorEnum {
     private final String msg;
 
     @Override
-    public Integer getErrorCode() {
+    public Integer getCode() {
         return this.code;
     }
 
     @Override
-    public String getErrorMsg() {
+    public String getMsg() {
         return this.msg;
     }
 }
