@@ -14,7 +14,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
-import static org.springframework.http.MediaType.APPLICATION_JSON_UTF8_VALUE;
+import static org.springframework.http.MediaType.APPLICATION_JSON_VALUE;
 
 /**
  * 登录失败
@@ -36,10 +36,9 @@ public class LoginFailureHandler implements AuthenticationFailureHandler {
      */
     @Override
     public void onAuthenticationFailure(HttpServletRequest request, HttpServletResponse response, AuthenticationException exception) throws IOException {
-        response.setContentType(APPLICATION_JSON_UTF8_VALUE);
+        response.setContentType(APPLICATION_JSON_VALUE);
         response.setStatus(HttpStatus.BAD_REQUEST.value());
-        response.getWriter().write(JSON.toJSONString(ResponseEntity.body(ResponseCodeEnum.LOGIN_FAILURE)));
+        response.getWriter().write(JSON.toJSONString(ResponseEntity.fail(ResponseCodeEnum.LOGIN_FAILURE)));
         logininforService.asyncLogininfor("***", "1", LOGIN_FAILURE);
-        
     }
 }
