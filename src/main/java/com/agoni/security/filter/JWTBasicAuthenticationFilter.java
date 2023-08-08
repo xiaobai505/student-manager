@@ -21,7 +21,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
-import static com.agoni.core.exception.ResponseCodeEnum.TOKEN_CHECK_FAIL;
+import static com.agoni.core.exception.enums.httpEnum.TOKEN_CHECK_FAIL;
 
 /**
  * @author gyd
@@ -90,7 +90,7 @@ public class JWTBasicAuthenticationFilter extends OncePerRequestFilter {
         try {
             return JwtTokenUtil.getUserName(header.replace(SecurityConstants.TOKEN_PREFIX, ""));
         } catch (Exception e) {
-            TOKEN_CHECK_FAIL.sendFailure(response);
+            TOKEN_CHECK_FAIL.sendFail(response);
         }
         return null;
     }

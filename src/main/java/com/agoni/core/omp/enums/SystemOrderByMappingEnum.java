@@ -1,8 +1,12 @@
-package com.agoni.core.omp.config.enums;
+package com.agoni.core.omp.enums;
 
 import cn.hutool.core.map.MapUtil;
 
 import java.util.HashMap;
+
+/**
+ * @author gyd
+ */
 
 public enum SystemOrderByMappingEnum implements OrderByEnumFunction {
 

@@ -1,6 +1,6 @@
 package com.agoni.core.exception;
 
-import com.agoni.system.response.ResponseEntity;
+import com.agoni.system.model.response.ResponseEntity;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.validation.BindException;
 import org.springframework.web.HttpRequestMethodNotSupportedException;
@@ -8,7 +8,7 @@ import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 
-import static com.agoni.core.exception.ResponseCodeEnum.INNER_ERROR;
+import static com.agoni.core.exception.enums.httpEnum.INNER_ERROR;
 
 
 /**

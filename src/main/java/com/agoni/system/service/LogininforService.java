@@ -1,6 +1,6 @@
 package com.agoni.system.service;
 
-import com.agoni.core.exception.ResponseCodeEnum;
+import com.agoni.core.exception.enums.httpEnum;
 import com.agoni.system.model.po.Logininfor;
 import com.agoni.system.model.query.LogininforQuery;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
@@ -20,12 +20,12 @@ public interface LogininforService extends IService<Logininfor> {
      * @param username 用户名
      * @param e Enum对象
      */
-    void asyncLogininfor(String username, ResponseCodeEnum e);
+    void asyncLogininfor(String username, httpEnum e);
 
     /**
      * 分页查询
      *
-     * @param query
+     * @param query 请求对象
      * @return com.baomidou.mybatisplus.extension.plugins.pagination.Page<com.agoni.system.model.po.Logininfor>
      * @author t-guoyu.dong@pcitc.com
      * @date 2023-07-10

@@ -16,7 +16,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
-import static com.agoni.core.exception.ResponseCodeEnum.LOGIN_SUCCESS;
+import static com.agoni.core.exception.enums.httpEnum.LOGIN_SUCCESS;
 
 
 /**

@@ -1,8 +1,8 @@
-package com.agoni.core.exception;
+package com.agoni.core.exception.enums;
 
 import cn.hutool.http.ContentType;
 import com.agoni.security.model.TokenVo;
-import com.agoni.system.response.ResponseEntity;
+import com.agoni.system.model.response.ResponseEntity;
 import com.alibaba.fastjson2.JSON;
 import com.google.common.base.Charsets;
 import lombok.AllArgsConstructor;
@@ -20,7 +20,7 @@ import static org.springframework.http.MediaType.APPLICATION_JSON_VALUE;
 
 @AllArgsConstructor
 @Getter
-public enum ResponseCodeEnum implements ErrorEnum{
+public enum httpEnum implements BaseEnum {
     LOGIN_SUCCESS(200,"登录成功"),
     LOGIN_FAILURE(500, "登录失败"),
     INNER_ERROR(501, "系统内部错误"),
@@ -49,13 +49,15 @@ public enum ResponseCodeEnum implements ErrorEnum{
         response.setStatus(HttpStatus.OK.value());
         response.setContentType(ContentType.JSON.toString(Charsets.UTF_8));
         response.getWriter().write(JSON.toJSONString(ResponseEntity.body(vo)));
+        response.getWriter().flush();
     }
 
 
-    public void sendFailure(HttpServletResponse response) throws IOException {
+    public void sendFail(HttpServletResponse response) throws IOException {
         response.setContentType(APPLICATION_JSON_VALUE);
         response.setStatus(HttpStatus.BAD_REQUEST.value());
         response.setContentType(ContentType.JSON.toString(Charsets.UTF_8));
         response.getWriter().write(JSON.toJSONString(ResponseEntity.fail(this)));
+        response.getWriter().flush();
     }
 }

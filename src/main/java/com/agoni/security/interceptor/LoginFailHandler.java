@@ -10,14 +10,14 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
-import static com.agoni.core.exception.ResponseCodeEnum.LOGIN_FAILURE;
+import static com.agoni.core.exception.enums.httpEnum.LOGIN_FAILURE;
 
 /**
  * 登录失败
  * @author Admin
  */
 @Component
-public class LoginFailureHandler implements AuthenticationFailureHandler {
+public class LoginFailHandler implements AuthenticationFailureHandler {
     
     @Resource
     private LogininforService logininforService;
@@ -33,7 +33,7 @@ public class LoginFailureHandler implements AuthenticationFailureHandler {
     public void onAuthenticationFailure(HttpServletRequest request,
                                         HttpServletResponse response,
                                         AuthenticationException exception) throws IOException {
-        LOGIN_FAILURE.sendFailure(response);
+        LOGIN_FAILURE.sendFail(response);
         logininforService.asyncLogininfor("****", LOGIN_FAILURE);
     }
 }

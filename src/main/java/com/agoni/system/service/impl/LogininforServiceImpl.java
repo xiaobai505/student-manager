@@ -1,6 +1,6 @@
 package com.agoni.system.service.impl;
 
-import com.agoni.core.exception.ResponseCodeEnum;
+import com.agoni.core.exception.enums.httpEnum;
 import com.agoni.core.omp.OmpDbUtil;
 import com.agoni.system.mapper.LogininforMapper;
 import com.agoni.system.model.po.Logininfor;
@@ -27,7 +27,7 @@ public class LogininforServiceImpl
         implements LogininforService {
 
     @Override
-    public void asyncLogininfor(String username, ResponseCodeEnum e) {
+    public void asyncLogininfor(String username, httpEnum e) {
         // 插入数据
         Logininfor logininfor = httpUitl.getLogininfor();
         logininfor.setUserName(username);

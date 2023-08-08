@@ -2,10 +2,10 @@ package com.agoni.security.config;
 
 import com.agoni.security.config.constants.SecurityConstants;
 import com.agoni.security.filter.JWTBasicAuthenticationFilter;
-import com.agoni.security.interceptor.LoginFailureHandler;
+import com.agoni.security.interceptor.LoginFailHandler;
 import com.agoni.security.interceptor.LoginSuccessHandler;
+import com.agoni.security.interceptor.RestAuthenticationEntryPoint;
 import com.agoni.security.service.AuthUserService;
-import com.agoni.system.response.RestAuthenticationEntryPoint;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
@@ -31,7 +31,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     @Autowired
     LoginSuccessHandler loginSuccessHandler;
     @Autowired
-    LoginFailureHandler loginFailureHandler;
+    LoginFailHandler loginFailHandler;
     @Autowired
     RestAuthenticationEntryPoint restAuthenticationEntryPoint;
     @Autowired
@@ -40,7 +40,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     JWTBasicAuthenticationFilter jwtBasicAuthenticationFilter;
 
     @Override
-    protected void configure(AuthenticationManagerBuilder auth) throws Exception {
+    protected void configure(AuthenticationManagerBuilder auth) {
         // 标准的security认证,根据数据库里面的用户名密码
         DaoAuthenticationProvider provider = new DaoAuthenticationProvider();
         provider.setUserDetailsService(authUserService);
@@ -62,7 +62,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         http.exceptionHandling().authenticationEntryPoint(restAuthenticationEntryPoint);
         http.addFilterBefore(jwtBasicAuthenticationFilter, UsernamePasswordAuthenticationFilter.class);
         // 登录解析
-        http.formLogin().loginProcessingUrl("/auth/login").successHandler(loginSuccessHandler).failureHandler(loginFailureHandler);
+        http.formLogin().loginProcessingUrl("/auth/login").successHandler(loginSuccessHandler).failureHandler(loginFailHandler);
         // 定义logout不需要验证
         http.logout().permitAll();
         // 退出的Handler

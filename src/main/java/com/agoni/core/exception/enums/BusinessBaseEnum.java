@@ -1,4 +1,4 @@
-package com.agoni.core.exception;
+package com.agoni.core.exception.enums;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -12,7 +12,7 @@ import lombok.Getter;
 
 @AllArgsConstructor
 @Getter
-public enum BusinessErrorEnum implements ErrorEnum{
+public enum BusinessBaseEnum implements BaseEnum {
     BUSINESS_ERROR(1001, "{0}"),
     SYSTEM_ERROR(1001, "系统出小差了，请稍后再试哦~~"),
     ;

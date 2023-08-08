@@ -6,9 +6,8 @@
     <resultMap id="BaseResultMap" type="com.agoni.system.model.po.Menu">
         <id property="id" column="id" jdbcType="BIGINT"/>
         <result property="parentId" column="parent_id" jdbcType="BIGINT"/>
-        <result property="menuType" column="menu_type" jdbcType="VARCHAR"/>
         <result property="path" column="path" jdbcType="VARCHAR"/>
-        <result property="redirect" column="redirect" jdbcType="VARCHAR"/>
+        <result property="component" column="redirect" jdbcType="VARCHAR"/>
         <result property="name" column="name" jdbcType="VARCHAR"/>
         <result property="meta" column="meta" jdbcType="OTHER"
                 javaType="com.alibaba.fastjson2.JSONObject"

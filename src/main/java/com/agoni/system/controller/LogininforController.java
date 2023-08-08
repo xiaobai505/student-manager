@@ -2,7 +2,7 @@ package com.agoni.system.controller;
 
 import com.agoni.system.model.po.Logininfor;
 import com.agoni.system.model.query.LogininforQuery;
-import com.agoni.system.response.ResponseEntity;
+import com.agoni.system.model.response.ResponseEntity;
 import com.agoni.system.service.LogininforService;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import io.swagger.annotations.Api;

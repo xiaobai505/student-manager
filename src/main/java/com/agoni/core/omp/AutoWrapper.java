@@ -1,9 +1,12 @@
 package com.agoni.core.omp;
 
-import com.agoni.core.omp.config.enums.Operator;
+import com.agoni.core.omp.enums.Operator;
 
 import java.lang.annotation.*;
 
+/**
+ * @author gyd
+ */
 @Documented
 @Retention(RetentionPolicy.RUNTIME)
 @Target({ElementType.FIELD})

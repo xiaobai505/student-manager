@@ -3,7 +3,7 @@ package com.agoni.security.controller;
 import com.agoni.security.model.TokenFrom;
 import com.agoni.security.model.TokenVo;
 import com.agoni.security.service.AuthUserService;
-import com.agoni.system.response.ResponseEntity;
+import com.agoni.system.model.response.ResponseEntity;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;

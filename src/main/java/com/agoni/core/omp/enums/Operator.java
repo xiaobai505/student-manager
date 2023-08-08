@@ -1,4 +1,4 @@
-package com.agoni.core.omp.config.enums;
+package com.agoni.core.omp.enums;
 
 import lombok.Getter;
 

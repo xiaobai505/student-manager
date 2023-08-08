@@ -1,9 +1,9 @@
-package com.agoni.core.exception;
+package com.agoni.core.exception.enums;
 
 /**
  * @author gyd
  */
-public interface ErrorEnum {
+public interface BaseEnum {
 
     Integer getCode();
 

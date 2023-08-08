@@ -2,8 +2,8 @@ package com.agoni.system.controller;
 
 import com.agoni.system.model.po.Dept;
 import com.agoni.system.model.query.DeptQuery;
+import com.agoni.system.model.response.ResponseEntity;
 import com.agoni.system.model.vo.DeptVo;
-import com.agoni.system.response.ResponseEntity;
 import com.agoni.system.service.DeptService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -26,7 +26,7 @@ public class DeptController {
     
     @GetMapping
     @ApiOperation("列表")
-    public ResponseEntity<List> listByQuery(@Validated DeptQuery dq) {
+    public ResponseEntity<List<DeptVo>> listByQuery(@Validated DeptQuery dq) {
         List<DeptVo> deptVos = deptService.listByQuery(dq);
         return ResponseEntity.body(deptVos);
     }

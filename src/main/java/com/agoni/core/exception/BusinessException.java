@@ -1,5 +1,6 @@
 package com.agoni.core.exception;
 
+import com.agoni.core.exception.enums.BaseEnum;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 
@@ -44,7 +45,7 @@ public class BusinessException extends RuntimeException {
         this.errorMsg = errorMsg;
     }
 
-    public BusinessException(ErrorEnum error) {
+    public BusinessException(BaseEnum error) {
         super(error.getMsg());
         this.errorCode = error.getCode();
         this.errorMsg = error.getMsg();

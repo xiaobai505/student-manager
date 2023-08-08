@@ -2,8 +2,8 @@ package com.agoni.system.controller;
 
 import com.agoni.core.diboot.Binder;
 import com.agoni.system.model.po.Dict;
+import com.agoni.system.model.response.ResponseEntity;
 import com.agoni.system.model.vo.DictVo;
-import com.agoni.system.response.ResponseEntity;
 import com.agoni.system.service.DictService;
 import com.diboot.core.util.BeanUtils;
 import io.swagger.annotations.Api;
