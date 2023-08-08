@@ -32,6 +32,12 @@ public class ResponseEntity<T> implements Serializable {
         return result;
     }
 
+    public static <T> ResponseEntity<T> body(Boolean b) {
+        ResponseEntity<T> result = new ResponseEntity<>();
+        result.setSuccess(b);
+        return result;
+    }
+
     public static <T> ResponseEntity<T> fail(httpEnum codeEnum) {
         ResponseEntity<T> result = new ResponseEntity<>();
         result.setCode(codeEnum.getCode());

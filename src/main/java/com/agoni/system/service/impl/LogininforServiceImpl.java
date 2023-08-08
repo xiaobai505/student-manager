@@ -41,7 +41,7 @@ public class LogininforServiceImpl
     public Page<Logininfor> selectPage(LogininforQuery query) {
         QueryWrapper<Logininfor> queryWrapper = new QueryWrapper<>();
         fillQueryWrapper(query, queryWrapper);
-        Page<Logininfor> page = Page.of(query.getCurrent(), query.getLimit());
+        Page<Logininfor> page = Page.of(query.getCurrent(), query.getSize());
         return page(page, queryWrapper);
     }
 
