@@ -21,8 +21,8 @@ import static org.springframework.http.MediaType.APPLICATION_JSON_VALUE;
 @AllArgsConstructor
 @Getter
 public enum httpEnum implements BaseEnum {
-    LOGIN_SUCCESS(200,"登录成功"),
-    LOGIN_FAILURE(500, "登录失败"),
+    LOGIN_SUCCESS(0,"登录成功"),
+    LOGIN_FAILURE(1, "登录失败"),
     INNER_ERROR(501, "系统内部错误"),
     UNAUTHORIZED(401, "未登录"),
     BAD_REQUEST(400, "请求错误"),
@@ -49,7 +49,6 @@ public enum httpEnum implements BaseEnum {
         response.setStatus(HttpStatus.OK.value());
         response.setContentType(ContentType.JSON.toString(Charsets.UTF_8));
         response.getWriter().write(JSON.toJSONString(ResponseEntity.body(vo)));
-        response.getWriter().flush();
     }
 
 
@@ -58,6 +57,5 @@ public enum httpEnum implements BaseEnum {
         response.setStatus(HttpStatus.BAD_REQUEST.value());
         response.setContentType(ContentType.JSON.toString(Charsets.UTF_8));
         response.getWriter().write(JSON.toJSONString(ResponseEntity.fail(this)));
-        response.getWriter().flush();
     }
 }

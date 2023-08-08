@@ -17,7 +17,8 @@ import static com.agoni.core.exception.enums.httpEnum.TOKEN_CHECK_FAIL;
 public class RestAuthenticationEntryPoint implements AuthenticationEntryPoint {
 
     @Override
-    public void commence(HttpServletRequest request, HttpServletResponse response,
+    public void commence(HttpServletRequest request,
+                         HttpServletResponse response,
                          AuthenticationException authException) throws IOException {
         TOKEN_CHECK_FAIL.sendFail(response);
     }
