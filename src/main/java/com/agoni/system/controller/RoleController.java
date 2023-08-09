@@ -5,8 +5,8 @@ import com.agoni.system.model.po.Role;
 import com.agoni.system.model.query.RoleQuery;
 import com.agoni.system.model.response.ResponseEntity;
 import com.agoni.system.service.RoleService;
-import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
-import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import com.baomidou.mybatisplus.core.metadata.IPage;
+import com.baomidou.mybatisplus.core.toolkit.Constants;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -31,18 +31,17 @@ public class RoleController {
 
     @GetMapping("/page")
     @ApiOperation("分页列表")
-    public ResponseEntity<Page> page(@Validated RoleQuery from) {
-        QueryWrapper<Role> queryWrapper = new QueryWrapper<>();
-        queryWrapper.lambda().orderByAsc(Role::getRoleSort);
-        Page<Role> page = Page.of(from.getCurrent(), from.getSize());
-        Page<Role> res = roleService.page(page, queryWrapper);
-        return ResponseEntity.body(res);
+    public ResponseEntity<IPage<Role>> page(@Validated RoleQuery from) {
+        from.setOrderBy("role_sort");
+        from.setOrder(Constants.ASC);
+        IPage<Role> page = roleService.selectPage(from);
+        return ResponseEntity.body(page);
     }
     
     @PostMapping
     @ApiOperation("保存角色")
-    public ResponseEntity<Boolean> save(@RequestBody Role role) {
-        boolean res = roleService.save(role);
+    public ResponseEntity<Boolean> saveOrUpdate(@RequestBody Role role) {
+        boolean res = roleService.saveOrUpdate(role);
         return ResponseEntity.body(res);
     }
     

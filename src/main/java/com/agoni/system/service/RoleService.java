@@ -1,6 +1,8 @@
 package com.agoni.system.service;
 
 import com.agoni.system.model.po.Role;
+import com.agoni.system.model.query.RoleQuery;
+import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.service.IService;
 
 /**
@@ -12,6 +14,14 @@ import com.baomidou.mybatisplus.extension.service.IService;
  * @since 2021-12-22
  */
 public interface RoleService extends IService<Role> {
+
+    /**
+     * 分页查询
+     * @param from
+     * @return
+     */
+    IPage<Role> selectPage(RoleQuery from);
+
     
     /**
      * 根据 code 查询 Role
