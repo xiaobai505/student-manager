@@ -24,7 +24,7 @@ public class DeptController {
     @Autowired
     private DeptService deptService;
     
-    @GetMapping
+    @GetMapping()
     @ApiOperation("列表")
     public ResponseEntity<List<DeptVo>> listByQuery(@Validated DeptQuery dq) {
         List<DeptVo> deptVos = deptService.listByQuery(dq);

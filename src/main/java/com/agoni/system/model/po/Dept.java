@@ -2,6 +2,8 @@ package com.agoni.system.model.po;
 
 import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableName;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+import com.fasterxml.jackson.databind.ser.std.ToStringSerializer;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.AllArgsConstructor;
@@ -30,7 +32,8 @@ public class Dept extends AbstractEntity {
     
     @ApiModelProperty("父id")
     @TableField("parentId")
-    private Integer parentId;
+    @JsonSerialize(using= ToStringSerializer.class)
+    private Long parentId;
     
     @ApiModelProperty("排序字段")
     private Integer sort;

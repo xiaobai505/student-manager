@@ -30,7 +30,7 @@ jwt:
   #jwt token的头
   header: Authorization
   #token存储在redis的有效时间,登录失效时间-秒,多长时间不操作token,需要用刷新token来重新生成登录token秒.值设置的越小，统计在线人数就越精确，但是调用刷新token的请求也会越频繁
-  AccessExpireTime: 60
+  AccessExpireTime: 300
   #refreshToken存储在redis的存在时间,刷新token过期时间-秒，jwt校验时间是这个2倍
   refreshExpireTime: 10800
   #是否允许一个账号多个设备登录,如果为 false,一个账号登录后会自动踢出已经登录的账号
