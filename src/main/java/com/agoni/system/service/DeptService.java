@@ -28,5 +28,5 @@ public interface DeptService extends IService<Dept> {
      *
      * @return
      */
-    Boolean saveDept(Dept dept);
+    Boolean saveOrUpdateDept(Dept dept);
 }

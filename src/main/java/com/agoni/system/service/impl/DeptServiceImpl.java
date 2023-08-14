@@ -56,11 +56,11 @@ public class DeptServiceImpl extends ServiceImpl<DeptMapper, Dept> implements De
      * @return
      */
     @Override
-    public Boolean saveDept(Dept dept) {
+    public Boolean saveOrUpdateDept(Dept dept) {
         // 上级部门信息
         Dept info = this.getById(dept.getParentId());
         // 如果父节点不为正常状态,则不允许新增子节点
-        if ("1".equals(info.getStatus().toString())) {
+        if (info.getStatus() == 0) {
             throw new RuntimeException("部门停用，不允许新增");
         }
         dept.setAncestors(info.getAncestors() + "," + dept.getParentId());

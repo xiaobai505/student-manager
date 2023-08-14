@@ -33,8 +33,8 @@ public class DeptController {
     
     @PostMapping
     @ApiOperation("保存部门")
-    public ResponseEntity<Boolean> save(@RequestBody Dept dept) {
-        boolean save = deptService.saveDept(dept);
+    public ResponseEntity<Boolean> saveOrUpdate(@RequestBody Dept dept) {
+        boolean save = deptService.saveOrUpdateDept(dept);
         return ResponseEntity.body(save);
     }
     
