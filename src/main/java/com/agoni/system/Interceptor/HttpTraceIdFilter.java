@@ -2,6 +2,7 @@ package com.agoni.system.Interceptor;
 
 import lombok.extern.slf4j.Slf4j;
 import org.slf4j.MDC;
+import org.springframework.stereotype.Component;
 
 import javax.servlet.*;
 import javax.servlet.annotation.WebFilter;
@@ -15,6 +16,7 @@ import java.util.UUID;
  */
 @Slf4j
 @WebFilter(urlPatterns = "/*")
+@Component
 public class HttpTraceIdFilter implements Filter {
 
     private final static String TID = "tid";

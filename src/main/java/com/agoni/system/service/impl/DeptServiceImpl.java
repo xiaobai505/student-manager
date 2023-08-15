@@ -12,6 +12,7 @@ import com.baomidou.mybatisplus.core.toolkit.StringUtils;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import javax.validation.constraints.NotNull;
 import java.util.List;
@@ -27,17 +28,9 @@ public class DeptServiceImpl extends ServiceImpl<DeptMapper, Dept> implements De
     @Autowired
     private UserService userService;
     
-    /**
-     * 根据 dq 查询 list
-     *
-     * @param dq
-     *
-     * @return
-     */
     @Override
-    public List<DeptVo> listByQuery(DeptQuery dq) {
-        List<Dept> list = list(getDeptQueryWrapper(dq));
-        return Binder.convertAndBindRelations(list, DeptVo.class);
+    public List<DeptVo> listByQuery() {
+        return Binder.convertAndBindRelations(this.list(), DeptVo.class);
     }
 
     @NotNull
@@ -48,13 +41,7 @@ public class DeptServiceImpl extends ServiceImpl<DeptMapper, Dept> implements De
         return queryWrapper;
     }
     
-    /**
-     * 保存更新部门
-     *
-     * @param dept
-     *
-     * @return
-     */
+    @Transactional(rollbackFor = Exception.class)
     @Override
     public Boolean saveOrUpdateDept(Dept dept) {
         // 上级部门信息

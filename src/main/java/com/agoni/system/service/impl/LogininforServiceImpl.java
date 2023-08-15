@@ -6,7 +6,7 @@ import com.agoni.system.mapper.LogininforMapper;
 import com.agoni.system.model.po.Logininfor;
 import com.agoni.system.model.query.LogininforQuery;
 import com.agoni.system.service.LogininforService;
-import com.agoni.system.utils.httpUitl;
+import com.agoni.system.utils.HttpUitl;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
@@ -29,7 +29,7 @@ public class LogininforServiceImpl
     @Override
     public void asyncLogininfor(String username, httpEnum e) {
         // 插入数据
-        Logininfor logininfor = httpUitl.getLogininfor();
+        Logininfor logininfor = HttpUitl.getLogininfor();
         logininfor.setUserName(username);
         logininfor.setStatus(e.getCode());
         logininfor.setMsg(e.getMsg());

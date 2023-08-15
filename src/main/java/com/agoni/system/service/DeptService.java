@@ -1,7 +1,6 @@
 package com.agoni.system.service;
 
 import com.agoni.system.model.po.Dept;
-import com.agoni.system.model.query.DeptQuery;
 import com.agoni.system.model.vo.DeptVo;
 import com.baomidou.mybatisplus.extension.service.IService;
 
@@ -15,12 +14,11 @@ import java.util.List;
 public interface DeptService extends IService<Dept> {
     
     /**
-     * 根据 dq 查询 list
-     * @param dq
+     * 查询 list
      *
      * @return
      */
-    List<DeptVo> listByQuery(DeptQuery dq);
+    List<DeptVo> listByQuery();
     
     /**
      * 保存更新部门

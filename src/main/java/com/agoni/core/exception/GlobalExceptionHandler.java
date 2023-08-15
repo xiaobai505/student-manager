@@ -1,12 +1,16 @@
 package com.agoni.core.exception;
 
 import com.agoni.system.model.response.ResponseEntity;
+import com.agoni.system.utils.HttpUitl;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.http.HttpStatus;
 import org.springframework.validation.BindException;
 import org.springframework.web.HttpRequestMethodNotSupportedException;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
+
+import javax.servlet.http.HttpServletRequest;
 
 import static com.agoni.core.exception.enums.httpEnum.INNER_ERROR;
 
@@ -37,7 +41,7 @@ public class GlobalExceptionHandler {
     public ResponseEntity bindException(BindException e) {
         StringBuilder errorMsg = new StringBuilder();
         e.getBindingResult().getFieldErrors().forEach(x -> errorMsg.append(x.getField()).append(x.getDefaultMessage()));
-        log.info("validation parameters error！The reason is:{}", errorMsg);
+        logError(e, false);
         return ResponseEntity.body(INNER_ERROR);
     }
 
@@ -46,7 +50,7 @@ public class GlobalExceptionHandler {
      */
     @ExceptionHandler(value = NullPointerException.class)
     public ResponseEntity exceptionHandler(NullPointerException e) {
-        log.error("null point exception！The reason is: ", e);
+        logError(e, true);
         return ResponseEntity.body(INNER_ERROR);
     }
 
@@ -55,7 +59,7 @@ public class GlobalExceptionHandler {
      */
     @ExceptionHandler(value = Exception.class)
     public ResponseEntity systemExceptionHandler(Exception e) {
-        log.error("system exception！The reason is：{}", e.getMessage(), e);
+        logError(e, true);
         return ResponseEntity.body(INNER_ERROR);
     }
 
@@ -64,8 +68,8 @@ public class GlobalExceptionHandler {
      */
     @ExceptionHandler(value = BusinessException.class)
     public ResponseEntity businessExceptionHandler(BusinessException e) {
-        log.info("business exception！The reason is：{}", e.getMessage(), e);
-        return ResponseEntity.body(INNER_ERROR);
+        logError(e, false);
+        return ResponseEntity.body(HttpStatus.BAD_GATEWAY.value(), e.getMessage());
     }
 
     /**
@@ -73,7 +77,19 @@ public class GlobalExceptionHandler {
      */
     @ExceptionHandler(HttpRequestMethodNotSupportedException.class)
     public ResponseEntity handleException(HttpRequestMethodNotSupportedException e) {
-        log.error(e.getMessage(), e);
+        logError(e, true);
         return ResponseEntity.body(INNER_ERROR);
+    }
+
+    protected void logError(Exception e, boolean printStackTrace) {
+        HttpServletRequest req = HttpUitl.getRequest();
+        String pattern = "%s,Class {%s}Host {%s}Invokes url {%s} ";
+        String host = req.getRemoteHost();
+        String url = req.getRequestURL().toString();
+        String message = String.format(pattern, e.getMessage(), e.getClass().getName(), host, url);
+        log.error(message);
+        if (printStackTrace) {
+            log.error("-" + e.getMessage(), e);
+        }
     }
 }

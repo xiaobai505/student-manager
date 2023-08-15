@@ -26,7 +26,7 @@ import java.util.Map;
  * @author gyd
  */
 @Slf4j
-public class httpUitl {
+public class HttpUitl {
 
     public static Logininfor getLogininfor() {
         // IP

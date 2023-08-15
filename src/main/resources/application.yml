@@ -34,7 +34,7 @@ jwt:
   #refreshToken存储在redis的存在时间,刷新token过期时间-秒，jwt校验时间是这个2倍
   refreshExpireTime: 10800
   #是否允许一个账号多个设备登录,如果为 false,一个账号登录后会自动踢出已经登录的账号
-  multipleLogin: false
+  multipleLogin: true
 
 
 # 微信登录
