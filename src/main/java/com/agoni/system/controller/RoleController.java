@@ -13,6 +13,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 /**
  * <p>
  * 角色表 前端控制器
@@ -36,6 +38,13 @@ public class RoleController {
         from.setOrder(Constants.ASC);
         IPage<Role> page = roleService.selectPage(from);
         return ResponseEntity.body(page);
+    }
+
+    @GetMapping
+    @ApiOperation("分页列表")
+    public ResponseEntity<List<Role>> List() {
+        List<Role> list = roleService.list();
+        return ResponseEntity.body(list);
     }
     
     @PostMapping

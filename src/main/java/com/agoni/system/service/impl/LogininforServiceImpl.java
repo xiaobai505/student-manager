@@ -13,8 +13,6 @@ import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
-import java.time.LocalDateTime;
-
 /**
 * @author Admin
 * &#064;description  针对表【sys_logininfor(系统访问记录)】的数据库操作Service实现
@@ -33,7 +31,6 @@ public class LogininforServiceImpl
         logininfor.setUserName(username);
         logininfor.setStatus(e.getCode());
         logininfor.setMsg(e.getMsg());
-        logininfor.setLoginTime(LocalDateTime.now());
         save(logininfor);
     }
 
@@ -41,13 +38,13 @@ public class LogininforServiceImpl
     public Page<Logininfor> selectPage(LogininforQuery query) {
         QueryWrapper<Logininfor> queryWrapper = new QueryWrapper<>();
         fillQueryWrapper(query, queryWrapper);
-        Page<Logininfor> page = Page.of(query.getCurrent(), query.getSize());
+        Page<Logininfor> page = Page.of(query.getCurrentPage(), query.getPageSize());
         return page(page, queryWrapper);
     }
 
     private static void fillQueryWrapper(LogininforQuery query, QueryWrapper<Logininfor> queryWrapper) {
         //自动组装查询条件，生成orderBy，组装条件的两种方式：1.基于注解 2.基于query对象中属性的后缀
-        OmpDbUtil.autoWrapper(query, queryWrapper, Logininfor.class);
+        OmpDbUtil.autoCondition(query, queryWrapper, Logininfor.class);
     }
 }
 

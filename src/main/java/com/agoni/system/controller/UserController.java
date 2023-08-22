@@ -5,6 +5,7 @@ import com.agoni.core.diboot.Binder;
 import com.agoni.dgy.model.query.PwdQuery;
 import com.agoni.system.model.po.User;
 import com.agoni.system.model.query.UserQuery;
+import com.agoni.system.model.response.ResponseEntity;
 import com.agoni.system.model.vo.UserVo;
 import com.agoni.system.service.UserService;
 import com.agoni.system.utils.UserUtil;
@@ -13,8 +14,6 @@ import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
@@ -43,28 +42,28 @@ public class UserController {
     public ResponseEntity<UserVo> get(){
         User user = UserUtil.getUser();
         UserVo userVo = Binder.convertAndBindRelations(user, UserVo.class);
-        return new ResponseEntity<>(userVo, HttpStatus.OK);
+        return ResponseEntity.body(userVo);
     }
 
     @GetMapping("/page")
     @ApiOperation("列表")
     public ResponseEntity<IPage> page(@Validated UserQuery userQuery){
         IPage<UserVo> res = userService.pageUser(userQuery);
-        return new ResponseEntity<>(res, HttpStatus.OK);
+        return ResponseEntity.body(res);
     }
 
     @PostMapping
     @ApiOperation("新增")
     public ResponseEntity<Boolean> saveBatch(@RequestBody List<User> user){
         boolean b = userService.saveBatch(user);
-        return new ResponseEntity<>(b, HttpStatus.OK);
+        return ResponseEntity.body(b);
     }
 
     @PutMapping
     @ApiOperation("更新")
     public ResponseEntity<Boolean> updateBatchById(@RequestBody List<User> user){
         boolean b = userService.updateBatchById(user);
-        return new ResponseEntity<>(b, HttpStatus.OK);
+        return ResponseEntity.body(b);
     }
 
     @DeleteMapping
@@ -72,13 +71,13 @@ public class UserController {
     public ResponseEntity<Boolean> removeByIds(@RequestBody List<User> userList){
         List<Long> ids = userList.stream().map(User::getId).collect(Collectors.toList());
         boolean b = userService.removeByIds(ids);
-        return new ResponseEntity<>(b, HttpStatus.OK);
+        return ResponseEntity.body(b);
     }
     
     @PutMapping("/resetPwd")
-    @ApiOperation("更新密码")
+    @ApiOperation("重置密码")
     public ResponseEntity<Boolean> resetPwd(@RequestBody PwdQuery pq){
         boolean b = userService.resetPwd(pq);
-        return new ResponseEntity<>(b, HttpStatus.OK);
+        return ResponseEntity.body(b);
     }
 }

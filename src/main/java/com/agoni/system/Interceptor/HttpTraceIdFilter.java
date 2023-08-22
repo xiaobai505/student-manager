@@ -22,7 +22,7 @@ public class HttpTraceIdFilter implements Filter {
     private final static String TID = "tid";
 
     @Override
-    public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain) throws IOException, ServletException {
+    public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain) throws ServletException, IOException {
         String tid = UUID.randomUUID().toString();
         MDC.put(TID, tid);
         chain.doFilter(request, response);

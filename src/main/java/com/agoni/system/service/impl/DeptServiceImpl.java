@@ -1,20 +1,15 @@
 package com.agoni.system.service.impl;
 
+import cn.hutool.core.util.StrUtil;
 import com.agoni.core.diboot.Binder;
 import com.agoni.system.mapper.DeptMapper;
 import com.agoni.system.model.po.Dept;
-import com.agoni.system.model.query.DeptQuery;
 import com.agoni.system.model.vo.DeptVo;
 import com.agoni.system.service.DeptService;
-import com.agoni.system.service.UserService;
-import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
-import com.baomidou.mybatisplus.core.toolkit.StringUtils;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import javax.validation.constraints.NotNull;
 import java.util.List;
 
 /**
@@ -25,22 +20,11 @@ import java.util.List;
 @Service
 public class DeptServiceImpl extends ServiceImpl<DeptMapper, Dept> implements DeptService {
     
-    @Autowired
-    private UserService userService;
-    
     @Override
     public List<DeptVo> listByQuery() {
         return Binder.convertAndBindRelations(this.list(), DeptVo.class);
     }
 
-    @NotNull
-    private QueryWrapper<Dept> getDeptQueryWrapper(DeptQuery dq) {
-        QueryWrapper<Dept> queryWrapper = new QueryWrapper<>();
-        queryWrapper.lambda().eq(StringUtils.isNotBlank(dq.getStatus()),Dept::getStatus, dq.getStatus())
-                .eq(StringUtils.isNotBlank(dq.getName()),Dept::getName,dq.getName()).orderByAsc(Dept::getSort);
-        return queryWrapper;
-    }
-    
     @Transactional(rollbackFor = Exception.class)
     @Override
     public Boolean saveOrUpdateDept(Dept dept) {
@@ -50,7 +34,7 @@ public class DeptServiceImpl extends ServiceImpl<DeptMapper, Dept> implements De
         if (info.getStatus() == 0) {
             throw new RuntimeException("部门停用，不允许新增");
         }
-        dept.setAncestors(info.getAncestors() + "," + dept.getParentId());
+        dept.setAncestors(info.getAncestors() + StrUtil.COMMA + dept.getParentId());
         return this.saveOrUpdate(dept);
     }
 }

@@ -85,8 +85,8 @@ public class OmpServiceImpl<M extends BaseMapper<T>, T> extends ServiceImpl<M, T
     }
 
     public IPage<T> getPage(Object query) {
-        Integer current = (Integer) ReflectUtil.getFieldValue(query, "current");
-        Integer limit = (Integer) ReflectUtil.getFieldValue(query, "size");
+        Integer current = (Integer) ReflectUtil.getFieldValue(query, "currentPage");
+        Integer limit = (Integer) ReflectUtil.getFieldValue(query, "pageSize");
         if (ObjectUtil.isEmpty(current) || ObjectUtil.isEmpty(limit)) {
             log.error("分页查询参数错误");
         }

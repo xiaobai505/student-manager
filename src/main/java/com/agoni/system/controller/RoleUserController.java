@@ -1,14 +1,13 @@
 package com.agoni.system.controller;
 
 
+import com.agoni.system.model.response.ResponseEntity;
 import com.agoni.system.model.vo.RoleUserVo;
 import com.agoni.system.service.RoleUserService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.constraints.NotEmpty;
@@ -38,14 +37,14 @@ public class RoleUserController {
     public ResponseEntity<List<Long>> getByUserId(@PathVariable @NotNull Long userId) {
         List<RoleUserVo> roleUserVos = roleUserService.getRolebyUserId(userId);
         List<Long> ids = roleUserVos.stream().map(RoleUserVo::getRoleId).collect(Collectors.toList());
-        return new ResponseEntity<>(ids, HttpStatus.OK);
+        return ResponseEntity.body(ids);
     }
     
     @PostMapping("/{userId}")
     @ApiOperation("根据用户ID添加角色信息")
     public ResponseEntity<Boolean> saveByUserId(@PathVariable @NotNull Long userId , @RequestBody @NotEmpty List<Long> ids) {
-        boolean save = roleUserService.saveByUserId(userId,ids);
-        return new ResponseEntity<>(save, HttpStatus.OK);
+        boolean b = roleUserService.saveByUserId(userId,ids);
+        return ResponseEntity.body(b);
     }
     
 }

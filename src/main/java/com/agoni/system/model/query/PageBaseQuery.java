@@ -24,14 +24,14 @@ public class PageBaseQuery {
      */
     @Schema(description = "页码")
     @Builder.Default
-    private Integer current = 1;
+    private Integer currentPage = 1;
 
     /**
      * 每页显示条数
      */
     @Schema(description = "每页显示条数")
     @Builder.Default
-    private Integer size = 10;
+    private Integer pageSize = 10;
 
     /**
      * 排序字段，默认id，如果要修改排序字段，需要改成对应的属性名，不是字段名！！！

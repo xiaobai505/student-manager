@@ -13,5 +13,8 @@ public class LogininforQuery extends PageBaseQuery {
 
     @ApiModelProperty("用户账号")
     private String userNameEq;
+
+    @ApiModelProperty("状态")
+    private Integer statusEq;
     
 }

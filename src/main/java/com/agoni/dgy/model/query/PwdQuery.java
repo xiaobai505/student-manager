@@ -3,6 +3,7 @@ package com.agoni.dgy.model.query;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.experimental.SuperBuilder;
@@ -18,10 +19,11 @@ public class PwdQuery implements Serializable {
     
     @ApiModelProperty("旧密码")
     private String oldPassword;
-    
+
     @ApiModelProperty("新密码")
-    private String newPassword;
+    @Builder.Default
+    private String newPassword = "123456";
     
     @ApiModelProperty("确认密码")
-    private String confirmPassword;
+    private String confirmPassword= "123456";
 }

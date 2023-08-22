@@ -5,6 +5,7 @@ import cn.hutool.core.date.DateUtil;
 import cn.hutool.core.util.StrUtil;
 import com.agoni.core.cache.TokenCacheManger;
 import com.agoni.core.diboot.Binder;
+import com.agoni.core.exception.BusinessException;
 import com.agoni.security.config.constants.JwtConfiguration;
 import com.agoni.security.model.TokenVo;
 import com.agoni.security.service.AuthUserService;
@@ -91,9 +92,8 @@ public class AuthUserServiceImpl implements AuthUserService {
             }
             return userName;
         }catch (Exception e){
-            log.error("<refreshToken> 校验失败，需要重新登录！");
+            throw new BusinessException("refreshToken 校验失败，需要重新登录！");
         }
-        return null;
     }
 
     @Override

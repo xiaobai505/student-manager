@@ -22,5 +22,7 @@ spring:
     maxPoolPreparedStatementPerConnectionSize: 20
     filters: stat,wall,slf4j
     connectionProperties: druid.stat.mergeSql=true;druid.stat.slowSqlMillis=5000
-    platform: mysql
+  sql:
+    init:
+      platform: mysql
 
