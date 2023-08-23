@@ -27,4 +27,12 @@ public interface DeptService extends IService<Dept> {
      * @return
      */
     Boolean saveOrUpdateDept(Dept dept);
+
+    /**
+     * 获取子部门id
+     *
+     * @param deptId 部门id
+     * @return
+     */
+    List<Long> getChildDeptIds(Long deptId);
 }

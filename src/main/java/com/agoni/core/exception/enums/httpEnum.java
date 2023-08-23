@@ -28,7 +28,11 @@ public enum httpEnum implements BaseEnum {
     BAD_REQUEST(400, "请求错误"),
     FORBIDDEN(403, "无权操作"),
     NOT_FOUND(404, "未找到"),
-    TOKEN_CHECK_FAIL(50001003, "登录超时，请刷新页面重新登录!"),// TOKEN解析失败
+    PASSWORD_FAIL(50001003, "原密码错误!"),
+    /**
+     * "refreshToken 校验失败，需要重新登录！"
+     */
+    TOKEN_CHECK_FAIL(50001003, "登录超时，请刷新页面重新登录!"),
     ;
     
     private final Integer code;

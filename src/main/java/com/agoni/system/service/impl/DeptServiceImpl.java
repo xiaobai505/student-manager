@@ -2,15 +2,20 @@ package com.agoni.system.service.impl;
 
 import cn.hutool.core.util.StrUtil;
 import com.agoni.core.diboot.Binder;
+import com.agoni.core.exception.BusinessException;
 import com.agoni.system.mapper.DeptMapper;
 import com.agoni.system.model.po.Dept;
 import com.agoni.system.model.vo.DeptVo;
 import com.agoni.system.service.DeptService;
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+import java.util.stream.Collectors;
+
+import static com.agoni.core.exception.enums.BusinessBaseEnum.DEPT_STOP;
 
 /**
  * @author gyd
@@ -32,11 +37,20 @@ public class DeptServiceImpl extends ServiceImpl<DeptMapper, Dept> implements De
         Dept info = this.getById(dept.getParentId());
         // 如果父节点不为正常状态,则不允许新增子节点
         if (info.getStatus() == 0) {
-            throw new RuntimeException("部门停用，不允许新增");
+            throw new BusinessException(DEPT_STOP);
         }
         dept.setAncestors(info.getAncestors() + StrUtil.COMMA + dept.getParentId());
         return this.saveOrUpdate(dept);
     }
+
+    @Override
+    public List<Long> getChildDeptIds(Long deptId) {
+        QueryWrapper<Dept> queryWrapper = new QueryWrapper<>();
+        queryWrapper.lambda().select(Dept::getId).apply("find_in_set({0}, ancestors)", deptId);
+        return list(queryWrapper).stream().map(Dept::getId).collect(Collectors.toList());
+    }
+
+
 }
 
 

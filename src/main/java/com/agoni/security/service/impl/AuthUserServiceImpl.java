@@ -22,6 +22,7 @@ import javax.annotation.Resource;
 import java.util.Arrays;
 import java.util.List;
 
+import static com.agoni.core.exception.enums.httpEnum.TOKEN_CHECK_FAIL;
 import static com.agoni.security.config.constants.SecurityConstants.ACCESS_TOKEN;
 import static com.agoni.security.config.constants.SecurityConstants.REFRESH_TOKEN;
 
@@ -86,13 +87,15 @@ public class AuthUserServiceImpl implements AuthUserService {
             String refreshTokenStr = tokenCacheManger.getRefreshToken(REFRESH_TOKEN + ":" + userName);
             if (StrUtil.isBlank(refreshTokenStr)) {
                 log.error(" <refreshToken>过期了,redis也删除了!");
+                throw new BusinessException(TOKEN_CHECK_FAIL);
             }
             if (!StrUtil.equals(refreshTokenStr, refreshToken)) {
                 log.error(" <refreshToken>过期了, 但redis里面是新生成的");
+                throw new BusinessException(TOKEN_CHECK_FAIL);
             }
             return userName;
         }catch (Exception e){
-            throw new BusinessException("refreshToken 校验失败，需要重新登录！");
+            throw new BusinessException(TOKEN_CHECK_FAIL);
         }
     }
 

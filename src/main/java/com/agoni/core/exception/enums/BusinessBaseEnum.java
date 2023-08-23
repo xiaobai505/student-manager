@@ -14,6 +14,7 @@ import lombok.Getter;
 @Getter
 public enum BusinessBaseEnum implements BaseEnum {
     BUSINESS_ERROR(1001, "{0}"),
+    DEPT_STOP(1001, "部门停用，不允许新增用户"),
     SYSTEM_ERROR(1001, "系统出小差了，请稍后再试哦~~"),
     ;
 

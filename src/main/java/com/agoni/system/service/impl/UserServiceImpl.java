@@ -7,6 +7,7 @@ import com.agoni.system.mapper.UserMapper;
 import com.agoni.system.model.po.User;
 import com.agoni.system.model.query.UserQuery;
 import com.agoni.system.model.vo.UserVo;
+import com.agoni.system.service.DeptService;
 import com.agoni.system.service.UserService;
 import com.agoni.system.utils.UserUtil;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
@@ -16,8 +17,11 @@ import com.baomidou.mybatisplus.core.toolkit.StringUtils;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import javax.annotation.Resource;
+
+import static com.agoni.core.exception.enums.httpEnum.PASSWORD_FAIL;
 
 /**
  * <p>
@@ -31,8 +35,11 @@ import org.springframework.stereotype.Service;
 @Slf4j
 public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements UserService {
 
-    @Autowired
+    @Resource
     private UserMapper userMapper;
+
+    @Resource
+    private DeptService deptService;
 
     @Override
     public IPage<UserVo> pageUser(UserQuery userQuery) {
@@ -62,7 +69,7 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
     public boolean resetPwd(PwdQuery pq) {
         User user = UserUtil.getUser();
         if (pq.getUserId() == null && !StringUtils.equals(pq.getOldPassword(), user.getPassword())) {
-            throw new BusinessException("原密码错误!");
+            throw new BusinessException(PASSWORD_FAIL);
         }
         // 当前用户密码
         User u = User.builder().password(pq.getConfirmPassword()).build();
