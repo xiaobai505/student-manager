@@ -1,7 +1,9 @@
 package com.agoni.system.service.impl;
 
+import cn.hutool.core.collection.CollUtil;
 import com.agoni.core.diboot.Binder;
 import com.agoni.core.exception.BusinessException;
+import com.agoni.core.omp.OmpServiceImpl;
 import com.agoni.dgy.model.query.PwdQuery;
 import com.agoni.system.mapper.UserMapper;
 import com.agoni.system.model.po.User;
@@ -15,11 +17,11 @@ import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.core.toolkit.StringUtils;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
-import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
+import java.util.List;
 
 import static com.agoni.core.exception.enums.httpEnum.PASSWORD_FAIL;
 
@@ -33,7 +35,7 @@ import static com.agoni.core.exception.enums.httpEnum.PASSWORD_FAIL;
  */
 @Service
 @Slf4j
-public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements UserService {
+public class UserServiceImpl extends OmpServiceImpl<UserMapper, User> implements UserService {
 
     @Resource
     private UserMapper userMapper;
@@ -43,9 +45,13 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
 
     @Override
     public IPage<UserVo> pageUser(UserQuery userQuery) {
-        Page<UserVo> page = Page.of(userQuery.getCurrentPage(), userQuery.getPageSize());
-        IPage<UserVo> iPage = userMapper.selectUserAndRolepage(page, userQuery);
-        return Binder.bindRelations(iPage);
+        // 获取当前用户的部门及子部门
+        List<Long> deptIds = deptService.getChildDeptIds(userQuery.getDeptId());
+        Page<User> page = Page.of(userQuery.getCurrentPage(), userQuery.getPageSize());
+        QueryWrapper<User> userQueryWrapper = fillQueryWrapper(userQuery);
+        // 增加 .or() 部门条件
+        userQueryWrapper.lambda().or().in(CollUtil.isNotEmpty(deptIds), User::getDeptId, deptIds);
+        return Binder.convertAndBindRelations(page(page, userQueryWrapper), UserVo.class);
     }
 
     /**

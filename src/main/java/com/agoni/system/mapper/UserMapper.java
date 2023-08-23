@@ -2,13 +2,8 @@ package com.agoni.system.mapper;
 
 
 import com.agoni.system.model.po.User;
-import com.agoni.system.model.query.UserQuery;
-import com.agoni.system.model.vo.UserVo;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
-import com.baomidou.mybatisplus.core.metadata.IPage;
-import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import org.apache.ibatis.annotations.Mapper;
-import org.apache.ibatis.annotations.Param;
 
 /**
  * <p>
@@ -20,14 +15,5 @@ import org.apache.ibatis.annotations.Param;
  */
 @Mapper
 public interface UserMapper extends BaseMapper<User> {
-
-    /**
-     * 多表分页模糊查询用户信息
-     * 这里 @Param("ew") LambdaQueryWrapper<UserAndRole> query 对应 xml 的 ${ew.customSqlSegment} 参数
-     * @param page 分页
-     * @param userQuery 模糊查询对象
-     * @return 分页的用户信息
-     */
-    IPage<UserVo> selectUserAndRolepage(Page<UserVo> page, @Param("userQuery") UserQuery userQuery);
 
 }

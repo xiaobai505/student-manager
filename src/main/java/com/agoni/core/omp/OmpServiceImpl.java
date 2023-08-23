@@ -91,15 +91,24 @@ public class OmpServiceImpl<M extends BaseMapper<T>, T> extends ServiceImpl<M, T
             log.error("分页查询参数错误");
         }
         Page<T> page = Page.of(current, limit);
-        QueryWrapper<T> queryWrapper = Wrappers.query();
-        OmpDbUtil.autoWrapper(query, queryWrapper, getEntityClass());
-        return page(page, queryWrapper);
+        return page(page, fillQueryWrapper(query));
     }
 
     public List<T> getList(Object query) {
+        return this.list(fillQueryWrapper(query));
+    }
+
+    /**
+     * 生成查询条件
+     *
+     * @param query 查询条件对象
+     * @author t-guoyu.dong
+     */
+    public QueryWrapper<T> fillQueryWrapper(Object query) {
         QueryWrapper<T> queryWrapper = Wrappers.query();
+        //自动组装查询条件，生成orderBy，组装条件的两种方式：1.基于注解 2.基于query对象中属性的后缀
         OmpDbUtil.autoWrapper(query, queryWrapper, getEntityClass());
-        return this.list();
+        return queryWrapper;
     }
 
 }
