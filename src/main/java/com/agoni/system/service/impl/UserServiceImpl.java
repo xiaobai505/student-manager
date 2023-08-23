@@ -1,6 +1,7 @@
 package com.agoni.system.service.impl;
 
 import com.agoni.core.diboot.Binder;
+import com.agoni.core.exception.BusinessException;
 import com.agoni.dgy.model.query.PwdQuery;
 import com.agoni.system.mapper.UserMapper;
 import com.agoni.system.model.po.User;
@@ -12,6 +13,7 @@ import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.core.toolkit.StringUtils;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -34,7 +36,8 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
 
     @Override
     public IPage<UserVo> pageUser(UserQuery userQuery) {
-        IPage<UserVo> iPage = userMapper.selectUserAndRolepage(userQuery, userQuery);
+        Page<UserVo> page = Page.of(userQuery.getCurrentPage(), userQuery.getPageSize());
+        IPage<UserVo> iPage = userMapper.selectUserAndRolepage(page, userQuery);
         return Binder.bindRelations(iPage);
     }
 
@@ -57,13 +60,14 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
      */
     @Override
     public boolean resetPwd(PwdQuery pq) {
-        // 当前用户密码
         User user = UserUtil.getUser();
-        if (StringUtils.equals(pq.getOldPassword(), user.getPassword())) {
-            User u = User.builder().id(user.getId()).password(pq.getConfirmPassword()).build();
-            return updateById(u);
+        if (pq.getUserId() == null && !StringUtils.equals(pq.getOldPassword(), user.getPassword())) {
+            throw new BusinessException("原密码错误!");
         }
-        return false;
+        // 当前用户密码
+        User u = User.builder().password(pq.getConfirmPassword()).build();
+        u.setId(pq.getUserId() == null ? user.getId() : pq.getUserId());
+        return updateById(u);
     }
     
     private LambdaQueryWrapper<User> getUserLambdaQueryWrapper(User user) {

@@ -16,14 +16,17 @@ import java.io.Serializable;
 @AllArgsConstructor
 @ApiModel(value = "pwdQuery对象", description = "重置密码")
 public class PwdQuery implements Serializable {
-    
+
+    @ApiModelProperty("用户id")
+    private Long userId;
+
     @ApiModelProperty("旧密码")
     private String oldPassword;
 
     @ApiModelProperty("新密码")
     @Builder.Default
-    private String newPassword = "123456";
+    private String newPassword = "admin123";
     
     @ApiModelProperty("确认密码")
-    private String confirmPassword= "123456";
+    private String confirmPassword= "admin123";
 }

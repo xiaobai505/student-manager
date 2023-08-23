@@ -1,14 +1,11 @@
 package com.agoni.system.model.query;
 
-import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
-import lombok.Builder;
 import lombok.Data;
 
 import javax.validation.constraints.NotNull;
 
 @Data
-@Builder
-public class UserQuery extends Page {
+public class UserQuery extends PageBaseQuery {
     
     /**
      * 用户名
@@ -24,12 +21,7 @@ public class UserQuery extends Page {
      * 状态
      */
     private Integer status;
-    
-    /**
-     * 角色
-     */
-    private String roles;
-    
+
     /**
      * 部门
      */

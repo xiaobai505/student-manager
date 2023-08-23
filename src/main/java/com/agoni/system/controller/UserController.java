@@ -18,7 +18,6 @@ import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-import java.util.stream.Collectors;
 
 /**
  * <p>
@@ -66,11 +65,10 @@ public class UserController {
         return ResponseEntity.body(b);
     }
 
-    @DeleteMapping
+    @DeleteMapping("/{id}")
     @ApiOperation("删除")
-    public ResponseEntity<Boolean> removeByIds(@RequestBody List<User> userList){
-        List<Long> ids = userList.stream().map(User::getId).collect(Collectors.toList());
-        boolean b = userService.removeByIds(ids);
+    public ResponseEntity<Boolean> removeById(@PathVariable long id){
+        boolean b = userService.removeById(id);
         return ResponseEntity.body(b);
     }
     
