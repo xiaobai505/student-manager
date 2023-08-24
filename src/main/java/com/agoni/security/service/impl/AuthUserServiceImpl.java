@@ -19,8 +19,6 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
-import java.util.Arrays;
-import java.util.List;
 
 import static com.agoni.core.exception.enums.httpEnum.TOKEN_CHECK_FAIL;
 import static com.agoni.security.config.constants.SecurityConstants.ACCESS_TOKEN;
@@ -71,8 +69,9 @@ public class AuthUserServiceImpl implements AuthUserService {
     @Override
     public TokenVo refreshToken(String refreshToken) {
         String userName = getUserName(refreshToken);
+        AuthUserVo authUserVo = this.loadUserByUsername(userName);
         String clientId = JwtTokenUtil.getClientId(refreshToken);
-        return getTokenVo(userName, clientId);
+        return getTokenVo(authUserVo, clientId);
     }
 
     /**
@@ -83,8 +82,9 @@ public class AuthUserServiceImpl implements AuthUserService {
     private String getUserName(String refreshToken) {
         try {
             String userName = JwtTokenUtil.getUserName(refreshToken);
+            String clientId = JwtTokenUtil.getClientId(refreshToken);
             // 看下redis里面有没有这个refreshToken
-            String refreshTokenStr = tokenCacheManger.getRefreshToken(REFRESH_TOKEN + ":" + userName);
+            String refreshTokenStr = tokenCacheManger.getRefreshToken(REFRESH_TOKEN + "::" + userName + "::" + clientId);
             if (StrUtil.isBlank(refreshTokenStr)) {
                 log.error(" <refreshToken>过期了,redis也删除了!");
                 throw new BusinessException(TOKEN_CHECK_FAIL);
@@ -100,7 +100,8 @@ public class AuthUserServiceImpl implements AuthUserService {
     }
 
     @Override
-    public TokenVo getTokenVo(String userName, String clientId) {
+    public TokenVo getTokenVo(AuthUserVo authUserVo, String clientId) {
+        String userName = authUserVo.getUsername();
         // accessToken 和 refreshToken
         String accessToken = jwtTokenUtil.generateToken(userName, clientId);
         DateTime expirationDate = DateUtil.offsetSecond(DateUtil.date(), jwtConfiguration.getRefreshExpireTime() * 2);
@@ -113,8 +114,7 @@ public class AuthUserServiceImpl implements AuthUserService {
 
         // 当前时间偏移 jwtConfiguration.getAccessExpireTime() 后为过期时间
         DateTime expires = DateUtil.offsetSecond(DateUtil.date(), jwtConfiguration.getAccessExpireTime());
-        List<String> roles = Arrays.asList("admin");
         return TokenVo.builder().username(userName).accessToken(accessToken)
-                .refreshToken(refreshToken).expires(expires).roles(roles).build();
+                .refreshToken(refreshToken).expires(expires).roles(authUserVo.getRoleCodes()).build();
     }
 }

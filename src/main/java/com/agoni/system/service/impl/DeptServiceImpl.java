@@ -9,6 +9,8 @@ import com.agoni.system.model.vo.DeptVo;
 import com.agoni.system.service.DeptService;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import org.springframework.cache.annotation.CacheEvict;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -26,12 +28,15 @@ import static com.agoni.core.exception.enums.BusinessBaseEnum.DEPT_STOP;
 public class DeptServiceImpl extends ServiceImpl<DeptMapper, Dept> implements DeptService {
     
     @Override
+    @Cacheable(value = "dept")
     public List<DeptVo> listByQuery() {
         return Binder.convertAndBindRelations(this.list(), DeptVo.class);
     }
 
-    @Transactional(rollbackFor = Exception.class)
+
     @Override
+    @Transactional(rollbackFor = Exception.class)
+    @CacheEvict(value = "dept", allEntries = true)
     public Boolean saveOrUpdateDept(Dept dept) {
         // 上级部门信息
         Dept info = this.getById(dept.getParentId());

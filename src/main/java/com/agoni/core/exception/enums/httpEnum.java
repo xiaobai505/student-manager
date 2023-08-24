@@ -28,11 +28,11 @@ public enum httpEnum implements BaseEnum {
     BAD_REQUEST(400, "请求错误"),
     FORBIDDEN(403, "无权操作"),
     NOT_FOUND(404, "未找到"),
-    PASSWORD_FAIL(50001003, "原密码错误!"),
+    PASSWORD_FAIL(501001, "原密码错误!"),
     /**
-     * "refreshToken 校验失败，需要重新登录！"
+     * "refreshToken 校验失败，需要重新登录！会清空缓冲，返回登录页面！"
      */
-    TOKEN_CHECK_FAIL(50001003, "登录超时，请刷新页面重新登录!"),
+    TOKEN_CHECK_FAIL(5001003, "登录超时，请刷新页面重新登录!"),
     ;
     
     private final Integer code;
@@ -58,7 +58,7 @@ public enum httpEnum implements BaseEnum {
 
     public void sendFail(HttpServletResponse response) throws IOException {
         response.setContentType(APPLICATION_JSON_VALUE);
-        response.setStatus(HttpStatus.BAD_REQUEST.value());
+        response.setStatus(HttpStatus.BAD_GATEWAY.value());
         response.setContentType(ContentType.JSON.toString(Charsets.UTF_8));
         response.getWriter().write(JSON.toJSONString(ResponseEntity.fail(this)));
     }

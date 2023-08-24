@@ -38,12 +38,12 @@ public class PageBaseQuery {
      */
     @Schema(description = "排序字段，默认id")
     @Builder.Default
-    private String orderBy = "id";
+    private String orderBy = "create_time";
 
     /**
      * 排序方式，默认倒序，正序则改为ASC
      */
     @Schema(description = "排序方式，默认倒序")
     @Builder.Default
-    private String order = Constants.DESC;
+    private String order = Constants.ASC;
 }

@@ -8,7 +8,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
-import static com.agoni.core.exception.enums.httpEnum.TOKEN_CHECK_FAIL;
+import static com.agoni.core.exception.enums.httpEnum.LOGIN_FAILURE;
 
 /**
  * @author gyd
@@ -20,6 +20,6 @@ public class RestAuthenticationEntryPoint implements AuthenticationEntryPoint {
     public void commence(HttpServletRequest request,
                          HttpServletResponse response,
                          AuthenticationException authException) throws IOException {
-        TOKEN_CHECK_FAIL.sendFail(response);
+        LOGIN_FAILURE.sendFail(response);
     }
 }

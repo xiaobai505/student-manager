@@ -3,7 +3,6 @@ package com.agoni.core.exception;
 import com.agoni.system.model.response.ResponseEntity;
 import com.agoni.system.utils.HttpUitl;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.http.HttpStatus;
 import org.springframework.validation.BindException;
 import org.springframework.web.HttpRequestMethodNotSupportedException;
 import org.springframework.web.bind.MethodArgumentNotValidException;
@@ -69,7 +68,7 @@ public class GlobalExceptionHandler {
     @ExceptionHandler(value = BusinessException.class)
     public ResponseEntity businessExceptionHandler(BusinessException e) {
         logError(e, false);
-        return ResponseEntity.body(HttpStatus.BAD_GATEWAY.value(), e.getMessage());
+        return ResponseEntity.body(e.getErrorCode(), e.getMessage());
     }
 
     /**
