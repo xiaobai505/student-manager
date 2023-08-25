@@ -39,9 +39,9 @@ public class User extends AbstractEntity {
     @TableField("name")
     private String name;
 
-    @ApiModelProperty("性别，1男，2女")
+    @ApiModelProperty("性别，0男，1女")
     @TableField("sex")
-    private String sex;
+    private Integer sex;
 
     @ApiModelProperty("用户名")
     @TableField("username")
