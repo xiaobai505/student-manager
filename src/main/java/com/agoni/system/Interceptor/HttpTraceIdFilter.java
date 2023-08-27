@@ -25,6 +25,7 @@ public class HttpTraceIdFilter implements Filter {
     public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain) throws ServletException, IOException {
         String tid = UUID.randomUUID().toString();
         MDC.put(TID, tid);
+        log.info("tid:{}", tid);
         chain.doFilter(request, response);
         MDC.remove(TID);
     }

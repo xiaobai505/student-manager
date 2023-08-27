@@ -1,6 +1,6 @@
-package com.agoni.system.model.bo;
+package com.agoni.system.model.from;
 
-import com.agoni.dgy.model.po.Major;
+import com.agoni.system.model.po.Dept;
 import com.agoni.system.model.po.Role;
 import com.agoni.system.model.po.User;
 import lombok.Data;
@@ -9,11 +9,10 @@ import lombok.Data;
  * @author gyd
  */
 @Data
-public class AddUserFrom {
+public class UserFrom extends User {
 
-    private User user;
 
     private Role role;
 
-    private Major major;
+    private Dept dept;
 }

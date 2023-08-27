@@ -2,7 +2,6 @@ package com.agoni.system.service.impl;
 
 import cn.hutool.core.util.StrUtil;
 import com.agoni.core.diboot.Binder;
-import com.agoni.core.exception.BusinessException;
 import com.agoni.system.mapper.DeptMapper;
 import com.agoni.system.model.po.Dept;
 import com.agoni.system.model.vo.DeptVo;
@@ -16,8 +15,6 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.stream.Collectors;
-
-import static com.agoni.core.exception.enums.BusinessBaseEnum.DEPT_STOP;
 
 /**
  * @author gyd
@@ -38,13 +35,11 @@ public class DeptServiceImpl extends ServiceImpl<DeptMapper, Dept> implements De
     @Transactional(rollbackFor = Exception.class)
     @CacheEvict(value = "dept", allEntries = true)
     public Boolean saveOrUpdateDept(Dept dept) {
-        // 上级部门信息
-        Dept info = this.getById(dept.getParentId());
-        // 如果父节点不为正常状态,则不允许新增子节点
-        if (info.getStatus() == 0) {
-            throw new BusinessException(DEPT_STOP);
+        // 有上级部门信息
+        if (dept.getParentId() != 0) {
+            Dept info = this.getById(dept.getParentId());
+            dept.setAncestors(info.getAncestors() + StrUtil.COMMA + dept.getParentId());
         }
-        dept.setAncestors(info.getAncestors() + StrUtil.COMMA + dept.getParentId());
         return this.saveOrUpdate(dept);
     }
 

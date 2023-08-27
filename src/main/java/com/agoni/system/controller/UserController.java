@@ -17,8 +17,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.List;
-
 /**
  * <p>
  * 用户表 dgy前端控制器
@@ -53,15 +51,16 @@ public class UserController {
 
     @PostMapping
     @ApiOperation("新增")
-    public ResponseEntity<Boolean> saveBatch(@RequestBody List<User> user){
-        boolean b = userService.saveBatch(user);
+    public ResponseEntity<Boolean> saveOrUpdate(@RequestBody User user){
+        user.setPassword("admin123");
+        boolean b = userService.saveOrUpdate(user);
         return ResponseEntity.body(b);
     }
 
     @PutMapping
     @ApiOperation("更新")
-    public ResponseEntity<Boolean> updateBatchById(@RequestBody List<User> user){
-        boolean b = userService.updateBatchById(user);
+    public ResponseEntity<Boolean> updateBatchById(@RequestBody User user){
+        boolean b = userService.updateById(user);
         return ResponseEntity.body(b);
     }
 
