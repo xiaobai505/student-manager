@@ -104,8 +104,8 @@ public class AuthUserServiceImpl implements AuthUserService {
         String userName = authUserVo.getUsername();
         // accessToken 和 refreshToken
         String accessToken = jwtTokenUtil.generateToken(userName, clientId);
-        DateTime expirationDate = DateUtil.offsetSecond(DateUtil.date(), jwtConfiguration.getRefreshExpireTime() * 2);
-        String refreshToken = jwtTokenUtil.generateToken(REFRESH_TOKEN + ":" + userName, clientId, expirationDate);
+        DateTime dateTime = DateUtil.offsetSecond(DateUtil.date(), jwtConfiguration.getRefreshExpireTime() * 2);
+        String refreshToken = jwtTokenUtil.generateToken(REFRESH_TOKEN + ":" + userName, clientId, dateTime);
         // 保存到redis
         String accessKey = ACCESS_TOKEN + "::" + userName + "::" + clientId;
         String refreshKey = REFRESH_TOKEN + "::" + userName + "::" + clientId;

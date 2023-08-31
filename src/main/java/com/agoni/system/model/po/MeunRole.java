@@ -13,7 +13,7 @@ import java.io.Serializable;
  * 菜单角色关联表
  * @TableName sys_meun_role
  */
-@TableName(value ="sys_meun_role")
+@TableName(value ="sys_menu_role")
 @Data
 @SuperBuilder
 @NoArgsConstructor

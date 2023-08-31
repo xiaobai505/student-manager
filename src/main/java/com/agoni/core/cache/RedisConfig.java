@@ -70,7 +70,7 @@ public class RedisConfig extends CachingConfigurerSupport {
         public MyObjectMapper() {
             super();
             // 去掉各种@JsonSerialize注解的解析
-            configure(MapperFeature.USE_ANNOTATIONS, false);
+            isEnabled(MapperFeature.USE_ANNOTATIONS);
             // 只针对非空的值进行序列化
             setSerializationInclusion(JsonInclude.Include.NON_NULL);
             // 将类型序列化到属性json字符串中

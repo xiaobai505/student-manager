@@ -38,7 +38,7 @@
         from
             student_status_management.sys_menu t
         left join
-            student_status_management.sys_meun_role t1
+            student_status_management.sys_menu_role t1
             on t1.meun_id = t.id
         left join
             student_status_management.sys_role t2

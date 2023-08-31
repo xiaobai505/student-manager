@@ -1,6 +1,8 @@
 package com.agoni.system.service.impl;
 
 import cn.hutool.core.collection.CollUtil;
+import cn.hutool.core.util.ObjectUtil;
+import cn.hutool.core.util.StrUtil;
 import com.agoni.core.diboot.Binder;
 import com.agoni.core.exception.BusinessException;
 import com.agoni.core.omp.OmpServiceImpl;
@@ -38,20 +40,17 @@ import static com.agoni.core.exception.enums.httpEnum.PASSWORD_FAIL;
 public class UserServiceImpl extends OmpServiceImpl<UserMapper, User> implements UserService {
 
     @Resource
-    private UserMapper userMapper;
-
-    @Resource
     private DeptService deptService;
 
     @Override
     public IPage<UserVo> pageUser(UserQuery userQuery) {
         // 获取当前用户的部门及子部门
         List<Long> deptIds = deptService.getChildDeptIds(userQuery.getDeptId());
+        userQuery.setDeptIds(deptIds);
         Page<User> page = Page.of(userQuery.getCurrentPage(), userQuery.getPageSize());
-        QueryWrapper<User> userQueryWrapper = fillQueryWrapper(userQuery);
-        // 增加 .or() 部门条件
-        userQueryWrapper.lambda().or().in(CollUtil.isNotEmpty(deptIds), User::getDeptId, deptIds);
-        return Binder.convertAndBindRelations(page(page, userQueryWrapper), UserVo.class);
+        LambdaQueryWrapper<User> queryWrapper = getUserLambdaQueryWrapper(userQuery);
+        Page<User> userPage = page(page, queryWrapper);
+        return Binder.convertAndBindRelations(userPage, UserVo.class);
     }
 
     /**
@@ -78,15 +77,26 @@ public class UserServiceImpl extends OmpServiceImpl<UserMapper, User> implements
             throw new BusinessException(PASSWORD_FAIL);
         }
         // 当前用户密码
-        User u = User.builder().password(pq.getConfirmPassword()).build();
-        u.setId(pq.getUserId() == null ? user.getId() : pq.getUserId());
+        User u = User.builder().id(pq.getUserId()).password(pq.getConfirmPassword()).build();
         return updateById(u);
     }
-    
-    private LambdaQueryWrapper<User> getUserLambdaQueryWrapper(User user) {
-        LambdaQueryWrapper<User> queryWrapper=new LambdaQueryWrapper<>();
-        queryWrapper.like(User::getName,user.getName());
+
+    /**
+     * 特殊的查询 拼装or
+     * @param uq 查询条件
+     * @return
+     */
+    private LambdaQueryWrapper<User> getUserLambdaQueryWrapper(UserQuery uq) {
+        LambdaQueryWrapper<User> queryWrapper = new LambdaQueryWrapper<>();
+        queryWrapper.eq(StrUtil.isNotEmpty(uq.getUsernameEq()), User::getUsername, uq.getUsernameEq())
+                .eq(StrUtil.isNotEmpty(uq.getPhoneEq()), User::getPhone, uq.getPhoneEq())
+                .eq(ObjectUtil.isNotEmpty(uq.getStatusEq()), User::getStatus, uq.getStatusEq())
+                .and(u -> u.eq(User::getDeptId, uq.getDeptId()).or()
+                        .in(CollUtil.isNotEmpty(uq.getDeptIds()), User::getDeptId, uq.getDeptIds())
+                );
         return queryWrapper;
     }
+
+
 
 }
