@@ -1,7 +1,6 @@
 package com.agoni.system.service;
 
 import com.agoni.system.model.po.Menu;
-import com.agoni.system.model.query.MenuQuery;
 import com.agoni.system.model.vo.MenuTreeVo;
 import com.baomidou.mybatisplus.extension.service.IService;
 
@@ -18,6 +17,6 @@ public interface MenuService extends IService<Menu> {
      * 根据 权限cede 查找
      * @return menu菜单
      */
-    List<MenuTreeVo> getTree(MenuQuery from);
+    List<MenuTreeVo> getTree();
     
 }
