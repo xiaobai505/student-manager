@@ -4,7 +4,7 @@ import com.agoni.core.exception.enums.httpEnum;
 import com.agoni.core.omp.OmpDbUtil;
 import com.agoni.system.mapper.LogininforMapper;
 import com.agoni.system.model.po.Logininfor;
-import com.agoni.system.model.query.LogininforQuery;
+import com.agoni.system.model.query.LogininforPageQuery;
 import com.agoni.system.service.LogininforService;
 import com.agoni.system.utils.HttpUitl;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
@@ -35,14 +35,14 @@ public class LogininforServiceImpl
     }
 
     @Override
-    public Page<Logininfor> selectPage(LogininforQuery query) {
+    public Page<Logininfor> selectPage(LogininforPageQuery query) {
         QueryWrapper<Logininfor> queryWrapper = new QueryWrapper<>();
         fillQueryWrapper(query, queryWrapper);
         Page<Logininfor> page = Page.of(query.getCurrentPage(), query.getPageSize());
         return page(page, queryWrapper);
     }
 
-    private static void fillQueryWrapper(LogininforQuery query, QueryWrapper<Logininfor> queryWrapper) {
+    private static void fillQueryWrapper(LogininforPageQuery query, QueryWrapper<Logininfor> queryWrapper) {
         //自动组装查询条件，生成orderBy，组装条件的两种方式：1.基于注解 2.基于query对象中属性的后缀
         OmpDbUtil.autoCondition(query, queryWrapper, Logininfor.class);
     }

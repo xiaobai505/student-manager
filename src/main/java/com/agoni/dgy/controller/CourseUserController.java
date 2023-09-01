@@ -8,6 +8,7 @@ import com.agoni.dgy.model.query.CourseDto;
 import com.agoni.dgy.model.query.CourseUserQuery;
 import com.agoni.dgy.model.vo.CourseUserVo;
 import com.agoni.dgy.service.CourseUserService;
+import com.agoni.system.model.response.ResponseEntity;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.diboot.core.binding.QueryBuilder;
@@ -15,8 +16,6 @@ import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
@@ -54,28 +53,28 @@ public class CourseUserController{
     @ApiOperation("列表")
     public ResponseEntity<IPage> searchPage(@Validated CourseUserQuery cq) {
         IPage<CourseUserVo> res = courseUserService.searchPage(cq);
-        return new ResponseEntity<>(res, HttpStatus.OK);
+        return ResponseEntity.body(res);
     }
     
     @PostMapping
     @ApiOperation("保存")
     public ResponseEntity<Boolean> save(@RequestBody Course course) {
         boolean b = courseUserService.saveCourse(course.getId());
-        return new ResponseEntity<>(b, HttpStatus.OK);
+        return ResponseEntity.body(b);
     }
     
     @PutMapping
     @ApiOperation("更新")
     public ResponseEntity<Boolean> updateBatchById(@RequestBody List<CourseUser> courseUserList) {
         boolean b = courseUserService.updateBatchById(courseUserList);
-        return new ResponseEntity<>(b, HttpStatus.OK);
+        return ResponseEntity.body(b);
     }
     
     @DeleteMapping
     @ApiOperation("删除")
     public ResponseEntity<Boolean> delete(@RequestBody CourseUser courseUser){
         boolean b = courseUserService.deleteById(courseUser);
-        return new ResponseEntity<>(b, HttpStatus.OK);
+        return ResponseEntity.body(b);
     }
 
 }

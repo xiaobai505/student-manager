@@ -17,7 +17,7 @@ import lombok.experimental.SuperBuilder;
 @NoArgsConstructor
 @AllArgsConstructor
 @Schema(name = "PageQuery", description = "分页查询")
-public class PageBaseQuery {
+public class BasePageQuery {
 
     /**
      * 页码

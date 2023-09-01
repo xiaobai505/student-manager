@@ -2,7 +2,7 @@ package com.agoni.system.service;
 
 import com.agoni.core.exception.enums.httpEnum;
 import com.agoni.system.model.po.Logininfor;
-import com.agoni.system.model.query.LogininforQuery;
+import com.agoni.system.model.query.LogininforPageQuery;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.IService;
 
@@ -30,5 +30,5 @@ public interface LogininforService extends IService<Logininfor> {
      * @author t-guoyu.dong@pcitc.com
      * @date 2023-07-10
      */
-    Page<Logininfor> selectPage(LogininforQuery query);
+    Page<Logininfor> selectPage(LogininforPageQuery query);
 }

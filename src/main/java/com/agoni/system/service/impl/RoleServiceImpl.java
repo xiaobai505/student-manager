@@ -3,7 +3,7 @@ package com.agoni.system.service.impl;
 import com.agoni.core.omp.OmpServiceImpl;
 import com.agoni.system.mapper.RoleMapper;
 import com.agoni.system.model.po.Role;
-import com.agoni.system.model.query.RoleQuery;
+import com.agoni.system.model.query.RolePageQuery;
 import com.agoni.system.service.RoleService;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
@@ -22,7 +22,7 @@ public class RoleServiceImpl extends OmpServiceImpl<RoleMapper, Role> implements
 
 
     @Override
-    public IPage<Role> selectPage(RoleQuery from) {
+    public IPage<Role> selectPage(RolePageQuery from) {
         return this.getPage(from);
     }
 

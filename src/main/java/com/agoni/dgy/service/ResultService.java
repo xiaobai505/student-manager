@@ -1,7 +1,7 @@
 package com.agoni.dgy.service;
 
 import com.agoni.dgy.model.po.Result;
-import com.agoni.dgy.model.query.ResultQuery;
+import com.agoni.dgy.model.query.ResultPageQuery;
 import com.agoni.dgy.model.vo.ResultVo;
 import com.agoni.system.model.po.Menu;
 import com.baomidou.mybatisplus.core.metadata.IPage;
@@ -19,7 +19,7 @@ import java.util.concurrent.CompletableFuture;
  */
 public interface ResultService extends IService<Result> {
     
-    IPage<ResultVo> searchPage(ResultQuery from);
+    IPage<ResultVo> searchPage(ResultPageQuery from);
     
     boolean delByCourseId(long cId);
     

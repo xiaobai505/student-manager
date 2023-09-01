@@ -1,7 +1,7 @@
 package com.agoni.system.controller;
 
 import com.agoni.system.model.po.Logininfor;
-import com.agoni.system.model.query.LogininforQuery;
+import com.agoni.system.model.query.LogininforPageQuery;
 import com.agoni.system.model.response.ResponseEntity;
 import com.agoni.system.service.LogininforService;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
@@ -30,7 +30,7 @@ public class LogininforController {
     
     @GetMapping
     @ApiOperation("分页列表")
-    public ResponseEntity<Page<Logininfor>> page(@Validated LogininforQuery query) {
+    public ResponseEntity<Page<Logininfor>> page(@Validated LogininforPageQuery query) {
         Page<Logininfor> page = logininforService.selectPage(query);
         return ResponseEntity.body(page);
     }

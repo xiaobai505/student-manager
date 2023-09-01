@@ -6,7 +6,7 @@ import javax.validation.constraints.NotNull;
 import java.util.List;
 
 @Data
-public class UserQuery extends PageBaseQuery {
+public class UserPageQuery extends BasePageQuery {
     
     /**
      * 用户名

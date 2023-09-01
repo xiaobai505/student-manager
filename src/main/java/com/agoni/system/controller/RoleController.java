@@ -2,7 +2,7 @@ package com.agoni.system.controller;
 
 
 import com.agoni.system.model.po.Role;
-import com.agoni.system.model.query.RoleQuery;
+import com.agoni.system.model.query.RolePageQuery;
 import com.agoni.system.model.response.ResponseEntity;
 import com.agoni.system.service.RoleService;
 import com.baomidou.mybatisplus.core.metadata.IPage;
@@ -33,7 +33,7 @@ public class RoleController {
 
     @GetMapping("/page")
     @ApiOperation("分页列表")
-    public ResponseEntity<IPage<Role>> page(@Validated RoleQuery from) {
+    public ResponseEntity<IPage<Role>> page(@Validated RolePageQuery from) {
         from.setOrderBy("role_sort");
         from.setOrder(Constants.ASC);
         IPage<Role> page = roleService.selectPage(from);

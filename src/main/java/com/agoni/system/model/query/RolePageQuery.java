@@ -3,7 +3,7 @@ package com.agoni.system.model.query;
 import lombok.Data;
 
 @Data
-public class RoleQuery extends PageBaseQuery {
+public class RolePageQuery extends BasePageQuery {
     
     private String roleNameEq;
     

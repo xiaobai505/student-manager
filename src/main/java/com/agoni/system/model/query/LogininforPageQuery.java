@@ -9,7 +9,7 @@ import lombok.Data;
  */
 @Data
 @ApiModel(value = "MenuQuery对象", description = "菜单查询条件")
-public class LogininforQuery extends PageBaseQuery {
+public class LogininforPageQuery extends BasePageQuery {
 
     @ApiModelProperty("用户账号")
     private String userNameEq;

@@ -3,7 +3,7 @@ package com.agoni.dgy.service.impl;
 import com.agoni.core.diboot.Binder;
 import com.agoni.dgy.mapper.ResultMapper;
 import com.agoni.dgy.model.po.Result;
-import com.agoni.dgy.model.query.ResultQuery;
+import com.agoni.dgy.model.query.ResultPageQuery;
 import com.agoni.dgy.model.vo.ResultVo;
 import com.agoni.dgy.service.ResultService;
 import com.agoni.system.model.po.Menu;
@@ -36,14 +36,13 @@ public class ResultServiceImpl extends ServiceImpl<ResultMapper, Result> impleme
     private ResultMapper resultMapper;
     
     @Override
-    public IPage<ResultVo> searchPage(ResultQuery from) {
-        QueryWrapper<Object> objectQueryWrapper = new QueryWrapper<>();
-    
-        QueryWrapper<Result> query = new QueryWrapper<>();
-        query.lambda().likeLeft(StringUtils.isNotEmpty(from.getCourseName()),Result::getCourseName,from.getCourseName())
+    public IPage<ResultVo> searchPage(ResultPageQuery query) {
+        QueryWrapper<Result> queryWrapper = new QueryWrapper<>();
+        queryWrapper.lambda().likeLeft(StringUtils.isNotEmpty(query.getCourseName()),Result::getCourseName,query.getCourseName())
              .orderByDesc(Result::getCreateTime);
-        Page<Result> page = page(from, query);
-        return Binder.convertAndBindRelations(page, ResultVo.class);
+        Page<Result> page = Page.of(query.getCurrentPage(), query.getPageSize());
+        Page<Result> resultPage = page(page, queryWrapper);
+        return Binder.convertAndBindRelations(resultPage, ResultVo.class);
     }
     
     /**

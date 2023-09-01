@@ -9,7 +9,7 @@ import com.agoni.core.omp.OmpServiceImpl;
 import com.agoni.dgy.model.query.PwdQuery;
 import com.agoni.system.mapper.UserMapper;
 import com.agoni.system.model.po.User;
-import com.agoni.system.model.query.UserQuery;
+import com.agoni.system.model.query.UserPageQuery;
 import com.agoni.system.model.vo.UserVo;
 import com.agoni.system.service.DeptService;
 import com.agoni.system.service.UserService;
@@ -43,7 +43,7 @@ public class UserServiceImpl extends OmpServiceImpl<UserMapper, User> implements
     private DeptService deptService;
 
     @Override
-    public IPage<UserVo> pageUser(UserQuery userQuery) {
+    public IPage<UserVo> pageUser(UserPageQuery userQuery) {
         // 获取当前用户的部门及子部门
         List<Long> deptIds = deptService.getChildDeptIds(userQuery.getDeptId());
         userQuery.setDeptIds(deptIds);
@@ -86,7 +86,7 @@ public class UserServiceImpl extends OmpServiceImpl<UserMapper, User> implements
      * @param uq 查询条件
      * @return
      */
-    private LambdaQueryWrapper<User> getUserLambdaQueryWrapper(UserQuery uq) {
+    private LambdaQueryWrapper<User> getUserLambdaQueryWrapper(UserPageQuery uq) {
         LambdaQueryWrapper<User> queryWrapper = new LambdaQueryWrapper<>();
         queryWrapper.eq(StrUtil.isNotEmpty(uq.getUsernameEq()), User::getUsername, uq.getUsernameEq())
                 .eq(StrUtil.isNotEmpty(uq.getPhoneEq()), User::getPhone, uq.getPhoneEq())

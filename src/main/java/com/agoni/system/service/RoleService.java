@@ -1,7 +1,7 @@
 package com.agoni.system.service;
 
 import com.agoni.system.model.po.Role;
-import com.agoni.system.model.query.RoleQuery;
+import com.agoni.system.model.query.RolePageQuery;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.service.IService;
 
@@ -20,7 +20,7 @@ public interface RoleService extends IService<Role> {
      * @param from
      * @return
      */
-    IPage<Role> selectPage(RoleQuery from);
+    IPage<Role> selectPage(RolePageQuery from);
 
     
     /**
