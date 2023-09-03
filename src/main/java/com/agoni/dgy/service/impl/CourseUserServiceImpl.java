@@ -24,6 +24,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.CollectionUtils;
 
+import javax.validation.constraints.NotNull;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -97,6 +98,21 @@ public class CourseUserServiceImpl extends ServiceImpl<CourseUserMapper, CourseU
         resultService.delByCourseId(courseUser.getCourseId());
         // 删除记录
         return this.removeById(courseUser);
+    }
+
+    @Override
+    @Transactional(rollbackFor = Exception.class)
+    public boolean deleteByCourseId(@NotNull Long id) {
+        // 增加座位数量
+        courseService.delStock(id);
+        // 根据选修课程ID删除对应记录
+        resultService.delByCourseId(id);
+        // 删除记录
+        User u = UserUtil.getUser();
+        QueryWrapper<CourseUser> queryWrapper = new QueryWrapper<>();
+        queryWrapper.lambda().eq(CourseUser::getCourseId, id)
+                .eq(CourseUser::getUserId, u.getId());
+        return this.remove(queryWrapper);
     }
 }
 

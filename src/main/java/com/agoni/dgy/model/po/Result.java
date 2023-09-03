@@ -3,6 +3,7 @@ package com.agoni.dgy.model.po;
 import com.agoni.system.model.po.AbstractEntity;
 import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableName;
+import com.diboot.core.data.access.DataAccessCheckpoint;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.AllArgsConstructor;
@@ -30,6 +31,7 @@ public class Result extends AbstractEntity{
     
     @ApiModelProperty("用户id")
     @TableField("user_id")
+    @DataAccessCheckpoint
     private Long userId;
 
     @ApiModelProperty("课程id")

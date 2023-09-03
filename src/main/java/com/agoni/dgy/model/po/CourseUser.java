@@ -30,8 +30,8 @@ import java.time.LocalDateTime;
 public class CourseUser implements Serializable {
     
     @ApiModelProperty("id主键")
-    @TableId(value = "id", type = IdType.ASSIGN_UUID)
-    private String id;
+    @TableId(value = "id", type = IdType.AUTO)
+    private Long id;
     
     @ApiModelProperty("用户ID")
     @TableField("user_id")

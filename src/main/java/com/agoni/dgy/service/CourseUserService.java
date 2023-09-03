@@ -43,6 +43,12 @@ public interface CourseUserService extends IService<CourseUser> {
      * @return
      */
     boolean deleteById(CourseUser courseUser);
-    
-    
+
+    /**
+     * 放弃 用户选课信息
+     * @param id
+     *
+     * @return
+     */
+    boolean deleteByCourseId(Long id);
 }

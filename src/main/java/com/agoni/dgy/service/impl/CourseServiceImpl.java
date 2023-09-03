@@ -1,6 +1,7 @@
 package com.agoni.dgy.service.impl;
 
 import com.agoni.core.diboot.Binder;
+import com.agoni.core.exception.BusinessException;
 import com.agoni.core.omp.OmpDbUtil;
 import com.agoni.dgy.mapper.CourseMapper;
 import com.agoni.dgy.model.bo.CourseSearchFrom;
@@ -13,10 +14,11 @@ import com.baomidou.mybatisplus.core.toolkit.StringUtils;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+
+import static com.agoni.core.exception.enums.BusinessBaseEnum.STOCK_NULL;
 
 /**
  * <p>
@@ -29,22 +31,22 @@ import java.util.List;
 @Service
 @Slf4j
 public class CourseServiceImpl extends ServiceImpl<CourseMapper, Course> implements CourseService {
-    
-    private static final SimpleGrantedAuthority ADMIN = new SimpleGrantedAuthority("admin");
-    
+
     @Override
-    public IPage<CourseVo> searchPage(CourseSearchFrom from) {
+    public IPage<CourseVo> selectPage(CourseSearchFrom from) {
         QueryWrapper<Course> queryWrapper = new QueryWrapper<>();
         fillQueryWrapper(queryWrapper, from);
-        Page<Course> page = Page.of(1, 10);
+        Page<Course> page = Page.of(from.getCurrentPage(), from.getPageSize());
         Page<Course> records = page(page, queryWrapper);
         return Binder.convertAndBindRelations(records, CourseVo.class);
     }
+
 
     private void fillQueryWrapper(QueryWrapper<Course> queryWrapper,CourseSearchFrom from) {
         //自动组装查询条件，生成orderBy，组装条件的两种方式：1.基于注解 2.基于query对象中属性的后缀
         OmpDbUtil.autoWrapper(from, queryWrapper, Course.class);
     }
+
 
     @Override
     public List<Course> listByCourseName(String courseName) {
@@ -57,7 +59,7 @@ public class CourseServiceImpl extends ServiceImpl<CourseMapper, Course> impleme
     public Course checkStock(Long id) {
         Course course = this.getById(id);
         if (course.getSale().equals(course.getStock())) {
-            throw new RuntimeException("库存不足");
+            throw new BusinessException(STOCK_NULL);
         }
         return course;
     }

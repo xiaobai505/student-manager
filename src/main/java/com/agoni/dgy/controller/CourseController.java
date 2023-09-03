@@ -47,7 +47,7 @@ public class CourseController {
     @GetMapping
     @ApiOperation("列表")
     public ResponseEntity<IPage> searchPage(@Validated CourseSearchFrom from) {
-        IPage<CourseVo> res = courseService.searchPage(from);
+        IPage<CourseVo> res = courseService.selectPage(from);
         return ResponseEntity.body(res);
     }
     

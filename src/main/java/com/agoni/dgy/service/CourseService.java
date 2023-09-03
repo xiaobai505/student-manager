@@ -24,7 +24,7 @@ public interface CourseService extends IService<Course> {
      *
      * @return
      */
-    IPage<CourseVo> searchPage(CourseSearchFrom from);
+    IPage<CourseVo> selectPage(CourseSearchFrom from);
     
     /**
      * 根据名字返回list

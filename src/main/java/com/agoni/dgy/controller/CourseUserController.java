@@ -72,8 +72,8 @@ public class CourseUserController{
     
     @DeleteMapping
     @ApiOperation("删除")
-    public ResponseEntity<Boolean> delete(@RequestBody CourseUser courseUser){
-        boolean b = courseUserService.deleteById(courseUser);
+    public ResponseEntity<Boolean> delete(@RequestBody Course course){
+        boolean b = courseUserService.deleteByCourseId(course.getId());
         return ResponseEntity.body(b);
     }
 
