@@ -84,9 +84,8 @@ public class CourseUserServiceImpl extends OmpServiceImpl<CourseUserMapper, Cour
         // 删除记录
         User u = UserUtil.getUser();
         QueryWrapper<CourseUser> queryWrapper = new QueryWrapper<>();
-        queryWrapper.lambda().eq(CourseUser::getCourseId, id)
-                .eq(CourseUser::getUserId, u.getId());
-        return this.remove(queryWrapper);
+        queryWrapper.lambda().eq(CourseUser::getCourseId, id).eq(CourseUser::getUserId, u.getId());
+        return remove(queryWrapper);
     }
 }
 
