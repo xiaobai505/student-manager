@@ -25,7 +25,7 @@ public class DeptController {
     
     @GetMapping()
     @ApiOperation("列表")
-    @PreAuthorize("hasAuthority('admin')")
+    @PreAuthorize("hasAuthority('admin') || hasAuthority('teacher')")
     public ResponseEntity<List<DeptVo>> listByQuery() {
         List<DeptVo> deptVos = deptService.listByQuery();
         return ResponseEntity.body(deptVos);
