@@ -1,6 +1,6 @@
-package com.agoni.dgy.service;
+package com.agoni.system.service;
 
-import com.agoni.dgy.model.po.JobLog;
+import com.agoni.system.model.po.JobLog;
 import com.baomidou.mybatisplus.extension.service.IService;
 
 /**

@@ -1,4 +1,4 @@
-package com.agoni.dgy.model.query;
+package com.agoni.system.model.query;
 
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;

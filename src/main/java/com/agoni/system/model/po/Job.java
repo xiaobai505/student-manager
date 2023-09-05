@@ -1,4 +1,4 @@
-package com.agoni.dgy.model.po;
+package com.agoni.system.model.po;
 
 import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableField;
@@ -17,7 +17,7 @@ import java.time.LocalDateTime;
  * 定时任务调度表
  * @TableName tb_job
  */
-@TableName(value ="tb_job")
+@TableName(value ="sys_job")
 @Data
 @SuperBuilder
 @NoArgsConstructor

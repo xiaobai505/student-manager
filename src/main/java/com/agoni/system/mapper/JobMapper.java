@@ -1,6 +1,6 @@
-package com.agoni.dgy.mapper;
+package com.agoni.system.mapper;
 
-import com.agoni.dgy.model.po.Job;
+import com.agoni.system.model.po.Job;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import org.apache.ibatis.annotations.Mapper;
 

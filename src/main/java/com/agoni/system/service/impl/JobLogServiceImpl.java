@@ -1,8 +1,8 @@
-package com.agoni.dgy.service.impl;
+package com.agoni.system.service.impl;
 
-import com.agoni.dgy.mapper.JobLogMapper;
-import com.agoni.dgy.model.po.JobLog;
-import com.agoni.dgy.service.JobLogService;
+import com.agoni.system.mapper.JobLogMapper;
+import com.agoni.system.model.po.JobLog;
+import com.agoni.system.service.JobLogService;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import org.springframework.stereotype.Service;
 
