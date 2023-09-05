@@ -1,8 +1,6 @@
 package com.agoni.system.service.impl;
 
 import com.agoni.core.diboot.Binder;
-import com.agoni.dgy.model.po.Major;
-import com.agoni.dgy.service.MajorService;
 import com.agoni.system.mapper.RoleUserMapper;
 import com.agoni.system.model.po.Role;
 import com.agoni.system.model.po.RoleUser;
@@ -18,7 +16,6 @@ import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.Collectors;
 
 /**
  * <p>
@@ -33,12 +30,6 @@ import java.util.stream.Collectors;
 public class RoleUserServiceImpl extends ServiceImpl<RoleUserMapper, RoleUser> implements RoleUserService {
 
     @Autowired
-    private RoleUserMapper roleUserMapper;
-
-    @Autowired
-    private MajorService majorService;
-    
-    @Autowired
     private RoleService roleService;
 
 
@@ -50,12 +41,6 @@ public class RoleUserServiceImpl extends ServiceImpl<RoleUserMapper, RoleUser> i
         return Binder.convertAndBindRelations(list, RoleUserVo.class);
     }
 
-    @Override
-    public List<String> getSchoolList() {
-        List<Major> mjlist = majorService.list();
-        return mjlist.stream().map(Major::getSchool).distinct().collect(Collectors.toList());
-    }
-    
     @Override
     public boolean saveByUserId(Long userId, List<Long> ids) {
         // 删除原来的权限

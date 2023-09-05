@@ -23,8 +23,6 @@ public interface RoleUserService extends IService<RoleUser> {
      */
     List<RoleUserVo> getRolebyUserId(Long id);
 
-    List<String> getSchoolList();
-    
     /**
      * 根据 user_id 提交用户权限
      * @param userId 用户id
