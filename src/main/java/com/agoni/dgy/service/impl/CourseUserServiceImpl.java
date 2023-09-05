@@ -12,19 +12,16 @@ import com.agoni.dgy.service.CourseService;
 import com.agoni.dgy.service.CourseUserService;
 import com.agoni.dgy.service.ResultService;
 import com.agoni.system.model.po.User;
-import com.agoni.system.model.vo.AuthUserVo;
 import com.agoni.system.utils.UserUtil;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.validation.constraints.NotNull;
-import java.util.List;
 
 /**
  * <p>
@@ -37,27 +34,13 @@ import java.util.List;
 @Service
 @Slf4j
 public class CourseUserServiceImpl extends OmpServiceImpl<CourseUserMapper, CourseUser> implements CourseUserService {
-    
-    @Autowired
-    private CourseUserMapper courseUserMapper;
-    
+
     @Autowired
     private CourseService courseService;
     
     @Autowired
     private ResultService resultService;
-    
-    @Override
-    public List<CourseUserVo> mylist() {
-        AuthUserVo userVo = UserUtil.getUserPrincipal();
-        SimpleGrantedAuthority admin = new SimpleGrantedAuthority("admin");
-        if (userVo.getAuthorities().contains(admin)) {
-            log.info("我拥有管理员权限！查询所有！");
-            return courseUserMapper.mylist(null);
-        }
-        return courseUserMapper.mylist(userVo.getId());
-    }
-    
+
     @Override
     public IPage<CourseUserVo> searchPage(CourseUserQuery query) {
         Page<CourseUser> page = getPage(query);

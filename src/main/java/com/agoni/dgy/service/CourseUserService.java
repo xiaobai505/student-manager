@@ -6,8 +6,6 @@ import com.agoni.dgy.model.vo.CourseUserVo;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.service.IService;
 
-import java.util.List;
-
 /**
  * <p>
  * 用户课程关系表 服务类
@@ -18,8 +16,6 @@ import java.util.List;
  */
 public interface CourseUserService extends IService<CourseUser> {
 
-    List<CourseUserVo>  mylist();
-    
     /**
      * 查询 用户课程关系表 信息
      * @param from

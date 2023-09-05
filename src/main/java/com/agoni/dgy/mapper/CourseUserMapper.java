@@ -1,12 +1,8 @@
 package com.agoni.dgy.mapper;
 
 import com.agoni.dgy.model.po.CourseUser;
-import com.agoni.dgy.model.vo.CourseUserVo;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import org.apache.ibatis.annotations.Mapper;
-import org.apache.ibatis.annotations.Param;
-
-import java.util.List;
 
 /**
  * <p>
@@ -18,7 +14,5 @@ import java.util.List;
  */
 @Mapper
 public interface CourseUserMapper extends BaseMapper<CourseUser> {
-
-    List<CourseUserVo> mylist(@Param("id") Long id);
 
 }
