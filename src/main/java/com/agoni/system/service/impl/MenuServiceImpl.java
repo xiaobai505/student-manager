@@ -21,6 +21,8 @@ import java.util.List;
 @Service
 public class MenuServiceImpl extends ServiceImpl<MenuMapper, Menu> implements MenuService {
 
+    private static final String AUTHS = "auths";
+
     /**
      * 根据 权限cede 查找
      *
@@ -29,7 +31,7 @@ public class MenuServiceImpl extends ServiceImpl<MenuMapper, Menu> implements Me
     @Override
     public List<MenuTreeVo> getTree() {
         // 转换vo
-        List<MenuTreeVo> menuTreeVos = Binder.convertAndBindRelations(list(), MenuTreeVo.class);
+        List<MenuTreeVo> menuTreeVos = Binder.convertAndBindRelations(setAuthority(list()), MenuTreeVo.class);
         // 构建树
         return BeanUtils.buildTree(menuTreeVos);
     }
@@ -38,17 +40,14 @@ public class MenuServiceImpl extends ServiceImpl<MenuMapper, Menu> implements Me
      * 给路由增加权限
      * @param menus
      */
-    private static void setAuthority(List<Menu> menus) {
-        // 用户选择的一个权限
+    private List<Menu> setAuthority(List<Menu> menus) {
+        // 先加默认的，后期根据角色设置菜单权限
         menus.forEach(menu -> {
             JSONObject meta = menu.getMeta();
-            List autchority = (List) meta.get("authority");
-            // autchority != null 说明有 authority 的属性
-            if (autchority != null) {
-                meta.put("authority", UserUtil.getRoles());
-                menu.setMeta(meta);
-            }
+            meta.put(AUTHS, UserUtil.getRoles());
+            menu.setMeta(meta);
         });
+        return menus;
     }
 }
 

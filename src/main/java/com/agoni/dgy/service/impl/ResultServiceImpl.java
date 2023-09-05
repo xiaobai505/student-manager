@@ -1,6 +1,7 @@
 package com.agoni.dgy.service.impl;
 
 import com.agoni.core.diboot.Binder;
+import com.agoni.core.omp.OmpDbUtil;
 import com.agoni.dgy.mapper.ResultMapper;
 import com.agoni.dgy.model.po.Result;
 import com.agoni.dgy.model.query.ResultPageQuery;
@@ -9,10 +10,8 @@ import com.agoni.dgy.service.ResultService;
 import com.agoni.system.model.po.Menu;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
-import com.baomidou.mybatisplus.core.toolkit.StringUtils;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.scheduling.annotation.AsyncResult;
 import org.springframework.stereotype.Service;
@@ -31,15 +30,11 @@ import java.util.concurrent.TimeUnit;
  */
 @Service
 public class ResultServiceImpl extends ServiceImpl<ResultMapper, Result> implements ResultService {
-    
-    @Autowired
-    private ResultMapper resultMapper;
-    
+
     @Override
     public IPage<ResultVo> searchPage(ResultPageQuery query) {
         QueryWrapper<Result> queryWrapper = new QueryWrapper<>();
-        queryWrapper.lambda().likeLeft(StringUtils.isNotEmpty(query.getCourseName()),Result::getCourseName,query.getCourseName())
-             .orderByDesc(Result::getCreateTime);
+        fillQueryWrapper(queryWrapper,query);
         Page<Result> page = Page.of(query.getCurrentPage(), query.getPageSize());
         Page<Result> resultPage = page(page, queryWrapper);
         return Binder.convertAndBindRelations(resultPage, ResultVo.class);
@@ -56,6 +51,11 @@ public class ResultServiceImpl extends ServiceImpl<ResultMapper, Result> impleme
         QueryWrapper<Result> queryWrapper = new QueryWrapper<>();
         queryWrapper.lambda().eq(Result::getCourseId,cId);
         return this.remove(queryWrapper);
+    }
+
+    private void fillQueryWrapper(QueryWrapper<Result> queryWrapper, ResultPageQuery query) {
+        //自动组装查询条件，生成orderBy，组装条件的两种方式：1.基于注解 2.基于query对象中属性的后缀
+        OmpDbUtil.autoWrapper(query, queryWrapper, getEntityClass());
     }
     
     /**

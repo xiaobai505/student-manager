@@ -1,6 +1,7 @@
 package com.agoni.dgy.model.po;
 
 import com.baomidou.mybatisplus.annotation.*;
+import com.diboot.core.data.access.DataAccessCheckpoint;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import com.fasterxml.jackson.databind.ser.std.ToStringSerializer;
 import io.swagger.annotations.ApiModel;
@@ -36,6 +37,7 @@ public class CourseUser implements Serializable {
     @ApiModelProperty("用户ID")
     @TableField("user_id")
     @JsonSerialize(using= ToStringSerializer.class)
+    @DataAccessCheckpoint
     private Long userId;
 
     @ApiModelProperty("课程ID")

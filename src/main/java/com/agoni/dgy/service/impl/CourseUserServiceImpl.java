@@ -1,6 +1,7 @@
 package com.agoni.dgy.service.impl;
 
 import com.agoni.core.diboot.Binder;
+import com.agoni.core.omp.OmpServiceImpl;
 import com.agoni.dgy.mapper.CourseUserMapper;
 import com.agoni.dgy.model.po.Course;
 import com.agoni.dgy.model.po.CourseUser;
@@ -16,17 +17,14 @@ import com.agoni.system.utils.UserUtil;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
-import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.util.CollectionUtils;
 
 import javax.validation.constraints.NotNull;
 import java.util.List;
-import java.util.stream.Collectors;
 
 /**
  * <p>
@@ -38,7 +36,7 @@ import java.util.stream.Collectors;
  */
 @Service
 @Slf4j
-public class CourseUserServiceImpl extends ServiceImpl<CourseUserMapper, CourseUser> implements CourseUserService {
+public class CourseUserServiceImpl extends OmpServiceImpl<CourseUserMapper, CourseUser> implements CourseUserService {
     
     @Autowired
     private CourseUserMapper courseUserMapper;
@@ -61,14 +59,8 @@ public class CourseUserServiceImpl extends ServiceImpl<CourseUserMapper, CourseU
     }
     
     @Override
-    public IPage<CourseUserVo> searchPage(CourseUserQuery from) {
-        // 根据 名称 查找 课程id
-        List<Course> courses = courseService.listByCourseName(from.getCourseName());
-        List<Long> ids = courses.stream().map(Course::getId).collect(Collectors.toList());
-        // 根据 课程id 查找 选课信息
-        QueryWrapper<CourseUser> query = new QueryWrapper<>();
-        query.lambda().in(!CollectionUtils.isEmpty(ids), CourseUser::getCourseId, ids);
-        Page<CourseUser> page = page(from, query);
+    public IPage<CourseUserVo> searchPage(CourseUserQuery query) {
+        Page<CourseUser> page = getPage(query);
         return Binder.convertAndBindRelations(page,CourseUserVo.class);
     }
     
@@ -81,12 +73,11 @@ public class CourseUserServiceImpl extends ServiceImpl<CourseUserMapper, CourseU
         courseService.saleStock(c);
         // 保存记录
         User u = UserUtil.getUser();
-        CourseUser build = CourseUser.builder().userId(u.getId()).courseId(id).build();
         // 增选选修课成绩信息
         Result r = Result.builder().userId(u.getId()).courseId(c.getId()).graduate(c.getGraduate())
-                         .courseName(c.getCourseName()).build();
+                .courseName(u.getName()).build();
         resultService.save(r);
-        return this.save(build);
+        return this.save(CourseUser.builder().userId(u.getId()).courseId(id).build());
     }
     
     @Override

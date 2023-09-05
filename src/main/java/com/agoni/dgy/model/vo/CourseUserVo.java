@@ -42,7 +42,7 @@ public class CourseUserVo extends CourseUser {
     
     @ApiModelProperty("真实姓名")
     @BindField(entity= User.class, field="name", condition="this.user_id=id")
-    private String name;
+    private String studentName;
     
     @ApiModelProperty("用户名")
     @BindField(entity= User.class, field="username", condition="this.user_id=id")

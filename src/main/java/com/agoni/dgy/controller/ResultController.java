@@ -77,15 +77,15 @@ public class ResultController {
 
     @PostMapping
     @ApiOperation("保存")
-    public ResponseEntity<Boolean> save(@RequestBody List<Result> resultList) {
-        boolean b = resultService.saveBatch(resultList);
+    public ResponseEntity<Boolean> save(@RequestBody Result result) {
+        boolean b = resultService.saveOrUpdate(result);
         return ResponseEntity.body(b);
     }
 
     @PutMapping
     @ApiOperation("删除")
-    public ResponseEntity<Boolean> updateBatchById(@RequestBody List<Result> resultList) {
-        boolean b = resultService.updateBatchById(resultList);
+    public ResponseEntity<Boolean> updateById(@RequestBody Result result) {
+        boolean b = resultService.updateById(result);
         return ResponseEntity.body(b);
     }
 

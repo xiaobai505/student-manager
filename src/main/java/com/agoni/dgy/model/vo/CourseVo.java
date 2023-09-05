@@ -1,7 +1,7 @@
 package com.agoni.dgy.model.vo;
 
 import com.agoni.dgy.model.po.Course;
-import com.agoni.dgy.model.po.Result;
+import com.agoni.dgy.model.po.CourseUser;
 import com.diboot.core.binding.annotation.BindCount;
 import com.diboot.core.binding.annotation.BindDict;
 import io.swagger.annotations.ApiModel;
@@ -22,7 +22,7 @@ public class CourseVo extends Course {
     @BindDict(type = "isMust",field = "isMust")
     private String isMustDisplay;
 
-    @BindCount(entity = Result.class, condition = "this.id=course_id and del_flag=0")
+    @BindCount(entity = CourseUser.class, condition = "this.id=course_id")
     private Integer count;
 
 }

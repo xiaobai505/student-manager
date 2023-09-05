@@ -8,7 +8,6 @@ import com.baomidou.mybatisplus.core.conditions.Wrapper;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
-import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.core.metadata.TableInfo;
 import com.baomidou.mybatisplus.core.metadata.TableInfoHelper;
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
@@ -84,7 +83,7 @@ public class OmpServiceImpl<M extends BaseMapper<T>, T> extends ServiceImpl<M, T
         return wrapper;
     }
 
-    public IPage<T> getPage(Object query) {
+    public Page<T> getPage(Object query) {
         Integer current = (Integer) ReflectUtil.getFieldValue(query, "currentPage");
         Integer limit = (Integer) ReflectUtil.getFieldValue(query, "pageSize");
         if (ObjectUtil.isEmpty(current) || ObjectUtil.isEmpty(limit)) {
