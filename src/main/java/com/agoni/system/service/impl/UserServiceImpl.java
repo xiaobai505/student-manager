@@ -5,7 +5,6 @@ import cn.hutool.core.util.ObjectUtil;
 import cn.hutool.core.util.StrUtil;
 import com.agoni.core.diboot.Binder;
 import com.agoni.core.exception.BusinessException;
-import com.agoni.core.omp.OmpServiceImpl;
 import com.agoni.dgy.model.query.PwdQuery;
 import com.agoni.system.mapper.UserMapper;
 import com.agoni.system.model.po.User;
@@ -19,6 +18,7 @@ import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.core.toolkit.StringUtils;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
@@ -37,18 +37,18 @@ import static com.agoni.core.exception.enums.httpEnum.PASSWORD_FAIL;
  */
 @Service
 @Slf4j
-public class UserServiceImpl extends OmpServiceImpl<UserMapper, User> implements UserService {
+public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements UserService {
 
     @Resource
     private DeptService deptService;
 
     @Override
-    public IPage<UserVo> pageUser(UserPageQuery userQuery) {
+    public IPage<UserVo> pageUser(UserPageQuery query) {
         // 获取当前用户的部门及子部门
-        List<Long> deptIds = deptService.getChildDeptIds(userQuery.getDeptId());
-        userQuery.setDeptIds(deptIds);
-        Page<User> page = Page.of(userQuery.getCurrentPage(), userQuery.getPageSize());
-        LambdaQueryWrapper<User> queryWrapper = getUserLambdaQueryWrapper(userQuery);
+        List<Long> deptIds = deptService.getChildDeptIds(query.getDeptId());
+        query.setDeptIds(deptIds);
+        Page<User> page = Page.of(query.getCurrentPage(), query.getPageSize());
+        LambdaQueryWrapper<User> queryWrapper = getUserLambdaQueryWrapper(query);
         Page<User> userPage = page(page, queryWrapper);
         return Binder.convertAndBindRelations(userPage, UserVo.class);
     }

@@ -32,6 +32,10 @@ public class Course extends AbstractEntity {
     @TableField("course_name")
     private String courseName;
 
+    @ApiModelProperty("部门ID")
+    @TableField("dept_id")
+    private String deptId;
+
     @ApiModelProperty("课程老师")
     @TableField("course_teacher")
     private String courseTeacher;

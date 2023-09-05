@@ -1,8 +1,8 @@
 package com.agoni.dgy.controller;
 
 
-import com.agoni.dgy.model.bo.CourseSearchFrom;
 import com.agoni.dgy.model.po.Course;
+import com.agoni.dgy.model.query.CourseQuery;
 import com.agoni.dgy.model.vo.CourseVo;
 import com.agoni.dgy.service.CourseService;
 import com.agoni.system.model.response.ResponseEntity;
@@ -46,7 +46,7 @@ public class CourseController {
     
     @GetMapping
     @ApiOperation("列表")
-    public ResponseEntity<IPage> searchPage(@Validated CourseSearchFrom from) {
+    public ResponseEntity<IPage> searchPage(@Validated CourseQuery from) {
         IPage<CourseVo> res = courseService.selectPage(from);
         return ResponseEntity.body(res);
     }
