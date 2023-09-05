@@ -18,6 +18,7 @@ import java.util.List;
 @RestController
 @RequestMapping("/sys/dept")
 @Api(tags = "部门")
+@PreAuthorize("hasAuthority('admin')")
 public class DeptController {
     
     @Autowired
@@ -33,7 +34,6 @@ public class DeptController {
     
     @PostMapping
     @ApiOperation("保存部门")
-    @PreAuthorize("hasAuthority('admin')")
     public ResponseEntity<Boolean> saveOrUpdate(@RequestBody Dept dept) {
         boolean save = deptService.saveOrUpdateDept(dept);
         return ResponseEntity.body(save);
@@ -41,7 +41,6 @@ public class DeptController {
     
     @PutMapping
     @ApiOperation("更新部门")
-    @PreAuthorize("hasAuthority('admin')")
     public ResponseEntity<Boolean> update(@RequestBody Dept dept) {
         boolean save = deptService.updateById(dept);
         return ResponseEntity.body(save);
@@ -50,7 +49,6 @@ public class DeptController {
     
     @DeleteMapping("/{id}")
     @ApiOperation("删除")
-    @PreAuthorize("hasAuthority('admin')")
     public ResponseEntity<Boolean> del(@PathVariable long id) {
         boolean res = deptService.removeById(id);
         return ResponseEntity.body(res);
