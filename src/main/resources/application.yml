@@ -24,8 +24,8 @@ mybatis-plus:
       insert-strategy: not_empty
       update-strategy: not_null
       id-type: assign_id
-    # 驼峰下划线转换
-    db-column-underline: true
+      # 驼峰下划线转换
+      table-underline: true
   configuration:
     map-underscore-to-camel-case: true
     cache-enabled: false
