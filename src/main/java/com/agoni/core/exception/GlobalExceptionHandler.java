@@ -3,6 +3,7 @@ package com.agoni.core.exception;
 import com.agoni.system.model.response.ResponseEntity;
 import com.agoni.system.utils.HttpUitl;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.security.access.AccessDeniedException;
 import org.springframework.validation.BindException;
 import org.springframework.web.HttpRequestMethodNotSupportedException;
 import org.springframework.web.bind.MethodArgumentNotValidException;
@@ -11,6 +12,7 @@ import org.springframework.web.bind.annotation.RestControllerAdvice;
 
 import javax.servlet.http.HttpServletRequest;
 
+import static com.agoni.core.exception.enums.httpEnum.FORBIDDEN;
 import static com.agoni.core.exception.enums.httpEnum.INNER_ERROR;
 
 
@@ -42,6 +44,15 @@ public class GlobalExceptionHandler {
         e.getBindingResult().getFieldErrors().forEach(x -> errorMsg.append(x.getField()).append(x.getDefaultMessage()));
         logError(e, false);
         return ResponseEntity.body(INNER_ERROR);
+    }
+
+    /**
+     * 处理空指针的异常
+     */
+    @ExceptionHandler(value = AccessDeniedException.class)
+    public ResponseEntity exceptionHandler(AccessDeniedException e) {
+        logError(e, true);
+        return ResponseEntity.body(FORBIDDEN);
     }
 
     /**

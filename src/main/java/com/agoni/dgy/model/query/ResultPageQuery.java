@@ -9,6 +9,9 @@ import lombok.Data;
 @ApiModel(value = "ResultQuery对象", description = "结果查询条件")
 public class ResultPageQuery extends BasePageQuery {
 
+    @ApiModelProperty("学生id")
+    private Long userIdEq;
+
     @ApiModelProperty("课程id")
     private Long courseIdEq;
 

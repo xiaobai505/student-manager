@@ -58,7 +58,7 @@ public class CourseUserServiceImpl extends OmpServiceImpl<CourseUserMapper, Cour
         User u = UserUtil.getUser();
         // 增选选修课成绩信息
         Result r = Result.builder().userId(u.getId()).courseId(c.getId()).graduate(c.getGraduate())
-                .courseName(u.getName()).build();
+                .courseName(c.getCourseName()).build();
         resultService.save(r);
         return this.save(CourseUser.builder().userId(u.getId()).courseId(id).build());
     }

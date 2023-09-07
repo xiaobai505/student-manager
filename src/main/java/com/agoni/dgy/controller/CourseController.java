@@ -60,7 +60,6 @@ public class CourseController {
     
     @PutMapping
     @ApiOperation("更新")
-    //@PreAuthorize("hasAuthority('teacher')")
     public ResponseEntity<Boolean> updateBatchById(@RequestBody List<Course> courses) {
         boolean b = courseService.updateBatchById(courses);
         return ResponseEntity.body(b);

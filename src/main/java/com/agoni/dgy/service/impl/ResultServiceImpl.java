@@ -8,6 +8,7 @@ import com.agoni.dgy.model.query.ResultPageQuery;
 import com.agoni.dgy.model.vo.ResultVo;
 import com.agoni.dgy.service.ResultService;
 import com.agoni.system.model.po.Menu;
+import com.agoni.system.utils.UserUtil;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
@@ -16,6 +17,7 @@ import org.springframework.scheduling.annotation.Async;
 import org.springframework.scheduling.annotation.AsyncResult;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.StringJoiner;
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.TimeUnit;
@@ -33,13 +35,21 @@ public class ResultServiceImpl extends ServiceImpl<ResultMapper, Result> impleme
 
     @Override
     public IPage<ResultVo> searchPage(ResultPageQuery query) {
+        setId(query);
         QueryWrapper<Result> queryWrapper = new QueryWrapper<>();
         fillQueryWrapper(queryWrapper,query);
         Page<Result> page = Page.of(query.getCurrentPage(), query.getPageSize());
         Page<Result> resultPage = page(page, queryWrapper);
         return Binder.convertAndBindRelations(resultPage, ResultVo.class);
     }
-    
+
+    private void setId(ResultPageQuery query) {
+        List<String> roles = UserUtil.getRoles();
+        if (roles.contains("student")){
+            query.setUserIdEq(UserUtil.getUser().getId());
+        }
+    }
+
     /**
      * 根据课程ID删除
      * @param cId
