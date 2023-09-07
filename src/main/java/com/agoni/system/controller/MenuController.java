@@ -17,7 +17,7 @@ import java.util.List;
  * @author Admin
  */
 @RestController
-@RequestMapping("/menu")
+@RequestMapping("/sys/menu")
 @Slf4j
 @Api(tags = "动态路由")
 public class MenuController {
