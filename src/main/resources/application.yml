@@ -9,6 +9,13 @@ spring:
       matching-strategy: ANT_PATH_MATCHER
   freemarker:
     template-loader-path: classpath:/templates/
+server:
+  servlet:
+    # 以/api开头的请求都将被路由到应用程序的API部分进行处理
+    context-path: /api
+    encoding:
+      force-response: true
+
 mybatis-plus:
   mapper-locations: classpath*:mapper/**/*.xml
   global-config:
@@ -46,3 +53,4 @@ weixin:
 diboot:
   core:
     init-sql: false
+
