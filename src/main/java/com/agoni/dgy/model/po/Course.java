@@ -66,7 +66,7 @@ public class Course extends AbstractEntity {
 
     @ApiModelProperty("是否必修")
     @TableField("is_must")
-    private String isMust;
+    private Integer isMust;
     
     @ApiModelProperty("获得的学分")
     @TableField("graduate")

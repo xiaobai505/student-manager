@@ -16,7 +16,6 @@ import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-import java.util.stream.Collectors;
 
 /**
  * <p>
@@ -53,23 +52,22 @@ public class CourseController {
     
     @PostMapping
     @ApiOperation("保存")
-    public ResponseEntity<Boolean> save(@RequestBody List<Course> courses) {
-        boolean b = courseService.saveBatch(courses);
+    public ResponseEntity<Boolean> save(@RequestBody Course course) {
+        boolean b = courseService.saveOrUpdate(course);
         return ResponseEntity.body(b);
     }
     
     @PutMapping
     @ApiOperation("更新")
-    public ResponseEntity<Boolean> updateBatchById(@RequestBody List<Course> courses) {
-        boolean b = courseService.updateBatchById(courses);
+    public ResponseEntity<Boolean> updateById(@RequestBody Course course) {
+        boolean b = courseService.updateById(course);
         return ResponseEntity.body(b);
     }
     
-    @DeleteMapping
+    @DeleteMapping("/{id}")
     @ApiOperation("删除")
-    public ResponseEntity<Boolean>  delete(@RequestBody List<Course> courses){
-        List<Long> ids = courses.stream().map(Course::getId).collect(Collectors.toList());
-        boolean b = courseService.removeByIds(ids);
+    public ResponseEntity<Boolean> delete(@PathVariable long id){
+        boolean b = courseService.removeById(id);
         return ResponseEntity.body(b);
     }
 }
