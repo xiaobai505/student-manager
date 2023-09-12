@@ -8,6 +8,7 @@ import com.agoni.dgy.model.query.ResultPageQuery;
 import com.agoni.dgy.model.vo.ResultVo;
 import com.agoni.dgy.service.ResultService;
 import com.agoni.system.model.po.Menu;
+import com.agoni.system.service.UserService;
 import com.agoni.system.utils.UserUtil;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
@@ -17,6 +18,7 @@ import org.springframework.scheduling.annotation.Async;
 import org.springframework.scheduling.annotation.AsyncResult;
 import org.springframework.stereotype.Service;
 
+import javax.annotation.Resource;
 import java.util.List;
 import java.util.StringJoiner;
 import java.util.concurrent.CompletableFuture;
@@ -32,6 +34,9 @@ import java.util.concurrent.TimeUnit;
  */
 @Service
 public class ResultServiceImpl extends ServiceImpl<ResultMapper, Result> implements ResultService {
+
+    @Resource
+    private UserService userService;
 
     @Override
     public IPage<ResultVo> searchPage(ResultPageQuery query) {

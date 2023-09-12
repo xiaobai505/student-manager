@@ -42,12 +42,12 @@ public class Result extends AbstractEntity{
     
     @ApiModelProperty("成绩")
     @TableField("result")
-    private String result;
+    private Integer result;
     
     @ApiModelProperty("补考标记")
     private Integer isReset;
     
     @ApiModelProperty("获得的学分")
-    private int graduate;
+    private Integer graduate;
 
 }
