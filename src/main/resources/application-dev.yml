@@ -9,7 +9,7 @@ spring:
   datasource:
     username: ${MYSQL_USER_NAME}
     password: ${MYSQL_PASSWORD}
-    url: jdbc:mysql://rm-2ze7hrkqw885t3696mo.mysql.rds.aliyuncs.com/student_status_management?useUnicode=true&characterEncoding=utf-8&useSSL=false
+    url: jdbc:mysql://rm-2ze7hrkqw885t3696mo.mysql.rds.aliyuncs.com/student_base?useUnicode=true&characterEncoding=utf-8&useSSL=false
     driver-class-name: com.mysql.cj.jdbc.Driver
     type: com.alibaba.druid.pool.DruidDataSource
     druid:
@@ -34,7 +34,5 @@ spring:
     host: ${REDIS_HOST}
     port: 6379
     database: 2
-    username: ${REDIS_USERNAME}
-    password: ${REDIS_PASSWORD}
 
 

@@ -21,7 +21,7 @@
 		<weixin-java-mp.version>4.4.9.B</weixin-java-mp.version>
 		<spring-boot-starter-security.version>3.0.4</spring-boot-starter-security.version>
 		<jjwt.version>0.9.1</jjwt.version>
-		<diboot-core.version>3.0.0</diboot-core.version>
+		<diboot-core.version>3.1.2</diboot-core.version>
 		<dysmsapi20170525.version>2.0.23</dysmsapi20170525.version>
 		<hutool-all.version>5.8.18</hutool-all.version>
 		<springfox-boot-starter.version>3.0.0</springfox-boot-starter.version>

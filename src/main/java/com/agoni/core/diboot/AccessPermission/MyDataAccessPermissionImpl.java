@@ -5,7 +5,7 @@ import com.agoni.core.exception.BusinessException;
 import com.agoni.system.model.po.User;
 import com.agoni.system.utils.UserUtil;
 import com.diboot.core.config.Cons;
-import com.diboot.core.data.access.DataAccessInterface;
+import com.diboot.core.data.access.DataScopeManager;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
 
@@ -20,15 +20,10 @@ import static com.agoni.core.exception.enums.BusinessBaseEnum.START_ERROR;
  */
 @Slf4j
 @Component
-public class MyDataAccessPermissionImpl implements DataAccessInterface {
-    /**
-     * 实现DataAccessInterface接口，返回当前用户可访问的合法ID集合
-     * @param entityClass
-     * @param fieldName
-     * @return
-     */
+public class MyDataAccessPermissionImpl implements DataScopeManager {
+
     @Override
-    public List<? extends Serializable> getAccessibleIds(Class<?> entityClass, String fieldName) {
+    public List<? extends Serializable> getAccessibleIds(String entityClassName, String fieldName) {
         // @DataAccessCheckpoint 在po上才会执行
         // -Dspring.security.strategy=MODE_INHERITABLETHREADLOCAL
         // 子线程user==null，需要增加上面的参数
@@ -48,7 +43,7 @@ public class MyDataAccessPermissionImpl implements DataAccessInterface {
             // accessibleIds.addAll(childOrgIds);
         }
         // 按用户过滤
-         if(Cons.FieldName.userId.name().equals(fieldName)){
+        if(Cons.FieldName.userId.name().equals(fieldName)){
             //示例：可访问数据范围为: 本人
             accessibleIds.add(user.getId());
         }

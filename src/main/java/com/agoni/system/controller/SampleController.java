@@ -2,10 +2,10 @@ package com.agoni.system.controller;
 
 import com.aliyun.dysmsapi20170525.models.SendSmsRequest;
 import com.aliyun.dysmsapi20170525.models.SendSmsResponse;
-import com.aliyun.tea.TeaException;
 import com.aliyun.teaopenapi.models.Config;
 import com.aliyun.teautil.models.RuntimeOptions;
 import io.swagger.annotations.Api;
+import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -36,30 +36,22 @@ public class SampleController {
         config.endpoint = "dysmsapi.aliyuncs.com";
         return new com.aliyun.dysmsapi20170525.Client(config);
     }
-    
-    
+
+
     @RequestMapping("/sendSms")
-    public static void main(String[] args_) throws Exception {
+    @SneakyThrows(Exception.class)
+    public static void main(String[] args_) {
         com.aliyun.dysmsapi20170525.Client client =
                 SampleController.createClient("***", "****");
         SendSmsRequest sendSmsRequest = new SendSmsRequest()
-                .setPhoneNumbers("176****8927")
+                .setPhoneNumbers("17611678927")
                 .setSignName("GY董")
                 .setTemplateCode("SMS_170660489")
                 .setTemplateParam("{\"user\":\"1234\",\"pwd\":\"321aa\"}");
         RuntimeOptions runtime = new RuntimeOptions();
-        
-        try {
-            // 复制代码运行请自行打印 API 的返回值
-            SendSmsResponse sendSmsResponse = client.sendSmsWithOptions(sendSmsRequest, runtime);
-            System.out.print("ok");
-        } catch (TeaException error) {
-            // 如有需要，请打印 error
-            com.aliyun.teautil.Common.assertAsString(error.message);
-        } catch (Exception _error) {
-            TeaException error = new TeaException(_error.getMessage(), _error);
-            // 如有需要，请打印 error
-            com.aliyun.teautil.Common.assertAsString(error.message);
-        }
+
+        // 复制代码运行请自行打印 API 的返回值
+        SendSmsResponse sendSmsResponse = client.sendSmsWithOptions(sendSmsRequest, runtime);
+        System.out.print("ok");
     }
 }
